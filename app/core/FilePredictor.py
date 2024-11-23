@@ -2,17 +2,22 @@ import logging
 from app.core.TermPrediction import TermPrediction
 from app.utils.articles_parser import get_text_from_file
 
-logging.basicConfig(filename='logs/predictor.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='logs/predictor.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class FilePredictor:
     def __init__(self, initial_term_id, thesaurus):
-        self.initial_term_id = initial_term_id
+        self.thesaurus = thesaurus
         self.input_creators = ['abstract', 'normal', 'tf-idf']
+
+        self.initial_term_id = initial_term_id
         self.predictions = {}
         self.predictions_by_term = {}
-        self.thesaurus = thesaurus
+        # TODO: Remove it
+        self.temporal_predictions = {}
+        # For logging purposes
         self.log = logging.getLogger('predictor_logger')
 
+    # TODO: Remove function after testing
     '''
     Prints the predictions in the console
     '''
@@ -23,10 +28,10 @@ class FilePredictor:
             print("There are no predictions")
 
         else:
-            for term_id, prediction in self.predictions.items():
-                term_obj = self.thesaurus.get_by_id(term_id)
-                parents = term_obj.get_parents()
-                print(f"Term: {term_id}, Probabilities: {prediction.get_probabilities()}, Multipliers: {prediction.get_multipliers()}, Parents: {parents}")
+            for term_id, prediction in self.temporal_predictions.items():
+                print(f"Term: {term_id}, Probability: {prediction}")
+
+            print('---------------------------------------------------------------------')
 
             for term_id, final_prediction in self.predictions_by_term.items():
                 print(f"Term: {term_id}, Probability: {final_prediction}")
@@ -38,7 +43,7 @@ class FilePredictor:
         term_prediction = TermPrediction(input_creator)
 
         predicted_terms = []
-        predictions = term_prediction.predict_texts(text, self.initial_term_id, predicted_terms)
+        predictions = term_prediction.predict_text(text, self.initial_term_id, predicted_terms)
         return predictions
 
     '''
@@ -53,8 +58,10 @@ class FilePredictor:
                 probability = prediction.get_probabilities()[0]
                 self.predictions[prediction.get_term()].add_probability(probability)
                 self.predictions[prediction.get_term()].add_multiplier(prediction.get_multipliers()[0])
+                self.predictions[prediction.get_term()].add_multiplier_name(prediction.get_multipliers_names()[0])
+                self.predictions[prediction.get_term()].add_parent(prediction.get_parents()[0])
 
-        # Generate prediction object with the final probabilities
+        # Generate prediction object with the final probabilities combined
         final_predictions = {}
         for term_id, prediction in self.predictions.items():
             final_prediction = 0
@@ -64,15 +71,20 @@ class FilePredictor:
 
         self.predictions_by_term = final_predictions
 
+        # TODO: Remove function after testing
+        for term_id, prediction in self.predictions.items():
+            self.temporal_predictions[term_id] = {
+                'probabilities': prediction.get_probabilities(),
+                'multipliers': prediction.get_multipliers(),
+                'multipliersNames': prediction.get_multipliers_names(),
+                'parent': prediction.get_parents()
+            }     
+
     '''
     Extracts the abstract and full text from a file and predicts the terms
     '''
     async def predict_for_file(self, file):
-        print("Predicting for file: ", file)
         abstract, full_text = await get_text_from_file(file)
-        print("Abstract: ", abstract)
-        print("Full text: ", full_text)
-
         data_input = {"abstract": abstract, "normal": full_text, "tf-idf": full_text}
 
         # Iterate through the input creators
@@ -82,3 +94,4 @@ class FilePredictor:
             self.generate_predictions(predictions)
 
         self.print_predictions()
+        return self.temporal_predictions

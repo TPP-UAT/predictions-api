@@ -13,12 +13,8 @@ async def predict_article(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="PDF invalido")
     
     try:
-        # call predict service
-        await PredictService.predict_file(file)
-
-        # Here you can pass the extracted text to your prediction model
-        # For demonstration, we'll return the extracted text
-        return {"message": "success"}
+        predictions = await PredictService.predict_file(file)
+        return predictions
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error procesando el archivo: {e}")

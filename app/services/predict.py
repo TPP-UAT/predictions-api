@@ -11,8 +11,13 @@ class PredictService:
         thesaurus = mapper.map_to_thesaurus()
         # Get the root element from the thesaurus
         root_term = thesaurus.get_by_id("1")
+        predictions = {}
 
         predictor = FilePredictor(root_term.get_id(), thesaurus)
         # In the future, we could iterate over more than one file
-        await predictor.predict_for_file(file)
+        file_predictions = await predictor.predict_for_file(file)
+
+        filename = file.filename.removesuffix(".pdf")
+        predictions[filename] = file_predictions
+        return predictions
         

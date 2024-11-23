@@ -43,7 +43,6 @@ class UATMapper:
         return term
         
     def map_to_thesaurus(self):
-        print("LLEGA 3", self.file_path)
         with open(self.file_path, encoding='utf-8') as file:
             json_data = json.load(file)
 
