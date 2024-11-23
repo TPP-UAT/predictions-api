@@ -1,3 +1,5 @@
 fastapi
 uvicorn
 PyMuPDF
+spacy
+python-multipart

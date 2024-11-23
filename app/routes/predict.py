@@ -1,19 +1,21 @@
 from fastapi import APIRouter, File, UploadFile, HTTPException
 from app.services.predict import PredictService
+from typing import List
 
 router = APIRouter()
 
 @router.post("/predict")
-async def predict_article(file: UploadFile = File(...)):
+async def predict_article(files: List[UploadFile] = File(...)):
     """
     Accepts a PDF file, extracts its text, and returns a prediction.
     """
-    # Ensure the uploaded file is a PDF
-    if file.content_type != "application/pdf":
-        raise HTTPException(status_code=400, detail="PDF invalido")
+    # Ensure the uploaded files are a PDF
+    for file in files:
+        if file.content_type != "application/pdf":
+            raise HTTPException(status_code=400, detail="PDF invalido")
     
     try:
-        predictions = await PredictService.predict_file(file)
+        predictions = await PredictService.predict_files(files)
         return predictions
 
     except Exception as e:
