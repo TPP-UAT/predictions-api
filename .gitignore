@@ -3,7 +3,3 @@ __pycache__/
 *.pyc
 *.pyo
 .venv
-
-models
-logs
-!app/models
