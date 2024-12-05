@@ -2,6 +2,7 @@ import fitz
 import re
 
 equation_fonts = ["TimesLTStd-Roman",
+                  "TimesLTStd-BoldItalic",
                    "STIXTwoMath", 
                    "TimesLTStd-Italic", 
                    "EuclidSymbol", 
@@ -9,7 +10,12 @@ equation_fonts = ["TimesLTStd-Roman",
                    "STIXGeneral-Regular", 
                    "EuclidSymbol-Italic",
                    "AdvTTab7e17fd+22",
-                   "EuclidMathTwo"
+                   "EuclidMathTwo",
+                   "EuclidMathOne",
+                   "EuclidExtra",
+                   "EuclidSymbol-BoldItalic",
+                   "AdvOTb4af3d5d.I",
+                   "AdvOT564e738a.BI"
                    ]
    
 # Retrieves the text from a page and returns it filtered by different criteria
@@ -100,6 +106,8 @@ def clean_plain_text(text, bold_text):
     text = clean_orcidIds_from_text(text)
     text = clean_authors_from_text(text, bold_text)
     text = clean_references_from_text(text)
+    text = clean_erratum_from_text(text)
+    text = fix_word_breaks(text)
     return text
 
 def join_apostrophes(text):
@@ -193,10 +201,23 @@ def clean_orcidIds_from_text(text):
     else:
         return text
 
+# Removes all content from the last occurrence of 'Erratum' to the end.
+def clean_erratum_from_text(text):
+    last_occurrence = text.rfind("Erratum")
+    if last_occurrence != -1:
+        return text[:last_occurrence]
+    else:
+        return text
+
+# Fix word breaks when a line finishes with a "-". E.g. "This is a long- " and continues on the next line
+def fix_word_breaks(text):
+    fixed_text = re.sub(r'(\w+)-\s+(\w+)', r'\1\2', text)
+    return fixed_text
+
 ''' Cleans the text as spans by applying a series of text processing functions 
     Params: The spans from each page
 '''
-def clean_spans_from_page(spans):
+def clean_spans_from_page(spans, remove_abstract):
     spans = clean_tables_from_text(spans)
     spans = clean_urls_from_text(spans)
     spans = clean_equations_from_text(spans)
@@ -204,6 +225,14 @@ def clean_spans_from_page(spans):
     spans = clean_example_years_from_text(spans)
     spans = clean_parenthesis_with_years_from_text(spans)
     spans = clean_small_references_from_text(spans)
+    if (remove_abstract):
+        spans = clean_authors_and_abstract_from_spans(spans)
+    spans = clean_metadata_from_spans(spans)
+    spans = clean_titles_from_spans(spans)
+    spans = clean_parenthesis_with_references_from_spans(spans)
+    spans = clean_symbols_from_spans(spans)
+    spans = clean_orcids_from_spans(spans)
+    spans = clean_page_number_from_spans(spans)
     
     return spans
 
@@ -445,6 +474,192 @@ def clean_small_references_from_text(spans):
 
     return spans
 
+# Cleans small text like header and footer (e.g. Original content..., Published by..., The Astrophysical Journal...)
+def clean_metadata_from_spans(spans):
+    i = 0
+    while i < len(spans):
+        start_index = None
+        for j in range(i, len(spans)):
+            allowed_sizes = [5.977700233459473, 7.970200061798096, 6.339683532714844]
+            if spans[j].get('size') in allowed_sizes:
+                start_index = j
+                break
+
+        if start_index is not None:
+            for k in range(start_index, len(spans)):
+                 # Reached End of page
+                 if (k + 1) == len(spans):
+                    end_index = k + 1
+                    break
+                 # Check if the next element is not a small text
+                 disallowed_sizes = [5.977700233459473, 7.970200061798096, 6.339683532714844]
+                 if spans[k].get('size') not in disallowed_sizes:
+                    # print("REMOVED: ", spans[k]['text'], flush=True)
+                    end_index = k
+                    break
+
+        if start_index is not None and end_index is not None:
+            del spans[start_index:end_index]
+            i = start_index
+        else:
+            i += 1
+
+    return spans
+
+# Cleans everything between title and text (Abstract, Keywords, Authors). Adds an enter after the title
+def clean_authors_and_abstract_from_spans(spans):
+    i = 0
+    while i < len(spans):
+        start_index = None
+        end_index = None
+        # Find the end of the title text
+        for j in range(i, len(spans)):
+            if (spans[j].get('size') == 13.947600364685059 and ".B" in spans[j]["font"] and ".B" not in spans[j + 1]["font"]):                
+                start_index = j + 1
+                break
+            # If the abstract occupies more than one page, we need to check for "Introduction" and remove everything until there
+            if "1. Introduction" in spans[j]['text']:
+                start_index = 0
+                end_index = j + 1
+                del spans[start_index:end_index]
+                return spans
+
+        if start_index is not None:
+            for k in range(start_index, len(spans)):
+                if "1. Introduction" in spans[k]['text']:
+                    end_index = k + 1
+                    break
+
+        # If the abstract occupies more than one page, we need to remove everything until the end of the page from the title
+        if end_index is None:
+            end_index = len(spans)
+
+        if start_index is not None and end_index is not None:
+            del spans[start_index:end_index]
+            
+            # Create line break span
+            empty_span = {
+                "text": "\n",
+                "size": 13.947600364685059,
+                "font": "TimesLTStd-Roman",
+                "color": 0
+            }
+            spans.insert(start_index, empty_span)
+
+            i = start_index
+        else:
+            i += 1
+    return spans
+
+# Cleans titles and subtitles from the text (Sections, subsections)
+def clean_titles_from_spans(spans):
+    i = 0
+    while i < len(spans):
+        start_index = None
+        # Find the end of the title text
+        for j in range(i, len(spans)):
+            # Find "1. Introduction" in bold or "1.1. Introduction" in italic
+            if ((re.match(r'^\d+\.\s', spans[j]['text']) and ".B" in spans[j]["font"]) or
+                ("Appendix" in spans[j]['text'] and ".B" in spans[j]["font"]) or
+                (re.match(r'^\d+\.\d+\.\s', spans[j]['text']) and ".I" in spans[j]["font"])):
+                start_index = j
+                break
+
+        if start_index is not None:
+            del spans[start_index:start_index + 1]
+            i = start_index 
+        else:
+            i += 1
+
+    return spans
+
+# Cleans parenthesis with references from the text like "(see Figure 5)"
+def clean_parenthesis_with_references_from_spans(spans):
+    i = 0
+    while i < len(spans):
+        start_index = None
+        end_index = None
+        # Find the start of parenthesis and the word "see "
+        for j in range(i, len(spans) - 1):
+            words = ["see", "Figure", "Figures", "Table", "Section"]
+            if ("(" in spans[j]["text"] and any(word in spans[j + 1]["text"] for word in words)):
+                start_index = j
+                break
+
+        if start_index is not None:
+            for k in range(start_index, len(spans)):
+                # Find the end of the parenthesis. If there's another parenthesis inside, skip it. E.g. (see Figure 5(a), left)
+                if ")" in spans[k]["text"] and "(" not in spans[k - 2]["text"]:
+                    end_index = k + 1
+                    break
+
+        if start_index is not None and end_index is not None:
+            del spans[start_index:end_index]
+            i = start_index
+        else:
+            i += 1
+    return spans
+
+# Cleans symbols like (Greater-than or equal to) and (Less-than or equal to) that are not displayed correctly
+def clean_symbols_from_spans(spans):
+    i = 0
+    while i < len(spans):
+        start_index = None
+        # Find the end of the title text
+        for j in range(i, len(spans)):
+            # Find weird simbols like (Greater-than or equal to) and (Less-than or equal to)
+            symbols = ["\uf088", "\uf089", "\u0084", "\u0085", "\uf0d1"]
+            if (any(symbol in spans[j]['text'] for symbol in symbols)):
+                start_index = j
+                break
+
+        if start_index is not None:
+            del spans[start_index:start_index + 1]
+            i = start_index 
+        else:
+            i += 1
+
+    return spans
+
+# Clean the ORCID iDs from the text (Probably in last page). From the start of the ORCID iDs to the end of the page
+def clean_orcids_from_spans(spans):
+    i = 0
+    while i < len(spans):
+        start_index = None
+        end_index = None
+        # Find the start of parenthesis and the word "see "
+        for j in range(i, len(spans)):
+            if ("ORCID iDs" in spans[j]["text"] and ".B" in spans[j]["font"]):
+                start_index = j
+                end_index = len(spans)
+                break
+
+        if start_index is not None:
+            del spans[start_index:end_index]
+            i = start_index
+        else:
+            i += 1
+    return spans
+
+# If the last span is a number, it's probably a page number. Remove it
+def clean_page_number_from_spans(spans):
+    i = 0
+    while i < len(spans):
+        start_index = None
+        for j in range(i, len(spans)):
+            if (re.match(r'\d+', spans[j]['text']) and j == len(spans) - 1):
+                start_index = j
+                break
+
+        if start_index is not None:
+            del spans[start_index:start_index + 1]
+            i = start_index 
+        else:
+            i += 1
+
+    return spans
+
+
 '''
     Text getting functions
 '''
@@ -502,51 +717,10 @@ async def get_text_from_file(file, get_title=False):
 
     abstract_text = abstract_text.replace('\n', ' ').strip()
 
+    # Remove abstract_text from full_text
+    full_text = full_text.replace(abstract_text, '').strip()
+
     if get_title:
         abstract_text = await get_title_from_file(file) + abstract_text
     
     return abstract_text, full_text
-
-# Retrieve the top 50 words from an article based on TF-IDF
-# keywords_by_word is a list of words that will be given a higher TF-IDF value, [] if not used
-# def get_tf_idf_words_from_file(file_path, keywords_by_word):
-    # full_text = get_full_text_from_file(file_path)
-
-    # COMMON_WORDS = ['et', 'al', 'in', 'be', 'at', 'has', 'that', 'can', 'was', 'its', 'both', 'may', 'we', 'not', 'will', 'or', 'it', 'they', 'than', 'these', 'however', 'co', 'from', 'an', 'ah', 'for', "by", "would", "also", "to", 'and', 'the', 'this', "of", "the", "on", "as", "with", "our", "are", "is"]
-    # words_quantity = 50
-
-    # vectorizer = TfidfVectorizer()
-    # X = vectorizer.fit_transform([full_text])
-    # terms = vectorizer.get_feature_names_out()
-    # common_indices = [terms.tolist().index(word) for word in COMMON_WORDS if word in terms]
-
-    # # Set the TF-IDF values of the common words to 0
-    # for i in range(len(X.toarray())):
-    #     for idx in common_indices:
-    #         X[i, idx] = 0.0
-
-    # # If keywords_by_word is not empty, increase the TF-IDF value of the words in the list
-    # X_modified = X.toarray()
-    # for i in range(len(full_text)):
-    #     for word in keywords_by_word:
-    #         word_lower = word.lower() 
-    #         if word_lower in terms:
-    #             idx = terms.tolist().index(word_lower)
-    #             tfidf_value = X_modified[i, idx]
-    #             new_tfidf_value = tfidf_value * 2
-    #             X_modified[i, idx] = new_tfidf_value
-
-    # top_words_per_document = []
-    # for doc_tfidf in X_modified:
-    #     top_word_indices = doc_tfidf.argsort()[-words_quantity:][::-1]
-    #     top_words = [(terms[i], doc_tfidf[i]) for i in top_word_indices]
-    #     top_words_per_document.append(top_words)
-
-    # top_words_strings = []
-    # for doc_tfidf in X_modified:
-    #     top_word_indices = doc_tfidf.argsort()[-words_quantity:][::-1]
-    #     top_words = [terms[i] for i in top_word_indices]
-    #     top_words_string = ' '.join(top_words)
-    #     top_words_strings.append(top_words_string)
-
-    # return top_words_strings
