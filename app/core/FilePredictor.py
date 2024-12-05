@@ -7,7 +7,9 @@ logging.basicConfig(filename='logs/predictor.log', level=logging.INFO, format='%
 class FilePredictor:
     def __init__(self, initial_term_id, thesaurus):
         self.thesaurus = thesaurus
-        self.input_creators = ['abstract', 'normal', 'tf-idf']
+        # self.input_creators = ['abstract', 'normal', 'tf-idf', 'summarize']
+        self.input_creators = ['summarize']
+
 
         self.initial_term_id = initial_term_id
         self.predictions = {}
