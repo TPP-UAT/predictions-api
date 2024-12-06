@@ -6,8 +6,8 @@ from app.models.Prediction import Prediction
 
 logging.basicConfig(filename='logs/predictor.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-CHILDREN_THRESHOLD = 0.4
-PREDICTION_THRESHOLD = 0.5
+CHILDREN_THRESHOLD = 0.7
+PREDICTION_THRESHOLD = 0.01
 
 class TermPrediction:
     def __init__(self, input_creator):

@@ -14,6 +14,7 @@ class PredictService:
         predictions = {}
 
         for file in files:
+            print("Predicting for file: ", file.filename)
             predictor = FilePredictor(root_term.get_id(), thesaurus)
             file_predictions = await predictor.predict_for_file(file)
             filename = file.filename.removesuffix(".pdf")

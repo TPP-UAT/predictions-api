@@ -19,7 +19,7 @@ equation_fonts = ["TimesLTStd-Roman",
                    ]
    
 # Retrieves the text from a page and returns it filtered by different criteria
-def get_text_from_page(page):
+def get_text_from_page(page, remove_abstract):
     blocks = page.get_text("dict")["blocks"]
 
     page_spans = []
@@ -36,7 +36,7 @@ def get_text_from_page(page):
                         bold_text.append(text)
     
     # First filter using the full span element (more properties)
-    page_spans = clean_spans_from_page(page_spans)
+    page_spans = clean_spans_from_page(page_spans, remove_abstract)
 
     # The text is reconstructed from the spans without any line breaks
     text = ""
@@ -659,6 +659,17 @@ def clean_page_number_from_spans(spans):
 
     return spans
 
+'''
+Cleans summarized text by applying a series of text processing functions 
+'''
+def clean_summarized_text(text):
+    text = clean_parentesis_from_text(text)
+    return text
+
+def clean_parentesis_from_text(text):
+    # Remove everything between parenthesis in text
+    text = re.sub(r'\([^)]*\)', '', text)
+    return text
 
 '''
     Text getting functions
@@ -681,7 +692,7 @@ async def get_abstract_from_file(file, get_title=False):
     return extracted_text
 
 # Retrieve the full text from an article removing the unnecessary information
-async def get_full_text_from_file(file):
+async def get_full_text_from_file(file, remove_abstract=False):
     # Open the PDF file
     file_bytes = await file.read()
     pdf_document = fitz.open(stream=file_bytes, filetype="pdf")
@@ -691,7 +702,7 @@ async def get_full_text_from_file(file):
     for page_number in range(len(pdf_document)):
         # Numero de pagina - 1 que el pdf
         page = pdf_document[page_number]
-        text, bold_text_from_page = get_text_from_page(page)
+        text, bold_text_from_page = get_text_from_page(page, remove_abstract)
         # ctrl+shift+p: toggle word wrap para evitar scroll
         bold_text = bold_text + bold_text_from_page
         full_text += text + "\n\n"
@@ -707,18 +718,19 @@ async def get_full_text_from_file(file):
 Retrieve abstract and full text from an article
 '''
 async def get_text_from_file(file, get_title=False):
-    full_text = await get_full_text_from_file(file)
+    full_text_for_abstract = await get_full_text_from_file(file, False)
+    # Reset the file pointer to the beginning
+    await file.seek(0)
+
+    full_text = await get_full_text_from_file(file, True)
     regex_pattern = r'Abstract([\s\S]*?)Unified Astronomy Thesaurus concepts:'
     abstract_text = ''
-    match = re.search(regex_pattern, full_text)
+    match = re.search(regex_pattern, full_text_for_abstract)
 
     if match:
         abstract_text += match.group(1) 
 
     abstract_text = abstract_text.replace('\n', ' ').strip()
-
-    # Remove abstract_text from full_text
-    full_text = full_text.replace(abstract_text, '').strip()
 
     if get_title:
         abstract_text = await get_title_from_file(file) + abstract_text

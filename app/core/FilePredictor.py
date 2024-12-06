@@ -1,6 +1,7 @@
 import logging
 from app.core.TermPrediction import TermPrediction
 from app.utils.articles_parser import get_text_from_file
+from app.utils.summarize_text import summarize_text
 
 logging.basicConfig(filename='logs/predictor.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -87,7 +88,9 @@ class FilePredictor:
     '''
     async def predict_for_file(self, file):
         abstract, full_text = await get_text_from_file(file)
-        data_input = {"abstract": abstract, "normal": full_text, "tf-idf": full_text}
+        summarized_text = summarize_text(full_text, 0.25, max_sentences=100, additional_stopwords={"specific", "unnecessary", "technical"})
+        # data_input = {"abstract": abstract, "normal": full_text, "tf-idf": full_text}
+        data_input = {"summarize": full_text}
 
         # Iterate through the input creators
         for input_creator in self.input_creators:
