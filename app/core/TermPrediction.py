@@ -6,14 +6,17 @@ from app.models.Prediction import Prediction
 
 logging.basicConfig(filename='logs/predictor.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-CHILDREN_THRESHOLD = 0.7
-PREDICTION_THRESHOLD = 0.01
+CHILDREN_THRESHOLD = 0.4
+PREDICTION_THRESHOLD = 0.8
 
 class TermPrediction:
-    def __init__(self, input_creator):
+    def __init__(self, input_creator, thesaurus):
         self.input_creator = input_creator
+        self.thesaurus = thesaurus
         self.nlp = None
         self.log = logging.getLogger('predictor_logger')
+        # Array to store the predicted term ids and parents
+        self.predicted_term_ids = []
 
     """
     Retrieve and load the saved spaCy model for a specific term.
@@ -47,10 +50,13 @@ class TermPrediction:
         doc = self.nlp(text)  # Process the text with the loaded spaCy model
         for cat, score in doc.cats.items():
             predictions_log.append(f"{cat}: {score:.4f}")
-            if score > PREDICTION_THRESHOLD:
+            # TODO: Remove this condition. We have to check only if the term is already predicted (the parents dont matter)
+            # Change this condition to check if the "cat" is already predicted in predicted_term_ids
+            exists = any(item["term"] == cat and item["parent"] == term_id for item in self.predicted_term_ids)
+            if score > PREDICTION_THRESHOLD and not exists:
                 prediction_obj = Prediction(cat, doc.cats[cat], get_prediction_multiplier(self.input_creator), self.input_creator, term_id)
-
                 predicted_terms.append(prediction_obj)
+                self.predicted_term_ids.append({ "term": cat, "parent": term_id })
             if score > CHILDREN_THRESHOLD:
                 predicted_children_ids.append(cat)
 
@@ -66,7 +72,7 @@ class TermPrediction:
     '''
     Recursive function to predict the terms (Initially predicted terms are empty)
     '''
-    def predict_text(self, text, term_id, predicted_terms):
+    def predict_text(self, text, term_id, predicted_terms, remove_fathers=False, delete_by_probability=False):
         self.log.info(f"Started predicting for term: {term_id}")
         print(f"Started predicting for term: {term_id}", flush=True)
 
@@ -82,9 +88,65 @@ class TermPrediction:
         if selected_terms:
             predicted_terms.extend(selected_terms)
 
+            # For each predicted term, check if the term has a father term already predicted. If that's the case, remove the father from predicted_terms
+            if remove_fathers:
+                self.filter_predicted_terms_by_child(predicted_terms, delete_by_probability, selected_terms)
+
         # If the prediction returns children, recursively predict for them
         if len(selected_children_ids):
             for selected_children_id in selected_children_ids:
-                self.predict_text(text, selected_children_id, predicted_terms)
+                self.predict_text(text, selected_children_id, predicted_terms, remove_fathers, delete_by_probability)
 
         return predicted_terms
+
+    '''
+        Iterates over the selected terms (new predictions) and removes the father term from the predicted terms (all predictions) if it is already predicted
+    '''
+    def filter_predicted_terms_by_child(self, predicted_terms, delete_by_probability, selected_terms):
+        for selected_term in selected_terms:
+            term_predictions = selected_term.get_probabilities()
+            term_parents = selected_term.get_parents()
+            term_multipliers = selected_term.get_multipliers_names()
+
+            for term_prediction, term_parent, term_input_creator in zip(term_predictions, term_parents, term_multipliers):
+                self.remove_father_from_predictions(predicted_terms, term_prediction, term_parent, term_input_creator, delete_by_probability)
+    
+    '''
+        Removes the father term from the predicted terms if it is already predicted
+    '''
+    def remove_father_from_predictions(self, predicted_terms, term_prediction, term_parent, term_input_creator, delete_by_probability):
+        father_prediction = next((prediction for prediction in predicted_terms if prediction.get_term() == term_parent), None)
+        if father_prediction != None and term_input_creator == self.input_creator:
+            if delete_by_probability:
+                        
+                # Get first index of current input creator from father prediction
+                father_index = father_prediction.get_multipliers_names().index(self.input_creator)
+                father_probability = father_prediction.get_probabilities()[father_index]
+
+                if (father_probability < term_prediction):
+                    self.delete_prediction(predicted_terms, father_prediction)
+                    self.delete_branch(predicted_terms, father_prediction.get_parents())
+            else:
+                self.delete_prediction(predicted_terms, father_prediction)
+
+    '''
+        Iterates over the predicted terms and removes the branch of the term recursively
+    '''
+    def delete_branch(self, predicted_terms, term_parents):
+        for parent in term_parents:
+            father_prediction = next((prediction for prediction in predicted_terms if prediction.get_term() == parent), None)
+            if father_prediction != None:
+                print(f"Removing {father_prediction.get_term()} from predicted terms as branch", flush=True)
+                self.log.info(f"Removing {father_prediction.get_term()} from predicted terms as branch")
+                self.delete_prediction(predicted_terms, father_prediction)
+                self.delete_branch(predicted_terms, father_prediction.get_parents())
+
+    '''
+        Deletes the term from the predicted terms
+    '''
+    def delete_prediction(self, predicted_terms, term):
+        print(f"Removing {term.get_term()} from predicted terms", flush=True)
+        self.log.info(f"Removing {term.get_term()} from predicted terms")
+        predicted_terms.remove(term)
+
+

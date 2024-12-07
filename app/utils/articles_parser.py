@@ -494,7 +494,6 @@ def clean_metadata_from_spans(spans):
                  # Check if the next element is not a small text
                  disallowed_sizes = [5.977700233459473, 7.970200061798096, 6.339683532714844]
                  if spans[k].get('size') not in disallowed_sizes:
-                    # print("REMOVED: ", spans[k]['text'], flush=True)
                     end_index = k
                     break
 

@@ -8,10 +8,8 @@ logging.basicConfig(filename='logs/predictor.log', level=logging.INFO, format='%
 class FilePredictor:
     def __init__(self, initial_term_id, thesaurus):
         self.thesaurus = thesaurus
-        # self.input_creators = ['abstract', 'normal', 'tf-idf', 'summarize']
-        self.input_creators = ['summarize']
-
-
+        # self.input_creators = ['abstract', 'summarize']
+        self.input_creators = ['abstract']
         self.initial_term_id = initial_term_id
         self.predictions = {}
         self.predictions_by_term = {}
@@ -43,10 +41,10 @@ class FilePredictor:
     Predicts the terms for a given input creator
     '''
     def predict_terms(self, input_creator, text):
-        term_prediction = TermPrediction(input_creator)
+        term_prediction = TermPrediction(input_creator, self.thesaurus)
 
         predicted_terms = []
-        predictions = term_prediction.predict_text(text, self.initial_term_id, predicted_terms)
+        predictions = term_prediction.predict_text(text, self.initial_term_id, predicted_terms, True, True)
         return predictions
 
     '''
@@ -90,7 +88,7 @@ class FilePredictor:
         abstract, full_text = await get_text_from_file(file)
         summarized_text = summarize_text(full_text, 0.25, max_sentences=100, additional_stopwords={"specific", "unnecessary", "technical"})
         # data_input = {"abstract": abstract, "normal": full_text, "tf-idf": full_text}
-        data_input = {"summarize": full_text}
+        data_input = {"abstract": abstract}
 
         # Iterate through the input creators
         for input_creator in self.input_creators:
