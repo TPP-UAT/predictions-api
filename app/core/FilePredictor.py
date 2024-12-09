@@ -9,7 +9,7 @@ class FilePredictor:
     def __init__(self, initial_term_id, thesaurus):
         self.thesaurus = thesaurus
         # self.input_creators = ['abstract', 'summarize']
-        self.input_creators = ['abstract']
+        self.input_creators = ['summarize']
         self.initial_term_id = initial_term_id
         self.predictions = {}
         self.predictions_by_term = {}
@@ -17,6 +17,8 @@ class FilePredictor:
         self.temporal_predictions = {}
         # For logging purposes
         self.log = logging.getLogger('predictor_logger')
+        # For testing purposes
+        self.remove_flags = False
 
     # TODO: Remove function after testing
     '''
@@ -44,7 +46,7 @@ class FilePredictor:
         term_prediction = TermPrediction(input_creator, self.thesaurus)
 
         predicted_terms = []
-        predictions = term_prediction.predict_text(text, self.initial_term_id, predicted_terms, True, True)
+        predictions = term_prediction.predict_text(text, self.initial_term_id, predicted_terms, self.remove_flags, self.remove_flags)
         return predictions
 
     '''
@@ -87,8 +89,8 @@ class FilePredictor:
     async def predict_for_file(self, file):
         abstract, full_text = await get_text_from_file(file)
         summarized_text = summarize_text(full_text, 0.25, max_sentences=100, additional_stopwords={"specific", "unnecessary", "technical"})
-        # data_input = {"abstract": abstract, "normal": full_text, "tf-idf": full_text}
-        data_input = {"abstract": abstract}
+        # data_input = {"abstract": abstract, "summarize": full_text, "summarize": summarized_text}
+        data_input = {"summarize": full_text}
 
         # Iterate through the input creators
         for input_creator in self.input_creators:

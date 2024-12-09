@@ -54,7 +54,7 @@ class TermPrediction:
             # Change this condition to check if the "cat" is already predicted in predicted_term_ids
             exists = any(item["term"] == cat and item["parent"] == term_id for item in self.predicted_term_ids)
             if score > PREDICTION_THRESHOLD and not exists:
-                prediction_obj = Prediction(cat, doc.cats[cat], get_prediction_multiplier(self.input_creator), self.input_creator, term_id)
+                prediction_obj = Prediction(cat, round(doc.cats[cat], 5), get_prediction_multiplier(self.input_creator), self.input_creator, term_id)
                 predicted_terms.append(prediction_obj)
                 self.predicted_term_ids.append({ "term": cat, "parent": term_id })
             if score > CHILDREN_THRESHOLD:
@@ -123,8 +123,9 @@ class TermPrediction:
                 father_index = father_prediction.get_multipliers_names().index(self.input_creator)
                 father_probability = father_prediction.get_probabilities()[father_index]
 
-                if (father_probability < term_prediction):
-                    self.delete_prediction(predicted_terms, father_prediction)
+                # If the father probability is less than the term prediction + 0.05, remove the father from the predicted terms
+                if (father_probability < (term_prediction + 0.05)):
+                    self.delete_prediction(predicted_terms, father_prediction, father_probability)
                     self.delete_branch(predicted_terms, father_prediction.get_parents())
             else:
                 self.delete_prediction(predicted_terms, father_prediction)
@@ -144,9 +145,10 @@ class TermPrediction:
     '''
         Deletes the term from the predicted terms
     '''
-    def delete_prediction(self, predicted_terms, term):
-        print(f"Removing {term.get_term()} from predicted terms", flush=True)
-        self.log.info(f"Removing {term.get_term()} from predicted terms")
+    def delete_prediction(self, predicted_terms, term, probability=None):
+        if probability is not None:
+            print(f"Removing {term.get_term()} from predicted terms with prob {probability}", flush=True)
+            self.log.info(f"Removing {term.get_term()} from predicted terms")
         predicted_terms.remove(term)
 
 
