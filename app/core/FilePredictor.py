@@ -18,7 +18,7 @@ class FilePredictor:
         # For logging purposes
         self.log = logging.getLogger('predictor_logger')
         # For testing purposes
-        self.remove_flags = False
+        self.remove_flags = True
 
     # TODO: Remove function after testing
     '''
