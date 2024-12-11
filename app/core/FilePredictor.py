@@ -72,10 +72,13 @@ class FilePredictor:
         # Generate prediction object with the final probabilities combined
         final_predictions = {}
         for term_id, prediction in self.predictions.items():
+            # Get term name from thesaurus
+            term_name = self.thesaurus.get_by_id(term_id).get_name()
+            
             final_prediction = 0
             for pred, multiplier in zip(prediction.get_probabilities(), prediction.get_multipliers()):
                 final_prediction += pred * multiplier
-            final_predictions[term_id] = final_prediction
+            final_predictions[term_id] = { 'probability': final_prediction, 'name': term_name }
 
         self.predictions_by_term = final_predictions
 
