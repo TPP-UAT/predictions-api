@@ -5,7 +5,7 @@ from typing import List
 router = APIRouter()
 
 @router.post("/predict")
-async def predict_article(files: List[UploadFile] = File(...)):
+async def predict_article(files: List[UploadFile] = File(...), is_test: bool = False):
     """
     Accepts a PDF file, extracts its text, and returns a prediction.
     """
@@ -15,7 +15,7 @@ async def predict_article(files: List[UploadFile] = File(...)):
             raise HTTPException(status_code=400, detail="PDF invalido")
     
     try:
-        predictions = await PredictService.predict_files(files)
+        predictions = await PredictService.predict_files(files, is_test)
         return predictions
 
     except Exception as e:

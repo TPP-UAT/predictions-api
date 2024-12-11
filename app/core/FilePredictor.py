@@ -6,26 +6,28 @@ from app.utils.summarize_text import summarize_text
 logging.basicConfig(filename='logs/predictor.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class FilePredictor:
-    def __init__(self, initial_term_id, thesaurus):
+    def __init__(self, initial_term_id, thesaurus, is_test):
         self.thesaurus = thesaurus
-        # self.input_creators = ['abstract', 'summarize']
-        self.input_creators = ['summarize']
+        self.input_creators = ['abstract', 'summarize-full_text', 'summarize-summarize']
         self.initial_term_id = initial_term_id
+        self.is_test = is_test
+    
         self.predictions = {}
         self.predictions_by_term = {}
-        # TODO: Remove it
+
+        # For testing purposes
         self.temporal_predictions = {}
+        self.remove_parent_flag = not is_test
+
         # For logging purposes
         self.log = logging.getLogger('predictor_logger')
-        # For testing purposes
-        self.remove_flags = True
 
     # TODO: Remove function after testing
     '''
     Prints the predictions in the console
     '''
     def print_predictions(self):
-        print('----------------------------- Predictions ----------------------------')
+        print('----------------------------- Testing Predictions ----------------------------')
 
         if len(self.predictions) == 0:
             print("There are no predictions")
@@ -33,20 +35,23 @@ class FilePredictor:
         else:
             for term_id, prediction in self.temporal_predictions.items():
                 print(f"Term: {term_id}, Probability: {prediction}")
+                self.log.info(f"Term: {term_id}, Probability: {prediction}")
 
-            print('---------------------------------------------------------------------')
+            print('----------------------- Combined Predictions -------------------------------')
 
             for term_id, final_prediction in self.predictions_by_term.items():
                 print(f"Term: {term_id}, Probability: {final_prediction}")
+                self.log.info(f"Term: {term_id}, Probability: {final_prediction}")
 
     '''
     Predicts the terms for a given input creator
     '''
     def predict_terms(self, input_creator, text):
-        term_prediction = TermPrediction(input_creator, self.thesaurus)
+        term_prediction = TermPrediction(input_creator, self.thesaurus, self.is_test)
 
         predicted_terms = []
-        predictions = term_prediction.predict_text(text, self.initial_term_id, predicted_terms, self.remove_flags, self.remove_flags)
+        # The flag remove_parent_flag is for removing the fathers with "condition" based on the probability
+        predictions = term_prediction.predict_text(text, self.initial_term_id, predicted_terms, self.remove_parent_flag)
         return predictions
 
     '''
@@ -74,14 +79,14 @@ class FilePredictor:
 
         self.predictions_by_term = final_predictions
 
-        # TODO: Remove function after testing
+        # We want the info for the prediction for testing purposes
         for term_id, prediction in self.predictions.items():
             self.temporal_predictions[term_id] = {
                 'probabilities': prediction.get_probabilities(),
                 'multipliers': prediction.get_multipliers(),
                 'multipliersNames': prediction.get_multipliers_names(),
                 'parent': prediction.get_parents()
-            }     
+            }
 
     '''
     Extracts the abstract and full text from a file and predicts the terms
@@ -89,8 +94,7 @@ class FilePredictor:
     async def predict_for_file(self, file):
         abstract, full_text = await get_text_from_file(file)
         summarized_text = summarize_text(full_text, 0.25, max_sentences=100, additional_stopwords={"specific", "unnecessary", "technical"})
-        # data_input = {"abstract": abstract, "summarize": full_text, "summarize": summarized_text}
-        data_input = {"summarize": full_text}
+        data_input = {"abstract": abstract, "summarize-summarize": summarized_text, "summarize-full_text": full_text}
 
         # Iterate through the input creators
         for input_creator in self.input_creators:
@@ -99,4 +103,9 @@ class FilePredictor:
             self.generate_predictions(predictions)
 
         self.print_predictions()
-        return self.temporal_predictions
+
+        # Return the final predictions (It depends on the is_test flag)
+        if self.is_test:
+            return self.temporal_predictions
+        else:
+            return self.predictions_by_term

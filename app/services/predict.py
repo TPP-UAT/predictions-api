@@ -6,7 +6,7 @@ from app.core.FilePredictor import FilePredictor
 
 class PredictService:
     @staticmethod
-    async def predict_files(files: List[UploadFile] = File(...)):
+    async def predict_files(files: List[UploadFile] = File(...), is_test: bool = False):
         mapper = UATMapper(os.path.abspath("app/data/UAT-filtered.json"))
         thesaurus = mapper.map_to_thesaurus()
         # Get the root element from the thesaurus
@@ -15,7 +15,7 @@ class PredictService:
 
         for file in files:
             print("Predicting for file: ", file.filename)
-            predictor = FilePredictor(root_term.get_id(), thesaurus)
+            predictor = FilePredictor(root_term.get_id(), thesaurus, is_test)
             file_predictions = await predictor.predict_for_file(file)
             filename = file.filename.removesuffix(".pdf")
             predictions[filename] = file_predictions

@@ -6,13 +6,16 @@ from app.models.Prediction import Prediction
 
 logging.basicConfig(filename='logs/predictor.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-CHILDREN_THRESHOLD = 0.4
-PREDICTION_THRESHOLD = 0.8
-
 class TermPrediction:
-    def __init__(self, input_creator, thesaurus):
+    def __init__(self, input_creator, thesaurus, is_test):
         self.input_creator = input_creator
         self.thesaurus = thesaurus
+        self.is_test = is_test
+
+        # Threshold for prediction
+        self.CHILDREN_THRESHOLD = 0.4
+        self.PREDICTION_THRESHOLD = 0.2 if is_test else 0.8
+
         self.nlp = None
         self.log = logging.getLogger('predictor_logger')
         # Array to store the predicted term ids and parents
@@ -23,7 +26,9 @@ class TermPrediction:
     The model should have been previously saved to disk.
     """
     def get_model_for_term(self, term_id):
-        model_path = f"./models/{self.input_creator}/{term_id}"
+        # Because summarize has two different data inputs, we need to modify the input creator based on the "-"
+        input_creator = self.input_creator.split("-")[0]
+        model_path = f"./models/{input_creator}/{term_id}"
         
         try:
             # Check if the model path exists, then load the model
@@ -50,14 +55,21 @@ class TermPrediction:
         doc = self.nlp(text)  # Process the text with the loaded spaCy model
         for cat, score in doc.cats.items():
             predictions_log.append(f"{cat}: {score:.4f}")
-            # TODO: Remove this condition. We have to check only if the term is already predicted (the parents dont matter)
-            # Change this condition to check if the "cat" is already predicted in predicted_term_ids
-            exists = any(item["term"] == cat and item["parent"] == term_id for item in self.predicted_term_ids)
-            if score > PREDICTION_THRESHOLD and not exists:
+            
+            # Check if the term is already predicted 
+            # if it's for testing we can have multiples predictions for the same input creator - different parent)
+            # If it's not for testing, we can only have one prediction for the same input creator
+            if self.is_test:
+                exists = any(item["term"] == cat and item["parent"] == term_id for item in self.predicted_term_ids)
+            else:
+                exists = any(item["term"] == cat for item in self.predicted_term_ids)
+
+            # Check if the score is above the threshold and if the term is not already predicted
+            if score > self.PREDICTION_THRESHOLD and not exists:
                 prediction_obj = Prediction(cat, round(doc.cats[cat], 5), get_prediction_multiplier(self.input_creator), self.input_creator, term_id)
                 predicted_terms.append(prediction_obj)
                 self.predicted_term_ids.append({ "term": cat, "parent": term_id })
-            if score > CHILDREN_THRESHOLD:
+            if score > self.CHILDREN_THRESHOLD:
                 predicted_children_ids.append(cat)
 
         self.log.info(f"Predictions: {', '.join(predictions_log)}")
@@ -72,7 +84,7 @@ class TermPrediction:
     '''
     Recursive function to predict the terms (Initially predicted terms are empty)
     '''
-    def predict_text(self, text, term_id, predicted_terms, remove_fathers=False, delete_by_probability=False):
+    def predict_text(self, text, term_id, predicted_terms, delete_by_probability=False):
         self.log.info(f"Started predicting for term: {term_id}")
         print(f"Started predicting for term: {term_id}", flush=True)
 
@@ -89,13 +101,14 @@ class TermPrediction:
             predicted_terms.extend(selected_terms)
 
             # For each predicted term, check if the term has a father term already predicted. If that's the case, remove the father from predicted_terms
-            if remove_fathers:
+            # We are using the is_test for allowing the removal of the father term if the term is already predicted
+            if not self.is_test:
                 self.filter_predicted_terms_by_child(predicted_terms, delete_by_probability, selected_terms)
 
         # If the prediction returns children, recursively predict for them
         if len(selected_children_ids):
             for selected_children_id in selected_children_ids:
-                self.predict_text(text, selected_children_id, predicted_terms, remove_fathers, delete_by_probability)
+                self.predict_text(text, selected_children_id, predicted_terms, delete_by_probability)
 
         return predicted_terms
 
