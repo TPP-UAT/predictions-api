@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 from app.routes import predict
 from fastapi.middleware.cors import CORSMiddleware
+import spacy
+
+# Load the spacy model
+spacy.cli.download("en_core_web_md")
 
 app = FastAPI()
 
