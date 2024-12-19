@@ -8,7 +8,8 @@ logging.basicConfig(filename='logs/predictor.log', level=logging.INFO, format='%
 class FilePredictor:
     def __init__(self, initial_term_id, thesaurus, is_test):
         self.thesaurus = thesaurus
-        self.input_creators = ['abstract', 'summarize-full_text', 'summarize-summarize']
+        # self.input_creators = ['abstract', 'summarize-full_text', 'summarize-summarize']
+        self.input_creators = ['abstract']
         self.initial_term_id = initial_term_id
         self.is_test = is_test
     
@@ -97,15 +98,16 @@ class FilePredictor:
     async def predict_for_file(self, file):
         abstract, full_text = await get_text_from_file(file)
         summarized_text = summarize_text(full_text, 0.25, max_sentences=100, additional_stopwords={"specific", "unnecessary", "technical"})
-        data_input = {"abstract": abstract, "summarize-summarize": summarized_text, "summarize-full_text": full_text}
+        # data_input = {"abstract": abstract, "summarize-summarize": summarized_text, "summarize-full_text": full_text}
+        data_input = { "abstract": abstract }
 
-        # Iterate through the input creators
-        for input_creator in self.input_creators:
-            self.log.info(f"Predicting with input creator: {input_creator}")
-            predictions = self.predict_terms(input_creator, data_input[input_creator])
-            self.generate_predictions(predictions)
+        # # Iterate through the input creators
+        # for input_creator in self.input_creators:
+        #     self.log.info(f"Predicting with input creator: {input_creator}")
+        #     predictions = self.predict_terms(input_creator, data_input[input_creator])
+        #     self.generate_predictions(predictions)
 
-        self.print_predictions()
+        # self.print_predictions()
 
         # Return the final predictions (It depends on the is_test flag)
         if self.is_test:

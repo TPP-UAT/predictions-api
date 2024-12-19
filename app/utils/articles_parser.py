@@ -1,5 +1,6 @@
 import fitz
 import re
+import json
 
 equation_fonts = ["TimesLTStd-Roman",
                   "TimesLTStd-BoldItalic",
@@ -17,6 +18,22 @@ equation_fonts = ["TimesLTStd-Roman",
                    "AdvOTb4af3d5d.I",
                    "AdvOT564e738a.BI"
                    ]
+
+# TODO: Delete this function
+def save_string_to_file(string, filename):
+  """Saves a string to a file.
+
+  Args:
+    string: The string to be saved.
+    filename: The name of the file to be created.
+  """
+
+  try:
+    with open(filename, 'w') as file:
+      file.write(string)
+    #print(f"String saved to file: {filename}")
+  except Exception as e:
+    print(f"Error saving string to file: {e}")
    
 # Retrieves the text from a page and returns it filtered by different criteria
 def get_text_from_page(page, remove_abstract):
@@ -34,9 +51,16 @@ def get_text_from_page(page, remove_abstract):
 
                     if "Bold" in font_name or ".B" in font_name or "Black" in font_name:
                         bold_text.append(text)
+
+    # Guarda los spans en un archivo
+    objects_string = json.dumps(page_spans, indent=2)
+    save_string_to_file(objects_string, 'spans1.txt')
     
     # First filter using the full span element (more properties)
     page_spans = clean_spans_from_page(page_spans, remove_abstract)
+
+    objects_string2 = json.dumps(page_spans, indent=2)
+    save_string_to_file(objects_string2, 'spans2.txt')
 
     # The text is reconstructed from the spans without any line breaks
     text = ""
@@ -698,9 +722,9 @@ async def get_full_text_from_file(file, remove_abstract=False):
 
     full_text = ""
     bold_text = []
-    for page_number in range(len(pdf_document)):
+    for page_number in range(1):
         # Numero de pagina - 1 que el pdf
-        page = pdf_document[page_number]
+        page = pdf_document[0]
         text, bold_text_from_page = get_text_from_page(page, remove_abstract)
         # ctrl+shift+p: toggle word wrap para evitar scroll
         bold_text = bold_text + bold_text_from_page
@@ -722,14 +746,16 @@ async def get_text_from_file(file, get_title=False):
     await file.seek(0)
 
     full_text = await get_full_text_from_file(file, True)
-    regex_pattern = r'Abstract([\s\S]*?)Unified Astronomy Thesaurus concepts:'
+    print("FULL TEXT: ", full_text_for_abstract, flush=True)
+    regex_pattern = r'Abstract([\s\S]*?)(Unified Astronomy Thesaurus concepts:|Key words:|Subject headin g g s:|Key words.)'
     abstract_text = ''
-    match = re.search(regex_pattern, full_text_for_abstract)
+    match = re.search(regex_pattern, full_text_for_abstract, flags=re.IGNORECASE)
 
     if match:
         abstract_text += match.group(1) 
 
     abstract_text = abstract_text.replace('\n', ' ').strip()
+    print("ABSTRACT TEXT: ", abstract_text, flush=True)
 
     if get_title:
         abstract_text = await get_title_from_file(file) + abstract_text
