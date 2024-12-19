@@ -132,6 +132,7 @@ def clean_plain_text(text, bold_text):
     text = clean_references_from_text(text)
     text = clean_erratum_from_text(text)
     text = fix_word_breaks(text)
+    text = fix_multiple_spacing(text)
     return text
 
 def join_apostrophes(text):
@@ -236,6 +237,11 @@ def clean_erratum_from_text(text):
 # Fix word breaks when a line finishes with a "-". E.g. "This is a long- " and continues on the next line
 def fix_word_breaks(text):
     fixed_text = re.sub(r'(\w+)-\s+(\w+)', r'\1\2', text)
+    return fixed_text
+
+# Fix multiple spacing
+def fix_multiple_spacing(text):
+    fixed_text = re.sub(r'\s{3,}', ' ', text)
     return fixed_text
 
 ''' Cleans the text as spans by applying a series of text processing functions 
@@ -747,7 +753,7 @@ async def get_text_from_file(file, get_title=False):
 
     full_text = await get_full_text_from_file(file, True)
     print("FULL TEXT: ", full_text_for_abstract, flush=True)
-    regex_pattern = r'Abstract([\s\S]*?)(Unified Astronomy Thesaurus concepts:|Key words:|Subject headin g g s:|Key words.)'
+    regex_pattern = r'(?:Abstract|Received(?: on)? [\w\s,]*?\d{4})([\s\S]*?)(Unified Astronomy Thesaurus concepts:|Key words:|Subject headin g g s:|Key words.|Keywords :|Keywords:|Subject headings:)'
     abstract_text = ''
     match = re.search(regex_pattern, full_text_for_abstract, flags=re.IGNORECASE)
 
@@ -755,6 +761,7 @@ async def get_text_from_file(file, get_title=False):
         abstract_text += match.group(1) 
 
     abstract_text = abstract_text.replace('\n', ' ').strip()
+    print("--------------------")
     print("ABSTRACT TEXT: ", abstract_text, flush=True)
 
     if get_title:
