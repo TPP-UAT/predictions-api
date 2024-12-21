@@ -53,14 +53,14 @@ def get_text_from_page(page, remove_abstract):
                         bold_text.append(text)
 
     # Guarda los spans en un archivo
-    objects_string = json.dumps(page_spans, indent=2)
-    save_string_to_file(objects_string, 'spans1.txt')
+    # objects_string = json.dumps(page_spans, indent=2)
+    # save_string_to_file(objects_string, 'spans1.txt')
     
     # First filter using the full span element (more properties)
     page_spans = clean_spans_from_page(page_spans, remove_abstract)
 
-    objects_string2 = json.dumps(page_spans, indent=2)
-    save_string_to_file(objects_string2, 'spans2.txt')
+    # objects_string2 = json.dumps(page_spans, indent=2)
+    # save_string_to_file(objects_string2, 'spans2.txt')
 
     # The text is reconstructed from the spans without any line breaks
     text = ""
@@ -133,6 +133,7 @@ def clean_plain_text(text, bold_text):
     text = clean_erratum_from_text(text)
     text = fix_word_breaks(text)
     text = fix_multiple_spacing(text)
+    text = fix_spacing_on_abstract(text)
     return text
 
 def join_apostrophes(text):
@@ -242,6 +243,10 @@ def fix_word_breaks(text):
 # Fix multiple spacing
 def fix_multiple_spacing(text):
     fixed_text = re.sub(r'\s{3,}', ' ', text)
+    return fixed_text
+
+def fix_spacing_on_abstract(text):
+    fixed_text = re.sub(r'A B S T R A C T', 'abstract', text)
     return fixed_text
 
 ''' Cleans the text as spans by applying a series of text processing functions 
@@ -728,7 +733,7 @@ async def get_full_text_from_file(file, remove_abstract=False):
 
     full_text = ""
     bold_text = []
-    for page_number in range(1):
+    for page_number in range(len(pdf_document)):
         # Numero de pagina - 1 que el pdf
         page = pdf_document[0]
         text, bold_text_from_page = get_text_from_page(page, remove_abstract)
@@ -753,7 +758,7 @@ async def get_text_from_file(file, get_title=False):
 
     full_text = await get_full_text_from_file(file, True)
     print("FULL TEXT: ", full_text_for_abstract, flush=True)
-    regex_pattern = r'(?:Abstract|Received(?: on)? [\w\s,]*?\d{4})([\s\S]*?)(Unified Astronomy Thesaurus concepts:|Key words:|Subject headin g g s:|Key words.|Keywords :|Keywords:|Subject headings:)'
+    regex_pattern = r'(?:Abstract|Abstract\.|Received(?: on)? [\w\s,]*?\d{4})([\s\S]*?)(Unified Astronomy Thesaurus concepts:|I\.|Resumen\.|Keywords.|Key words:|Subject headin g g s:|Key words.|Keywords :|K ey words:|Keywords:|Subject headings:)'
     abstract_text = ''
     match = re.search(regex_pattern, full_text_for_abstract, flags=re.IGNORECASE)
 
@@ -761,6 +766,7 @@ async def get_text_from_file(file, get_title=False):
         abstract_text += match.group(1) 
 
     abstract_text = abstract_text.replace('\n', ' ').strip()
+    abstract_text = erase_abstract_previous_text(abstract_text)
     print("--------------------")
     print("ABSTRACT TEXT: ", abstract_text, flush=True)
 
@@ -768,3 +774,8 @@ async def get_text_from_file(file, get_title=False):
         abstract_text = await get_title_from_file(file) + abstract_text
     
     return abstract_text, full_text
+
+def erase_abstract_previous_text(abstract_text):
+    if "abstract" in abstract_text.lower():
+        abstract_text = abstract_text[abstract_text.lower().find("abstract") + len("abstract"):].strip()
+    return abstract_text
