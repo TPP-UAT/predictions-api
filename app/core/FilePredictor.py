@@ -81,7 +81,9 @@ class FilePredictor:
                 final_prediction += pred * multiplier
             final_predictions[term_id] = { 'probability': final_prediction, 'name': term_name }
 
-        self.predictions_by_term = final_predictions
+        sorted_predictions = dict(sorted(final_predictions.items(), key=lambda x: x[1]['probability'], reverse=True))
+
+        self.predictions_by_term = sorted_predictions
 
         # We want the info for the prediction for testing purposes
         for term_id, prediction in self.predictions.items():
