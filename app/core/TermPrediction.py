@@ -84,7 +84,7 @@ class TermPrediction:
     '''
     Recursive function to predict the terms (Initially predicted terms are empty)
     '''
-    def predict_text(self, text, term_id, predicted_terms, delete_by_probability=False):
+    def predict_text(self, text, term_id, predicted_terms, delete_by_probability=False, should_continue=True):
         self.log.info(f"Started predicting for term: {term_id}")
         print(f"Started predicting for term: {term_id}", flush=True)
 
@@ -106,7 +106,7 @@ class TermPrediction:
                 self.filter_predicted_terms_by_child(predicted_terms, delete_by_probability, selected_terms)
 
         # If the prediction returns children, recursively predict for them
-        if len(selected_children_ids):
+        if len(selected_children_ids) and should_continue:
             for selected_children_id in selected_children_ids:
                 self.predict_text(text, selected_children_id, predicted_terms, delete_by_probability)
 

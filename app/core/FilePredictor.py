@@ -15,6 +15,7 @@ class FilePredictor:
     
         self.predictions = {}
         self.predictions_by_term = {}
+        self.repredictions = {}
 
         # For testing purposes
         self.temporal_predictions = {}
@@ -47,18 +48,62 @@ class FilePredictor:
     '''
     Predicts the terms for a given input creator
     '''
-    def predict_terms(self, input_creator, text):
+    def predict_terms(self, input_creator, text, term_id = None):
         term_prediction = TermPrediction(input_creator, self.thesaurus, self.is_test)
+
+        # If the term_id is not provided, we use the initial_term_id
+        term_to_use = term_id if term_id is not None else self.initial_term_id
+        should_continue = False if term_id is not None else True
 
         predicted_terms = []
         # The flag remove_parent_flag is for removing the fathers with "condition" based on the probability
-        predictions = term_prediction.predict_text(text, self.initial_term_id, predicted_terms, self.remove_parent_flag)
+        predictions = term_prediction.predict_text(text, term_to_use, predicted_terms, self.remove_parent_flag, should_continue)
         return predictions
+    
+    def rerun_predictions(self, data_input):
+        models_predicted = []
+        for term_id, prediction in self.predictions.items():
+            # Get the parents of the term
+            parent_term = prediction.get_parents()[0]
+
+            # Iterate through the input creators
+            if (parent_term not in models_predicted):
+                for input_creator in self.input_creators:
+                    predictions = self.predict_terms(input_creator, data_input[input_creator], parent_term)
+                    self.create_and_append_repredictions(predictions)
+
+            # Add parent_term to terms_predicted
+            models_predicted.append(parent_term)
+
+    def combine_predictions(self):
+        # Generate prediction object with the final probabilities combined
+        final_predictions = {}
+        for term_id, prediction in self.repredictions.items():
+            # Get term name from thesaurus
+            term_name = self.thesaurus.get_by_id(term_id).get_name()
+            
+            final_prediction = 0
+            for pred, multiplier in zip(prediction.get_probabilities(), prediction.get_multipliers()):
+                final_prediction += pred * multiplier
+            final_predictions[term_id] = { 'probability': f"{round((final_prediction*100), 2)}%", 'name': f"{term_name} ({term_id})" }
+
+        sorted_predictions = dict(sorted(final_predictions.items(), key=lambda x: x[1]['probability'], reverse=True))
+
+        self.predictions_by_term = sorted_predictions
+
+        # We want the info for the prediction for testing purposes
+        for term_id, prediction in self.repredictions.items():
+            self.temporal_predictions[term_id] = {
+                'probabilities': prediction.get_probabilities(),
+                'multipliers': prediction.get_multipliers(),
+                'multipliersNames': prediction.get_multipliers_names(),
+                'parent': prediction.get_parents()
+            }
 
     '''
     Combines the predictions from different input creators and generates the final prediction
     '''
-    def generate_predictions(self, predictions):
+    def create_and_append_predictions(self, predictions):
         # Combine predictions from different input creators if the term is already in the predictions
         for prediction in predictions:
             if prediction.get_term() not in self.predictions:
@@ -70,29 +115,17 @@ class FilePredictor:
                 self.predictions[prediction.get_term()].add_multiplier_name(prediction.get_multipliers_names()[0])
                 self.predictions[prediction.get_term()].add_parent(prediction.get_parents()[0])
 
-        # Generate prediction object with the final probabilities combined
-        final_predictions = {}
-        for term_id, prediction in self.predictions.items():
-            # Get term name from thesaurus
-            term_name = self.thesaurus.get_by_id(term_id).get_name()
-            
-            final_prediction = 0
-            for pred, multiplier in zip(prediction.get_probabilities(), prediction.get_multipliers()):
-                final_prediction += pred * multiplier
-            final_predictions[term_id] = { 'probability': final_prediction, 'name': term_name }
-
-        sorted_predictions = dict(sorted(final_predictions.items(), key=lambda x: x[1]['probability'], reverse=True))
-
-        self.predictions_by_term = sorted_predictions
-
-        # We want the info for the prediction for testing purposes
-        for term_id, prediction in self.predictions.items():
-            self.temporal_predictions[term_id] = {
-                'probabilities': prediction.get_probabilities(),
-                'multipliers': prediction.get_multipliers(),
-                'multipliersNames': prediction.get_multipliers_names(),
-                'parent': prediction.get_parents()
-            }
+    def create_and_append_repredictions(self, predictions):
+        # Combine predictions from different input creators if the term is already in the predictions
+        for prediction in predictions:
+            if prediction.get_term() not in self.repredictions:
+                self.repredictions[prediction.get_term()] = prediction
+            else:
+                probability = prediction.get_probabilities()[0]
+                self.repredictions[prediction.get_term()].add_probability(probability)
+                self.repredictions[prediction.get_term()].add_multiplier(prediction.get_multipliers()[0])
+                self.repredictions[prediction.get_term()].add_multiplier_name(prediction.get_multipliers_names()[0])
+                self.repredictions[prediction.get_term()].add_parent(prediction.get_parents()[0])
 
     '''
     Extracts the abstract and full text from a file and predicts the terms
@@ -107,8 +140,10 @@ class FilePredictor:
         for input_creator in self.input_creators:
             self.log.info(f"Predicting with input creator: {input_creator}")
             predictions = self.predict_terms(input_creator, data_input[input_creator])
-            self.generate_predictions(predictions)
+            self.create_and_append_predictions(predictions)
 
+        self.rerun_predictions(data_input)
+        self.combine_predictions()
         self.print_predictions()
 
         # Return the final predictions (It depends on the is_test flag)
