@@ -1,4 +1,5 @@
 import logging
+import numpy as np
 from app.core.TermPrediction import TermPrediction
 from app.utils.articles_parser import get_text_from_file
 from app.utils.summarize_text import summarize_text
@@ -62,7 +63,18 @@ class FilePredictor:
     
     def rerun_predictions(self, data_input):
         models_predicted = []
-        for term_id, prediction in self.predictions.items():
+        for _, prediction in self.predictions.items():
+            # The condition to rerun is that it has only one prediction and it's a summarize-summarize method
+            should_rerun = False
+
+            is_summarize = (len(prediction.get_multipliers_names()) == 1 and 'summarize' in prediction.get_multipliers_names()[0])
+
+            if (is_summarize or len(prediction.get_multipliers_names()) == 2):
+                should_rerun = True
+
+            if (should_rerun == False):
+                continue
+
             # Get the parents of the term
             parent_term = prediction.get_parents()[0]
 
@@ -75,24 +87,43 @@ class FilePredictor:
             # Add parent_term to terms_predicted
             models_predicted.append(parent_term)
 
+    def add_prediction(self, term_id, prediction, predictions):
+        # Get term name from thesaurus
+        term_name = self.thesaurus.get_by_id(term_id).get_name()
+        
+        # Find the ponderation of the probability
+        final_prediction = 0
+        for pred, multiplier in zip(prediction.get_probabilities(), prediction.get_multipliers()):
+            final_prediction += pred * multiplier
+
+        predictions[term_id] = { 'probability': f"{round((final_prediction*100), 2)}%", 'name': f"{term_name} ({term_id})" }
+
+        return predictions
+
     def combine_predictions(self):
         # Generate prediction object with the final probabilities combined
+
         final_predictions = {}
+        # First, we need to add the "repredictions"
         for term_id, prediction in self.repredictions.items():
+            print(f"Repredictions: {term_id}, probs: {np.array(prediction.get_probabilities())}, multipliers: {np.array(prediction.get_multipliers())}")
+            final_predictions = self.add_prediction(term_id, prediction, final_predictions)
+
+        # Then, we add the predictions
+        for term_id, prediction in self.predictions.items():
+            # If the prediction is already in the predictions, we skip it
+            if term_id in final_predictions:
+                continue
+
             # Get term name from thesaurus
-            term_name = self.thesaurus.get_by_id(term_id).get_name()
-            
-            final_prediction = 0
-            for pred, multiplier in zip(prediction.get_probabilities(), prediction.get_multipliers()):
-                final_prediction += pred * multiplier
-            final_predictions[term_id] = { 'probability': f"{round((final_prediction*100), 2)}%", 'name': f"{term_name} ({term_id})" }
+            final_predictions = self.add_prediction(term_id, prediction, final_predictions)
 
         sorted_predictions = dict(sorted(final_predictions.items(), key=lambda x: x[1]['probability'], reverse=True))
 
         self.predictions_by_term = sorted_predictions
 
         # We want the info for the prediction for testing purposes
-        for term_id, prediction in self.repredictions.items():
+        for term_id, prediction in self.predictions.items():
             self.temporal_predictions[term_id] = {
                 'probabilities': prediction.get_probabilities(),
                 'multipliers': prediction.get_multipliers(),
@@ -141,6 +172,9 @@ class FilePredictor:
             self.log.info(f"Predicting with input creator: {input_creator}")
             predictions = self.predict_terms(input_creator, data_input[input_creator])
             self.create_and_append_predictions(predictions)
+
+        self.log.info(f"----- Rerunning predictions -----")
+        print("----- Rerunning predictions -----")
 
         self.rerun_predictions(data_input)
         self.combine_predictions()
