@@ -1,0 +1,785 @@
+2025-03-04 17:28:16,157 - INFO - Predicting with input creator: abstract
+2025-03-04 17:28:16,157 - INFO - Started predicting for term: 1
+2025-03-04 17:28:16,377 - INFO - Predictions: 104: 0.0011, 1145: 0.9988, 1476: 0.0002, 1529: 0.0098, 1583: 0.8527, 343: 0.0017, 486: 0.0087, 563: 0.0372, 739: 0.0001, 804: 0.4080, 847: 0.0388
+2025-03-04 17:28:16,377 - INFO - Started predicting for term: 1145
+2025-03-04 17:28:16,588 - INFO - Predictions: 1043: 0.0978, 1684: 0.9504, 799: 0.2280, 91: 0.1400
+2025-03-04 17:28:16,588 - INFO - Removing 1145 from predicted terms
+2025-03-04 17:28:16,588 - INFO - Started predicting for term: 1684
+2025-03-04 17:28:16,851 - INFO - Predictions: 1169: 0.0185, 1234: 0.9913, 1271: 0.0001, 1278: 0.0004, 1558: 0.0010, 2019: 0.0007, 2031: 0.0032, 207: 0.0170, 2094: 0.0020, 2167: 0.0044, 2179: 0.0010, 2191: 0.0003, 2359: 0.0001, 313: 0.0000, 38: 0.0073, 387: 0.0004, 400: 0.0004, 401: 0.0128, 410: 0.0000, 523: 0.0000, 534: 0.0014, 740: 0.0006, 80: 0.0161, 808: 0.0017, 87: 0.0147, 88: 0.0012, 998: 0.0004
+2025-03-04 17:28:16,851 - INFO - Removing 1684 from predicted terms
+2025-03-04 17:28:16,851 - INFO - Started predicting for term: 1234
+2025-03-04 17:28:17,017 - INFO - Predictions: 1225: 0.0004, 1229: 0.0017, 1232: 0.0012, 1233: 0.0205, 1556: 0.0803, 1620: 0.0036, 1670: 0.0007, 1709: 0.0005, 1724: 0.0133, 1792: 0.0006, 208: 0.0804, 2129: 0.0212, 611: 0.0002, 918: 0.1512
+2025-03-04 17:28:17,017 - INFO - Started predicting for term: 1583
+2025-03-04 17:28:17,201 - INFO - Predictions: 1567: 0.0113, 1621: 0.0104, 1622: 0.1270, 1627: 0.0424, 1634: 0.9587, 2178: 0.0026, 241: 0.0008, 73: 0.0119
+2025-03-04 17:28:17,201 - INFO - Removing 1583 from predicted terms
+2025-03-04 17:28:17,201 - INFO - Started predicting for term: 1634
+2025-03-04 17:28:17,373 - INFO - Predictions: 1081: 0.9835, 1127: 0.1800, 1302: 0.0001, 1668: 0.0020, 1761: 0.9996, 1941: 0.0049, 2050: 0.0002, 2051: 0.0004, 2052: 0.2681, 2103: 0.0001, 226: 0.0043, 430: 0.0005, 460: 0.0013, 732: 0.0018, 818: 0.0014, 909: 0.0046
+2025-03-04 17:28:17,373 - INFO - Removing 1634 from predicted terms
+2025-03-04 17:28:17,373 - INFO - Started predicting for term: 1081
+2025-03-04 17:28:17,537 - INFO - Predictions: 154: 1.0000, 1714: 0.0000
+2025-03-04 17:28:17,537 - INFO - Removing 1081 from predicted terms
+2025-03-04 17:28:17,537 - INFO - Started predicting for term: 154
+2025-03-04 17:28:17,781 - INFO - Predictions: 1386: 0.0014, 1557: 0.0278, 1777: 0.0045, 1801: 0.0011, 2111: 0.0003, 254: 0.8839, 291: 0.0124, 375: 0.0015, 444: 0.0277, 79: 0.0050, 806: 0.0056
+2025-03-04 17:28:17,781 - INFO - Started predicting for term: 254
+2025-03-04 17:28:17,942 - INFO - Predictions: 1835: 0.0000, 283: 0.0013, 455: 0.0007, 801: 0.9999
+2025-03-04 17:28:17,942 - INFO - Removing 254 from predicted terms
+2025-03-04 17:28:17,942 - INFO - Removing 154 from predicted terms as branch
+2025-03-04 17:28:17,942 - INFO - Started predicting for term: 801
+2025-03-04 17:28:18,089 - INFO - Predictions: 1443: 0.9999, 1674: 0.0011, 2156: 0.0004, 2157: 0.0007, 283: 0.0031, 297: 0.0005
+2025-03-04 17:28:18,090 - INFO - Removing 801 from predicted terms
+2025-03-04 17:28:18,090 - INFO - Started predicting for term: 1443
+2025-03-04 17:28:18,239 - INFO - Predictions: 1811: 0.0005, 203: 1.0000, 24: 0.0008
+2025-03-04 17:28:18,239 - INFO - Removing 1443 from predicted terms
+2025-03-04 17:28:18,239 - INFO - Started predicting for term: 203
+2025-03-04 17:28:18,385 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 17:28:18,385 - INFO - Started predicting for term: 1126
+2025-03-04 17:28:18,386 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 17:28:18,386 - INFO - Started predicting for term: 1761
+2025-03-04 17:28:18,545 - INFO - Predictions: 1202: 0.0004, 1213: 0.0001, 514: 0.0002, 859: 0.9997
+2025-03-04 17:28:18,545 - INFO - Removing 1761 from predicted terms
+2025-03-04 17:28:18,545 - INFO - Started predicting for term: 859
+2025-03-04 17:28:18,699 - INFO - Predictions: 1307: 0.0005, 203: 0.9995, 476: 0.0024, 722: 0.0049, 996: 0.0024
+2025-03-04 17:28:18,699 - INFO - Started predicting for term: 203
+2025-03-04 17:28:18,845 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 17:28:18,845 - INFO - Started predicting for term: 1126
+2025-03-04 17:28:18,846 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 17:28:18,846 - INFO - Started predicting for term: 804
+2025-03-04 17:28:19,035 - INFO - Predictions: 101: 0.0001, 1222: 0.0000, 1868: 0.0002, 1882: 0.6757, 2004: 0.0570, 2165: 0.0004, 2366: 0.0000, 293: 0.9585, 74: 0.0004, 75: 0.0001, 78: 0.0018
+2025-03-04 17:28:19,035 - INFO - Started predicting for term: 1882
+2025-03-04 17:28:19,198 - INFO - Predictions: 1883: 0.0021, 1884: 0.0244, 1885: 0.0004, 1886: 0.9980, 1887: 0.0015
+2025-03-04 17:28:19,198 - INFO - Started predicting for term: 1886
+2025-03-04 17:28:19,356 - INFO - Predictions: 1906: 0.0009, 1907: 0.0163, 1908: 0.0058, 1909: 0.0031, 1910: 0.0027, 1911: 0.0053, 1912: 0.0284, 1913: 0.0097, 1914: 0.0028, 1915: 0.0024, 1916: 0.9901, 1917: 0.0029, 1918: 0.0042
+2025-03-04 17:28:19,357 - INFO - Removing 1886 from predicted terms
+2025-03-04 17:28:19,357 - INFO - Started predicting for term: 1916
+2025-03-04 17:28:19,552 - INFO - Predictions: 1953: 0.0021, 1954: 0.0160, 1955: 0.1770, 1956: 0.0130, 1957: 0.1499
+2025-03-04 17:28:19,552 - INFO - Started predicting for term: 293
+2025-03-04 17:28:19,718 - INFO - Predictions: 1855: 0.0118, 1858: 0.9961, 1965: 0.0189
+2025-03-04 17:28:19,718 - INFO - Removing 293 from predicted terms
+2025-03-04 17:28:19,718 - INFO - Started predicting for term: 1858
+2025-03-04 17:28:19,884 - INFO - Predictions: 1859: 0.2760, 1860: 0.0100, 1861: 0.0076, 1968: 0.0649, 2305: 0.0024, 2306: 0.0002, 83: 0.0800
+2025-03-04 17:28:19,886 - INFO - ----- Rerunning predictions -----
+2025-03-04 17:28:19,886 - INFO - Term: 1234, Probability: {'probabilities': [0.99135], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 17:28:19,886 - INFO - Term: 203, Probability: {'probabilities': [0.99999], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1443']}
+2025-03-04 17:28:19,886 - INFO - Term: 1126, Probability: {'probabilities': [0.94077], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['203']}
+2025-03-04 17:28:19,886 - INFO - Term: 859, Probability: {'probabilities': [0.99969], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1761']}
+2025-03-04 17:28:19,887 - INFO - Term: 1916, Probability: {'probabilities': [0.99007], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1886']}
+2025-03-04 17:28:19,887 - INFO - Term: 1858, Probability: {'probabilities': [0.99611], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['293']}
+2025-03-04 17:28:19,887 - INFO - Term: 859, Probability: {'probability': '99.97%', 'name': 'Intrinsic variable stars (859)'}
+2025-03-04 17:28:19,887 - INFO - Term: 1858, Probability: {'probability': '99.61%', 'name': 'Astronomy data analysis (1858)'}
+2025-03-04 17:28:19,887 - INFO - Term: 1234, Probability: {'probability': '99.13%', 'name': 'Photometry (1234)'}
+2025-03-04 17:28:19,887 - INFO - Term: 1916, Probability: {'probability': '99.01%', 'name': 'Time series analysis (1916)'}
+2025-03-04 17:28:19,887 - INFO - Term: 1126, Probability: {'probability': '94.08%', 'name': 'Nova-like variable stars (1126)'}
+2025-03-04 17:28:19,887 - INFO - Term: 203, Probability: {'probability': '100.0%', 'name': 'Cataclysmic variable stars (203)'}
+2025-03-04 17:34:03,633 - INFO - Predicting with input creator: abstract
+2025-03-04 17:34:03,634 - INFO - Started predicting for term: 1
+2025-03-04 17:34:03,827 - INFO - Predictions: 104: 0.0011, 1145: 0.9988, 1476: 0.0002, 1529: 0.0098, 1583: 0.8527, 343: 0.0017, 486: 0.0087, 563: 0.0372, 739: 0.0001, 804: 0.4080, 847: 0.0388
+2025-03-04 17:34:03,827 - INFO - Started predicting for term: 1145
+2025-03-04 17:34:03,994 - INFO - Predictions: 1043: 0.0978, 1684: 0.9504, 799: 0.2280, 91: 0.1400
+2025-03-04 17:34:03,995 - INFO - Removing 1145 from predicted terms
+2025-03-04 17:34:03,995 - INFO - Started predicting for term: 1684
+2025-03-04 17:34:05,258 - INFO - Predictions: 1169: 0.0185, 1234: 0.9913, 1271: 0.0001, 1278: 0.0004, 1558: 0.0010, 2019: 0.0007, 2031: 0.0032, 207: 0.0170, 2094: 0.0020, 2167: 0.0044, 2179: 0.0010, 2191: 0.0003, 2359: 0.0001, 313: 0.0000, 38: 0.0073, 387: 0.0004, 400: 0.0004, 401: 0.0128, 410: 0.0000, 523: 0.0000, 534: 0.0014, 740: 0.0006, 80: 0.0161, 808: 0.0017, 87: 0.0147, 88: 0.0012, 998: 0.0004
+2025-03-04 17:34:05,258 - INFO - Removing 1684 from predicted terms
+2025-03-04 17:34:05,258 - INFO - Started predicting for term: 1234
+2025-03-04 17:34:05,421 - INFO - Predictions: 1225: 0.0004, 1229: 0.0017, 1232: 0.0012, 1233: 0.0205, 1556: 0.0803, 1620: 0.0036, 1670: 0.0007, 1709: 0.0005, 1724: 0.0133, 1792: 0.0006, 208: 0.0804, 2129: 0.0212, 611: 0.0002, 918: 0.1512
+2025-03-04 17:34:05,421 - INFO - Started predicting for term: 1583
+2025-03-04 17:34:05,591 - INFO - Predictions: 1567: 0.0113, 1621: 0.0104, 1622: 0.1270, 1627: 0.0424, 1634: 0.9587, 2178: 0.0026, 241: 0.0008, 73: 0.0119
+2025-03-04 17:34:05,591 - INFO - Removing 1583 from predicted terms
+2025-03-04 17:34:05,591 - INFO - Started predicting for term: 1634
+2025-03-04 17:34:05,766 - INFO - Predictions: 1081: 0.9835, 1127: 0.1800, 1302: 0.0001, 1668: 0.0020, 1761: 0.9996, 1941: 0.0049, 2050: 0.0002, 2051: 0.0004, 2052: 0.2681, 2103: 0.0001, 226: 0.0043, 430: 0.0005, 460: 0.0013, 732: 0.0018, 818: 0.0014, 909: 0.0046
+2025-03-04 17:34:05,767 - INFO - Removing 1634 from predicted terms
+2025-03-04 17:34:05,767 - INFO - Started predicting for term: 1081
+2025-03-04 17:34:05,930 - INFO - Predictions: 154: 1.0000, 1714: 0.0000
+2025-03-04 17:34:05,930 - INFO - Removing 1081 from predicted terms
+2025-03-04 17:34:05,930 - INFO - Started predicting for term: 154
+2025-03-04 17:34:06,086 - INFO - Predictions: 1386: 0.0014, 1557: 0.0278, 1777: 0.0045, 1801: 0.0011, 2111: 0.0003, 254: 0.8839, 291: 0.0124, 375: 0.0015, 444: 0.0277, 79: 0.0050, 806: 0.0056
+2025-03-04 17:34:06,087 - INFO - Started predicting for term: 254
+2025-03-04 17:34:06,240 - INFO - Predictions: 1835: 0.0000, 283: 0.0013, 455: 0.0007, 801: 0.9999
+2025-03-04 17:34:06,240 - INFO - Removing 254 from predicted terms
+2025-03-04 17:34:06,240 - INFO - Removing 154 from predicted terms as branch
+2025-03-04 17:34:06,240 - INFO - Started predicting for term: 801
+2025-03-04 17:34:06,422 - INFO - Predictions: 1443: 0.9999, 1674: 0.0011, 2156: 0.0004, 2157: 0.0007, 283: 0.0031, 297: 0.0005
+2025-03-04 17:34:06,422 - INFO - Removing 801 from predicted terms
+2025-03-04 17:34:06,422 - INFO - Started predicting for term: 1443
+2025-03-04 17:34:06,563 - INFO - Predictions: 1811: 0.0005, 203: 1.0000, 24: 0.0008
+2025-03-04 17:34:06,563 - INFO - Removing 1443 from predicted terms
+2025-03-04 17:34:06,563 - INFO - Started predicting for term: 203
+2025-03-04 17:34:06,709 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 17:34:06,709 - INFO - Started predicting for term: 1126
+2025-03-04 17:34:06,709 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 17:34:06,709 - INFO - Started predicting for term: 1761
+2025-03-04 17:34:07,085 - INFO - Predictions: 1202: 0.0004, 1213: 0.0001, 514: 0.0002, 859: 0.9997
+2025-03-04 17:34:07,085 - INFO - Removing 1761 from predicted terms
+2025-03-04 17:34:07,085 - INFO - Started predicting for term: 859
+2025-03-04 17:34:07,258 - INFO - Predictions: 1307: 0.0005, 203: 0.9995, 476: 0.0024, 722: 0.0049, 996: 0.0024
+2025-03-04 17:34:07,258 - INFO - Started predicting for term: 203
+2025-03-04 17:34:07,418 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 17:34:07,419 - INFO - Started predicting for term: 1126
+2025-03-04 17:34:07,419 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 17:34:07,419 - INFO - Started predicting for term: 804
+2025-03-04 17:34:07,590 - INFO - Predictions: 101: 0.0001, 1222: 0.0000, 1868: 0.0002, 1882: 0.6757, 2004: 0.0570, 2165: 0.0004, 2366: 0.0000, 293: 0.9585, 74: 0.0004, 75: 0.0001, 78: 0.0018
+2025-03-04 17:34:07,590 - INFO - Started predicting for term: 1882
+2025-03-04 17:34:07,744 - INFO - Predictions: 1883: 0.0021, 1884: 0.0244, 1885: 0.0004, 1886: 0.9980, 1887: 0.0015
+2025-03-04 17:34:07,745 - INFO - Started predicting for term: 1886
+2025-03-04 17:34:07,941 - INFO - Predictions: 1906: 0.0009, 1907: 0.0163, 1908: 0.0058, 1909: 0.0031, 1910: 0.0027, 1911: 0.0053, 1912: 0.0284, 1913: 0.0097, 1914: 0.0028, 1915: 0.0024, 1916: 0.9901, 1917: 0.0029, 1918: 0.0042
+2025-03-04 17:34:07,941 - INFO - Removing 1886 from predicted terms
+2025-03-04 17:34:07,941 - INFO - Started predicting for term: 1916
+2025-03-04 17:34:08,085 - INFO - Predictions: 1953: 0.0021, 1954: 0.0160, 1955: 0.1770, 1956: 0.0130, 1957: 0.1499
+2025-03-04 17:34:08,085 - INFO - Started predicting for term: 293
+2025-03-04 17:34:08,240 - INFO - Predictions: 1855: 0.0118, 1858: 0.9961, 1965: 0.0189
+2025-03-04 17:34:08,240 - INFO - Removing 293 from predicted terms
+2025-03-04 17:34:08,240 - INFO - Started predicting for term: 1858
+2025-03-04 17:34:08,400 - INFO - Predictions: 1859: 0.2760, 1860: 0.0100, 1861: 0.0076, 1968: 0.0649, 2305: 0.0024, 2306: 0.0002, 83: 0.0800
+2025-03-04 17:34:08,402 - INFO - ----- Rerunning predictions -----
+2025-03-04 17:34:08,402 - INFO - Term: 1234, Probability: {'probabilities': [0.99135], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 17:34:08,402 - INFO - Term: 203, Probability: {'probabilities': [0.99999], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1443']}
+2025-03-04 17:34:08,402 - INFO - Term: 1126, Probability: {'probabilities': [0.94077], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['203']}
+2025-03-04 17:34:08,402 - INFO - Term: 859, Probability: {'probabilities': [0.99969], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1761']}
+2025-03-04 17:34:08,402 - INFO - Term: 1916, Probability: {'probabilities': [0.99007], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1886']}
+2025-03-04 17:34:08,402 - INFO - Term: 1858, Probability: {'probabilities': [0.99611], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['293']}
+2025-03-04 17:34:08,402 - INFO - Term: 859, Probability: {'probability': '99.97%', 'name': 'Intrinsic variable stars (859)'}
+2025-03-04 17:34:08,402 - INFO - Term: 1858, Probability: {'probability': '99.61%', 'name': 'Astronomy data analysis (1858)'}
+2025-03-04 17:34:08,402 - INFO - Term: 1234, Probability: {'probability': '99.13%', 'name': 'Photometry (1234)'}
+2025-03-04 17:34:08,403 - INFO - Term: 1916, Probability: {'probability': '99.01%', 'name': 'Time series analysis (1916)'}
+2025-03-04 17:34:08,403 - INFO - Term: 1126, Probability: {'probability': '94.08%', 'name': 'Nova-like variable stars (1126)'}
+2025-03-04 17:34:08,403 - INFO - Term: 203, Probability: {'probability': '100.0%', 'name': 'Cataclysmic variable stars (203)'}
+2025-03-04 17:38:20,424 - INFO - Predicting with input creator: abstract
+2025-03-04 17:38:20,424 - INFO - Started predicting for term: 1
+2025-03-04 17:38:20,612 - INFO - Predictions: 104: 0.0011, 1145: 0.9988, 1476: 0.0002, 1529: 0.0098, 1583: 0.8527, 343: 0.0017, 486: 0.0087, 563: 0.0372, 739: 0.0001, 804: 0.4080, 847: 0.0388
+2025-03-04 17:38:20,612 - INFO - Started predicting for term: 1145
+2025-03-04 17:38:20,784 - INFO - Predictions: 1043: 0.0978, 1684: 0.9504, 799: 0.2280, 91: 0.1400
+2025-03-04 17:38:20,784 - INFO - Removing 1145 from predicted terms
+2025-03-04 17:38:20,784 - INFO - Started predicting for term: 1684
+2025-03-04 17:38:20,958 - INFO - Predictions: 1169: 0.0185, 1234: 0.9913, 1271: 0.0001, 1278: 0.0004, 1558: 0.0010, 2019: 0.0007, 2031: 0.0032, 207: 0.0170, 2094: 0.0020, 2167: 0.0044, 2179: 0.0010, 2191: 0.0003, 2359: 0.0001, 313: 0.0000, 38: 0.0073, 387: 0.0004, 400: 0.0004, 401: 0.0128, 410: 0.0000, 523: 0.0000, 534: 0.0014, 740: 0.0006, 80: 0.0161, 808: 0.0017, 87: 0.0147, 88: 0.0012, 998: 0.0004
+2025-03-04 17:38:20,958 - INFO - Removing 1684 from predicted terms
+2025-03-04 17:38:20,958 - INFO - Started predicting for term: 1234
+2025-03-04 17:38:21,114 - INFO - Predictions: 1225: 0.0004, 1229: 0.0017, 1232: 0.0012, 1233: 0.0205, 1556: 0.0803, 1620: 0.0036, 1670: 0.0007, 1709: 0.0005, 1724: 0.0133, 1792: 0.0006, 208: 0.0804, 2129: 0.0212, 611: 0.0002, 918: 0.1512
+2025-03-04 17:38:21,114 - INFO - Started predicting for term: 1583
+2025-03-04 17:38:21,286 - INFO - Predictions: 1567: 0.0113, 1621: 0.0104, 1622: 0.1270, 1627: 0.0424, 1634: 0.9587, 2178: 0.0026, 241: 0.0008, 73: 0.0119
+2025-03-04 17:38:21,286 - INFO - Removing 1583 from predicted terms
+2025-03-04 17:38:21,287 - INFO - Started predicting for term: 1634
+2025-03-04 17:38:21,496 - INFO - Predictions: 1081: 0.9835, 1127: 0.1800, 1302: 0.0001, 1668: 0.0020, 1761: 0.9996, 1941: 0.0049, 2050: 0.0002, 2051: 0.0004, 2052: 0.2681, 2103: 0.0001, 226: 0.0043, 430: 0.0005, 460: 0.0013, 732: 0.0018, 818: 0.0014, 909: 0.0046
+2025-03-04 17:38:21,497 - INFO - Removing 1634 from predicted terms
+2025-03-04 17:38:21,497 - INFO - Started predicting for term: 1081
+2025-03-04 17:38:21,647 - INFO - Predictions: 154: 1.0000, 1714: 0.0000
+2025-03-04 17:38:21,647 - INFO - Removing 1081 from predicted terms
+2025-03-04 17:38:21,647 - INFO - Started predicting for term: 154
+2025-03-04 17:38:21,881 - INFO - Predictions: 1386: 0.0014, 1557: 0.0278, 1777: 0.0045, 1801: 0.0011, 2111: 0.0003, 254: 0.8839, 291: 0.0124, 375: 0.0015, 444: 0.0277, 79: 0.0050, 806: 0.0056
+2025-03-04 17:38:21,881 - INFO - Started predicting for term: 254
+2025-03-04 17:38:22,037 - INFO - Predictions: 1835: 0.0000, 283: 0.0013, 455: 0.0007, 801: 0.9999
+2025-03-04 17:38:22,037 - INFO - Removing 254 from predicted terms
+2025-03-04 17:38:22,037 - INFO - Removing 154 from predicted terms as branch
+2025-03-04 17:38:22,037 - INFO - Started predicting for term: 801
+2025-03-04 17:38:22,198 - INFO - Predictions: 1443: 0.9999, 1674: 0.0011, 2156: 0.0004, 2157: 0.0007, 283: 0.0031, 297: 0.0005
+2025-03-04 17:38:22,198 - INFO - Removing 801 from predicted terms
+2025-03-04 17:38:22,198 - INFO - Started predicting for term: 1443
+2025-03-04 17:38:22,343 - INFO - Predictions: 1811: 0.0005, 203: 1.0000, 24: 0.0008
+2025-03-04 17:38:22,343 - INFO - Removing 1443 from predicted terms
+2025-03-04 17:38:22,343 - INFO - Started predicting for term: 203
+2025-03-04 17:38:22,496 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 17:38:22,496 - INFO - Started predicting for term: 1126
+2025-03-04 17:38:22,496 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 17:38:22,496 - INFO - Started predicting for term: 1761
+2025-03-04 17:38:22,643 - INFO - Predictions: 1202: 0.0004, 1213: 0.0001, 514: 0.0002, 859: 0.9997
+2025-03-04 17:38:22,643 - INFO - Removing 1761 from predicted terms
+2025-03-04 17:38:22,643 - INFO - Started predicting for term: 859
+2025-03-04 17:38:22,792 - INFO - Predictions: 1307: 0.0005, 203: 0.9995, 476: 0.0024, 722: 0.0049, 996: 0.0024
+2025-03-04 17:38:22,792 - INFO - Started predicting for term: 203
+2025-03-04 17:38:22,934 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 17:38:22,934 - INFO - Started predicting for term: 1126
+2025-03-04 17:38:22,934 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 17:38:22,934 - INFO - Started predicting for term: 804
+2025-03-04 17:38:23,101 - INFO - Predictions: 101: 0.0001, 1222: 0.0000, 1868: 0.0002, 1882: 0.6757, 2004: 0.0570, 2165: 0.0004, 2366: 0.0000, 293: 0.9585, 74: 0.0004, 75: 0.0001, 78: 0.0018
+2025-03-04 17:38:23,101 - INFO - Started predicting for term: 1882
+2025-03-04 17:38:23,261 - INFO - Predictions: 1883: 0.0021, 1884: 0.0244, 1885: 0.0004, 1886: 0.9980, 1887: 0.0015
+2025-03-04 17:38:23,261 - INFO - Started predicting for term: 1886
+2025-03-04 17:38:23,416 - INFO - Predictions: 1906: 0.0009, 1907: 0.0163, 1908: 0.0058, 1909: 0.0031, 1910: 0.0027, 1911: 0.0053, 1912: 0.0284, 1913: 0.0097, 1914: 0.0028, 1915: 0.0024, 1916: 0.9901, 1917: 0.0029, 1918: 0.0042
+2025-03-04 17:38:23,416 - INFO - Removing 1886 from predicted terms
+2025-03-04 17:38:23,416 - INFO - Started predicting for term: 1916
+2025-03-04 17:38:23,606 - INFO - Predictions: 1953: 0.0021, 1954: 0.0160, 1955: 0.1770, 1956: 0.0130, 1957: 0.1499
+2025-03-04 17:38:23,607 - INFO - Started predicting for term: 293
+2025-03-04 17:38:23,758 - INFO - Predictions: 1855: 0.0118, 1858: 0.9961, 1965: 0.0189
+2025-03-04 17:38:23,758 - INFO - Removing 293 from predicted terms
+2025-03-04 17:38:23,758 - INFO - Started predicting for term: 1858
+2025-03-04 17:38:23,905 - INFO - Predictions: 1859: 0.2760, 1860: 0.0100, 1861: 0.0076, 1968: 0.0649, 2305: 0.0024, 2306: 0.0002, 83: 0.0800
+2025-03-04 17:38:23,907 - INFO - ----- Rerunning predictions -----
+2025-03-04 17:38:23,908 - INFO - Term: 1234, Probability: {'probabilities': [0.99135], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 17:38:23,909 - INFO - Term: 203, Probability: {'probabilities': [0.99999], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1443']}
+2025-03-04 17:38:23,909 - INFO - Term: 1126, Probability: {'probabilities': [0.94077], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['203']}
+2025-03-04 17:38:23,909 - INFO - Term: 859, Probability: {'probabilities': [0.99969], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1761']}
+2025-03-04 17:38:23,909 - INFO - Term: 1916, Probability: {'probabilities': [0.99007], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1886']}
+2025-03-04 17:38:23,909 - INFO - Term: 1858, Probability: {'probabilities': [0.99611], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['293']}
+2025-03-04 17:39:41,947 - INFO - Predicting with input creator: abstract
+2025-03-04 17:39:41,947 - INFO - Started predicting for term: 1
+2025-03-04 17:39:42,202 - INFO - Predictions: 104: 0.0011, 1145: 0.9988, 1476: 0.0002, 1529: 0.0098, 1583: 0.8527, 343: 0.0017, 486: 0.0087, 563: 0.0372, 739: 0.0001, 804: 0.4080, 847: 0.0388
+2025-03-04 17:39:42,203 - INFO - Started predicting for term: 1145
+2025-03-04 17:39:42,383 - INFO - Predictions: 1043: 0.0978, 1684: 0.9504, 799: 0.2280, 91: 0.1400
+2025-03-04 17:39:42,384 - INFO - Removing 1145 from predicted terms
+2025-03-04 17:39:42,384 - INFO - Started predicting for term: 1684
+2025-03-04 17:39:42,579 - INFO - Predictions: 1169: 0.0185, 1234: 0.9913, 1271: 0.0001, 1278: 0.0004, 1558: 0.0010, 2019: 0.0007, 2031: 0.0032, 207: 0.0170, 2094: 0.0020, 2167: 0.0044, 2179: 0.0010, 2191: 0.0003, 2359: 0.0001, 313: 0.0000, 38: 0.0073, 387: 0.0004, 400: 0.0004, 401: 0.0128, 410: 0.0000, 523: 0.0000, 534: 0.0014, 740: 0.0006, 80: 0.0161, 808: 0.0017, 87: 0.0147, 88: 0.0012, 998: 0.0004
+2025-03-04 17:39:42,580 - INFO - Removing 1684 from predicted terms
+2025-03-04 17:39:42,580 - INFO - Started predicting for term: 1234
+2025-03-04 17:39:42,736 - INFO - Predictions: 1225: 0.0004, 1229: 0.0017, 1232: 0.0012, 1233: 0.0205, 1556: 0.0803, 1620: 0.0036, 1670: 0.0007, 1709: 0.0005, 1724: 0.0133, 1792: 0.0006, 208: 0.0804, 2129: 0.0212, 611: 0.0002, 918: 0.1512
+2025-03-04 17:39:42,736 - INFO - Started predicting for term: 1583
+2025-03-04 17:39:42,901 - INFO - Predictions: 1567: 0.0113, 1621: 0.0104, 1622: 0.1270, 1627: 0.0424, 1634: 0.9587, 2178: 0.0026, 241: 0.0008, 73: 0.0119
+2025-03-04 17:39:42,901 - INFO - Removing 1583 from predicted terms
+2025-03-04 17:39:42,901 - INFO - Started predicting for term: 1634
+2025-03-04 17:39:43,058 - INFO - Predictions: 1081: 0.9835, 1127: 0.1800, 1302: 0.0001, 1668: 0.0020, 1761: 0.9996, 1941: 0.0049, 2050: 0.0002, 2051: 0.0004, 2052: 0.2681, 2103: 0.0001, 226: 0.0043, 430: 0.0005, 460: 0.0013, 732: 0.0018, 818: 0.0014, 909: 0.0046
+2025-03-04 17:39:43,058 - INFO - Removing 1634 from predicted terms
+2025-03-04 17:39:43,058 - INFO - Started predicting for term: 1081
+2025-03-04 17:39:43,217 - INFO - Predictions: 154: 1.0000, 1714: 0.0000
+2025-03-04 17:39:43,218 - INFO - Removing 1081 from predicted terms
+2025-03-04 17:39:43,218 - INFO - Started predicting for term: 154
+2025-03-04 17:39:43,602 - INFO - Predictions: 1386: 0.0014, 1557: 0.0278, 1777: 0.0045, 1801: 0.0011, 2111: 0.0003, 254: 0.8839, 291: 0.0124, 375: 0.0015, 444: 0.0277, 79: 0.0050, 806: 0.0056
+2025-03-04 17:39:43,602 - INFO - Started predicting for term: 254
+2025-03-04 17:39:43,818 - INFO - Predictions: 1835: 0.0000, 283: 0.0013, 455: 0.0007, 801: 0.9999
+2025-03-04 17:39:43,818 - INFO - Removing 254 from predicted terms
+2025-03-04 17:39:43,819 - INFO - Removing 154 from predicted terms as branch
+2025-03-04 17:39:43,819 - INFO - Started predicting for term: 801
+2025-03-04 17:39:44,051 - INFO - Predictions: 1443: 0.9999, 1674: 0.0011, 2156: 0.0004, 2157: 0.0007, 283: 0.0031, 297: 0.0005
+2025-03-04 17:39:44,051 - INFO - Removing 801 from predicted terms
+2025-03-04 17:39:44,051 - INFO - Started predicting for term: 1443
+2025-03-04 17:39:44,217 - INFO - Predictions: 1811: 0.0005, 203: 1.0000, 24: 0.0008
+2025-03-04 17:39:44,217 - INFO - Removing 1443 from predicted terms
+2025-03-04 17:39:44,217 - INFO - Started predicting for term: 203
+2025-03-04 17:39:44,381 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 17:39:44,381 - INFO - Started predicting for term: 1126
+2025-03-04 17:39:44,381 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 17:39:44,381 - INFO - Started predicting for term: 1761
+2025-03-04 17:39:44,577 - INFO - Predictions: 1202: 0.0004, 1213: 0.0001, 514: 0.0002, 859: 0.9997
+2025-03-04 17:39:44,577 - INFO - Removing 1761 from predicted terms
+2025-03-04 17:39:44,577 - INFO - Started predicting for term: 859
+2025-03-04 17:39:44,755 - INFO - Predictions: 1307: 0.0005, 203: 0.9995, 476: 0.0024, 722: 0.0049, 996: 0.0024
+2025-03-04 17:39:44,755 - INFO - Started predicting for term: 203
+2025-03-04 17:39:44,904 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 17:39:44,904 - INFO - Started predicting for term: 1126
+2025-03-04 17:39:44,905 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 17:39:44,905 - INFO - Started predicting for term: 804
+2025-03-04 17:39:45,065 - INFO - Predictions: 101: 0.0001, 1222: 0.0000, 1868: 0.0002, 1882: 0.6757, 2004: 0.0570, 2165: 0.0004, 2366: 0.0000, 293: 0.9585, 74: 0.0004, 75: 0.0001, 78: 0.0018
+2025-03-04 17:39:45,065 - INFO - Started predicting for term: 1882
+2025-03-04 17:39:45,211 - INFO - Predictions: 1883: 0.0021, 1884: 0.0244, 1885: 0.0004, 1886: 0.9980, 1887: 0.0015
+2025-03-04 17:39:45,211 - INFO - Started predicting for term: 1886
+2025-03-04 17:39:45,369 - INFO - Predictions: 1906: 0.0009, 1907: 0.0163, 1908: 0.0058, 1909: 0.0031, 1910: 0.0027, 1911: 0.0053, 1912: 0.0284, 1913: 0.0097, 1914: 0.0028, 1915: 0.0024, 1916: 0.9901, 1917: 0.0029, 1918: 0.0042
+2025-03-04 17:39:45,369 - INFO - Removing 1886 from predicted terms
+2025-03-04 17:39:45,369 - INFO - Started predicting for term: 1916
+2025-03-04 17:39:45,554 - INFO - Predictions: 1953: 0.0021, 1954: 0.0160, 1955: 0.1770, 1956: 0.0130, 1957: 0.1499
+2025-03-04 17:39:45,554 - INFO - Started predicting for term: 293
+2025-03-04 17:39:45,698 - INFO - Predictions: 1855: 0.0118, 1858: 0.9961, 1965: 0.0189
+2025-03-04 17:39:45,698 - INFO - Removing 293 from predicted terms
+2025-03-04 17:39:45,698 - INFO - Started predicting for term: 1858
+2025-03-04 17:39:45,843 - INFO - Predictions: 1859: 0.2760, 1860: 0.0100, 1861: 0.0076, 1968: 0.0649, 2305: 0.0024, 2306: 0.0002, 83: 0.0800
+2025-03-04 17:39:45,845 - INFO - ----- Rerunning predictions -----
+2025-03-04 17:39:45,846 - INFO - Term: 1234, Probability: {'probabilities': [0.99135], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 17:39:45,846 - INFO - Term: 203, Probability: {'probabilities': [0.99999], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1443']}
+2025-03-04 17:39:45,846 - INFO - Term: 1126, Probability: {'probabilities': [0.94077], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['203']}
+2025-03-04 17:39:45,846 - INFO - Term: 859, Probability: {'probabilities': [0.99969], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1761']}
+2025-03-04 17:39:45,846 - INFO - Term: 1916, Probability: {'probabilities': [0.99007], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1886']}
+2025-03-04 17:39:45,846 - INFO - Term: 1858, Probability: {'probabilities': [0.99611], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['293']}
+2025-03-04 17:40:21,034 - INFO - Predicting with input creator: abstract
+2025-03-04 17:40:21,035 - INFO - Started predicting for term: 1
+2025-03-04 17:40:21,221 - INFO - Predictions: 104: 0.0011, 1145: 0.9988, 1476: 0.0002, 1529: 0.0098, 1583: 0.8527, 343: 0.0017, 486: 0.0087, 563: 0.0372, 739: 0.0001, 804: 0.4080, 847: 0.0388
+2025-03-04 17:40:21,221 - INFO - Started predicting for term: 1145
+2025-03-04 17:40:21,383 - INFO - Predictions: 1043: 0.0978, 1684: 0.9504, 799: 0.2280, 91: 0.1400
+2025-03-04 17:40:21,383 - INFO - Removing 1145 from predicted terms
+2025-03-04 17:40:21,383 - INFO - Started predicting for term: 1684
+2025-03-04 17:40:21,556 - INFO - Predictions: 1169: 0.0185, 1234: 0.9913, 1271: 0.0001, 1278: 0.0004, 1558: 0.0010, 2019: 0.0007, 2031: 0.0032, 207: 0.0170, 2094: 0.0020, 2167: 0.0044, 2179: 0.0010, 2191: 0.0003, 2359: 0.0001, 313: 0.0000, 38: 0.0073, 387: 0.0004, 400: 0.0004, 401: 0.0128, 410: 0.0000, 523: 0.0000, 534: 0.0014, 740: 0.0006, 80: 0.0161, 808: 0.0017, 87: 0.0147, 88: 0.0012, 998: 0.0004
+2025-03-04 17:40:21,556 - INFO - Removing 1684 from predicted terms
+2025-03-04 17:40:21,556 - INFO - Started predicting for term: 1234
+2025-03-04 17:40:21,712 - INFO - Predictions: 1225: 0.0004, 1229: 0.0017, 1232: 0.0012, 1233: 0.0205, 1556: 0.0803, 1620: 0.0036, 1670: 0.0007, 1709: 0.0005, 1724: 0.0133, 1792: 0.0006, 208: 0.0804, 2129: 0.0212, 611: 0.0002, 918: 0.1512
+2025-03-04 17:40:21,712 - INFO - Started predicting for term: 1583
+2025-03-04 17:40:21,874 - INFO - Predictions: 1567: 0.0113, 1621: 0.0104, 1622: 0.1270, 1627: 0.0424, 1634: 0.9587, 2178: 0.0026, 241: 0.0008, 73: 0.0119
+2025-03-04 17:40:21,874 - INFO - Removing 1583 from predicted terms
+2025-03-04 17:40:21,874 - INFO - Started predicting for term: 1634
+2025-03-04 17:40:22,036 - INFO - Predictions: 1081: 0.9835, 1127: 0.1800, 1302: 0.0001, 1668: 0.0020, 1761: 0.9996, 1941: 0.0049, 2050: 0.0002, 2051: 0.0004, 2052: 0.2681, 2103: 0.0001, 226: 0.0043, 430: 0.0005, 460: 0.0013, 732: 0.0018, 818: 0.0014, 909: 0.0046
+2025-03-04 17:40:22,037 - INFO - Removing 1634 from predicted terms
+2025-03-04 17:40:22,037 - INFO - Started predicting for term: 1081
+2025-03-04 17:40:22,200 - INFO - Predictions: 154: 1.0000, 1714: 0.0000
+2025-03-04 17:40:22,200 - INFO - Removing 1081 from predicted terms
+2025-03-04 17:40:22,200 - INFO - Started predicting for term: 154
+2025-03-04 17:40:22,434 - INFO - Predictions: 1386: 0.0014, 1557: 0.0278, 1777: 0.0045, 1801: 0.0011, 2111: 0.0003, 254: 0.8839, 291: 0.0124, 375: 0.0015, 444: 0.0277, 79: 0.0050, 806: 0.0056
+2025-03-04 17:40:22,434 - INFO - Started predicting for term: 254
+2025-03-04 17:40:22,578 - INFO - Predictions: 1835: 0.0000, 283: 0.0013, 455: 0.0007, 801: 0.9999
+2025-03-04 17:40:22,579 - INFO - Removing 254 from predicted terms
+2025-03-04 17:40:22,579 - INFO - Removing 154 from predicted terms as branch
+2025-03-04 17:40:22,579 - INFO - Started predicting for term: 801
+2025-03-04 17:40:22,723 - INFO - Predictions: 1443: 0.9999, 1674: 0.0011, 2156: 0.0004, 2157: 0.0007, 283: 0.0031, 297: 0.0005
+2025-03-04 17:40:22,724 - INFO - Removing 801 from predicted terms
+2025-03-04 17:40:22,724 - INFO - Started predicting for term: 1443
+2025-03-04 17:40:22,882 - INFO - Predictions: 1811: 0.0005, 203: 1.0000, 24: 0.0008
+2025-03-04 17:40:22,882 - INFO - Removing 1443 from predicted terms
+2025-03-04 17:40:22,882 - INFO - Started predicting for term: 203
+2025-03-04 17:40:23,027 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 17:40:23,027 - INFO - Started predicting for term: 1126
+2025-03-04 17:40:23,027 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 17:40:23,027 - INFO - Started predicting for term: 1761
+2025-03-04 17:40:23,191 - INFO - Predictions: 1202: 0.0004, 1213: 0.0001, 514: 0.0002, 859: 0.9997
+2025-03-04 17:40:23,191 - INFO - Removing 1761 from predicted terms
+2025-03-04 17:40:23,191 - INFO - Started predicting for term: 859
+2025-03-04 17:40:23,339 - INFO - Predictions: 1307: 0.0005, 203: 0.9995, 476: 0.0024, 722: 0.0049, 996: 0.0024
+2025-03-04 17:40:23,339 - INFO - Started predicting for term: 203
+2025-03-04 17:40:23,485 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 17:40:23,485 - INFO - Started predicting for term: 1126
+2025-03-04 17:40:23,485 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 17:40:23,485 - INFO - Started predicting for term: 804
+2025-03-04 17:40:23,649 - INFO - Predictions: 101: 0.0001, 1222: 0.0000, 1868: 0.0002, 1882: 0.6757, 2004: 0.0570, 2165: 0.0004, 2366: 0.0000, 293: 0.9585, 74: 0.0004, 75: 0.0001, 78: 0.0018
+2025-03-04 17:40:23,649 - INFO - Started predicting for term: 1882
+2025-03-04 17:40:23,802 - INFO - Predictions: 1883: 0.0021, 1884: 0.0244, 1885: 0.0004, 1886: 0.9980, 1887: 0.0015
+2025-03-04 17:40:23,802 - INFO - Started predicting for term: 1886
+2025-03-04 17:40:23,957 - INFO - Predictions: 1906: 0.0009, 1907: 0.0163, 1908: 0.0058, 1909: 0.0031, 1910: 0.0027, 1911: 0.0053, 1912: 0.0284, 1913: 0.0097, 1914: 0.0028, 1915: 0.0024, 1916: 0.9901, 1917: 0.0029, 1918: 0.0042
+2025-03-04 17:40:23,958 - INFO - Removing 1886 from predicted terms
+2025-03-04 17:40:23,958 - INFO - Started predicting for term: 1916
+2025-03-04 17:40:24,154 - INFO - Predictions: 1953: 0.0021, 1954: 0.0160, 1955: 0.1770, 1956: 0.0130, 1957: 0.1499
+2025-03-04 17:40:24,154 - INFO - Started predicting for term: 293
+2025-03-04 17:40:24,306 - INFO - Predictions: 1855: 0.0118, 1858: 0.9961, 1965: 0.0189
+2025-03-04 17:40:24,306 - INFO - Removing 293 from predicted terms
+2025-03-04 17:40:24,306 - INFO - Started predicting for term: 1858
+2025-03-04 17:40:24,462 - INFO - Predictions: 1859: 0.2760, 1860: 0.0100, 1861: 0.0076, 1968: 0.0649, 2305: 0.0024, 2306: 0.0002, 83: 0.0800
+2025-03-04 17:40:24,463 - INFO - ----- Rerunning predictions -----
+2025-03-04 17:40:24,465 - INFO - Term: 1234, Probability: {'probabilities': [0.99135], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 17:40:24,465 - INFO - Term: 203, Probability: {'probabilities': [0.99999], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1443']}
+2025-03-04 17:40:24,465 - INFO - Term: 1126, Probability: {'probabilities': [0.94077], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['203']}
+2025-03-04 17:40:24,465 - INFO - Term: 859, Probability: {'probabilities': [0.99969], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1761']}
+2025-03-04 17:40:24,465 - INFO - Term: 1916, Probability: {'probabilities': [0.99007], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1886']}
+2025-03-04 17:40:24,465 - INFO - Term: 1858, Probability: {'probabilities': [0.99611], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['293']}
+2025-03-04 17:42:09,133 - INFO - Predicting with input creator: abstract
+2025-03-04 17:42:09,133 - INFO - Started predicting for term: 1
+2025-03-04 17:42:09,333 - INFO - Predictions: 104: 0.0011, 1145: 0.9988, 1476: 0.0002, 1529: 0.0098, 1583: 0.8527, 343: 0.0017, 486: 0.0087, 563: 0.0372, 739: 0.0001, 804: 0.4080, 847: 0.0388
+2025-03-04 17:42:09,333 - INFO - Started predicting for term: 1145
+2025-03-04 17:42:09,509 - INFO - Predictions: 1043: 0.0978, 1684: 0.9504, 799: 0.2280, 91: 0.1400
+2025-03-04 17:42:09,509 - INFO - Removing 1145 from predicted terms
+2025-03-04 17:42:09,509 - INFO - Started predicting for term: 1684
+2025-03-04 17:42:09,688 - INFO - Predictions: 1169: 0.0185, 1234: 0.9913, 1271: 0.0001, 1278: 0.0004, 1558: 0.0010, 2019: 0.0007, 2031: 0.0032, 207: 0.0170, 2094: 0.0020, 2167: 0.0044, 2179: 0.0010, 2191: 0.0003, 2359: 0.0001, 313: 0.0000, 38: 0.0073, 387: 0.0004, 400: 0.0004, 401: 0.0128, 410: 0.0000, 523: 0.0000, 534: 0.0014, 740: 0.0006, 80: 0.0161, 808: 0.0017, 87: 0.0147, 88: 0.0012, 998: 0.0004
+2025-03-04 17:42:09,688 - INFO - Removing 1684 from predicted terms
+2025-03-04 17:42:09,688 - INFO - Started predicting for term: 1234
+2025-03-04 17:42:09,844 - INFO - Predictions: 1225: 0.0004, 1229: 0.0017, 1232: 0.0012, 1233: 0.0205, 1556: 0.0803, 1620: 0.0036, 1670: 0.0007, 1709: 0.0005, 1724: 0.0133, 1792: 0.0006, 208: 0.0804, 2129: 0.0212, 611: 0.0002, 918: 0.1512
+2025-03-04 17:42:09,845 - INFO - Started predicting for term: 1583
+2025-03-04 17:42:10,010 - INFO - Predictions: 1567: 0.0113, 1621: 0.0104, 1622: 0.1270, 1627: 0.0424, 1634: 0.9587, 2178: 0.0026, 241: 0.0008, 73: 0.0119
+2025-03-04 17:42:10,010 - INFO - Removing 1583 from predicted terms
+2025-03-04 17:42:10,010 - INFO - Started predicting for term: 1634
+2025-03-04 17:42:10,189 - INFO - Predictions: 1081: 0.9835, 1127: 0.1800, 1302: 0.0001, 1668: 0.0020, 1761: 0.9996, 1941: 0.0049, 2050: 0.0002, 2051: 0.0004, 2052: 0.2681, 2103: 0.0001, 226: 0.0043, 430: 0.0005, 460: 0.0013, 732: 0.0018, 818: 0.0014, 909: 0.0046
+2025-03-04 17:42:10,189 - INFO - Removing 1634 from predicted terms
+2025-03-04 17:42:10,189 - INFO - Started predicting for term: 1081
+2025-03-04 17:42:10,344 - INFO - Predictions: 154: 1.0000, 1714: 0.0000
+2025-03-04 17:42:10,344 - INFO - Removing 1081 from predicted terms
+2025-03-04 17:42:10,344 - INFO - Started predicting for term: 154
+2025-03-04 17:42:10,576 - INFO - Predictions: 1386: 0.0014, 1557: 0.0278, 1777: 0.0045, 1801: 0.0011, 2111: 0.0003, 254: 0.8839, 291: 0.0124, 375: 0.0015, 444: 0.0277, 79: 0.0050, 806: 0.0056
+2025-03-04 17:42:10,576 - INFO - Started predicting for term: 254
+2025-03-04 17:42:10,723 - INFO - Predictions: 1835: 0.0000, 283: 0.0013, 455: 0.0007, 801: 0.9999
+2025-03-04 17:42:10,723 - INFO - Removing 254 from predicted terms
+2025-03-04 17:42:10,723 - INFO - Removing 154 from predicted terms as branch
+2025-03-04 17:42:10,724 - INFO - Started predicting for term: 801
+2025-03-04 17:42:10,874 - INFO - Predictions: 1443: 0.9999, 1674: 0.0011, 2156: 0.0004, 2157: 0.0007, 283: 0.0031, 297: 0.0005
+2025-03-04 17:42:10,874 - INFO - Removing 801 from predicted terms
+2025-03-04 17:42:10,874 - INFO - Started predicting for term: 1443
+2025-03-04 17:42:11,024 - INFO - Predictions: 1811: 0.0005, 203: 1.0000, 24: 0.0008
+2025-03-04 17:42:11,024 - INFO - Removing 1443 from predicted terms
+2025-03-04 17:42:11,024 - INFO - Started predicting for term: 203
+2025-03-04 17:42:11,181 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 17:42:11,181 - INFO - Started predicting for term: 1126
+2025-03-04 17:42:11,181 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 17:42:11,181 - INFO - Started predicting for term: 1761
+2025-03-04 17:42:11,338 - INFO - Predictions: 1202: 0.0004, 1213: 0.0001, 514: 0.0002, 859: 0.9997
+2025-03-04 17:42:11,338 - INFO - Removing 1761 from predicted terms
+2025-03-04 17:42:11,338 - INFO - Started predicting for term: 859
+2025-03-04 17:42:11,501 - INFO - Predictions: 1307: 0.0005, 203: 0.9995, 476: 0.0024, 722: 0.0049, 996: 0.0024
+2025-03-04 17:42:11,501 - INFO - Started predicting for term: 203
+2025-03-04 17:42:11,652 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 17:42:11,652 - INFO - Started predicting for term: 1126
+2025-03-04 17:42:11,652 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 17:42:11,653 - INFO - Started predicting for term: 804
+2025-03-04 17:42:11,826 - INFO - Predictions: 101: 0.0001, 1222: 0.0000, 1868: 0.0002, 1882: 0.6757, 2004: 0.0570, 2165: 0.0004, 2366: 0.0000, 293: 0.9585, 74: 0.0004, 75: 0.0001, 78: 0.0018
+2025-03-04 17:42:11,826 - INFO - Started predicting for term: 1882
+2025-03-04 17:42:11,988 - INFO - Predictions: 1883: 0.0021, 1884: 0.0244, 1885: 0.0004, 1886: 0.9980, 1887: 0.0015
+2025-03-04 17:42:11,988 - INFO - Started predicting for term: 1886
+2025-03-04 17:42:12,151 - INFO - Predictions: 1906: 0.0009, 1907: 0.0163, 1908: 0.0058, 1909: 0.0031, 1910: 0.0027, 1911: 0.0053, 1912: 0.0284, 1913: 0.0097, 1914: 0.0028, 1915: 0.0024, 1916: 0.9901, 1917: 0.0029, 1918: 0.0042
+2025-03-04 17:42:12,151 - INFO - Removing 1886 from predicted terms
+2025-03-04 17:42:12,151 - INFO - Started predicting for term: 1916
+2025-03-04 17:42:12,358 - INFO - Predictions: 1953: 0.0021, 1954: 0.0160, 1955: 0.1770, 1956: 0.0130, 1957: 0.1499
+2025-03-04 17:42:12,358 - INFO - Started predicting for term: 293
+2025-03-04 17:42:12,516 - INFO - Predictions: 1855: 0.0118, 1858: 0.9961, 1965: 0.0189
+2025-03-04 17:42:12,516 - INFO - Removing 293 from predicted terms
+2025-03-04 17:42:12,516 - INFO - Started predicting for term: 1858
+2025-03-04 17:42:12,673 - INFO - Predictions: 1859: 0.2760, 1860: 0.0100, 1861: 0.0076, 1968: 0.0649, 2305: 0.0024, 2306: 0.0002, 83: 0.0800
+2025-03-04 17:42:12,675 - INFO - ----- Rerunning predictions -----
+2025-03-04 17:42:12,677 - INFO - Term: 1234, Probability: {'probabilities': [0.99135], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 17:42:12,677 - INFO - Term: 203, Probability: {'probabilities': [0.99999], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1443']}
+2025-03-04 17:42:12,677 - INFO - Term: 1126, Probability: {'probabilities': [0.94077], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['203']}
+2025-03-04 17:42:12,677 - INFO - Term: 859, Probability: {'probabilities': [0.99969], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1761']}
+2025-03-04 17:42:12,677 - INFO - Term: 1916, Probability: {'probabilities': [0.99007], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1886']}
+2025-03-04 17:42:12,677 - INFO - Term: 1858, Probability: {'probabilities': [0.99611], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['293']}
+2025-03-04 18:10:26,823 - INFO - Predicting with input creator: abstract
+2025-03-04 18:10:26,823 - INFO - Started predicting for term: 1
+2025-03-04 18:10:27,027 - INFO - Predictions: 104: 0.0011, 1145: 0.9988, 1476: 0.0002, 1529: 0.0098, 1583: 0.8527, 343: 0.0017, 486: 0.0087, 563: 0.0372, 739: 0.0001, 804: 0.4080, 847: 0.0388
+2025-03-04 18:10:27,027 - INFO - Started predicting for term: 1145
+2025-03-04 18:10:27,208 - INFO - Predictions: 1043: 0.0978, 1684: 0.9504, 799: 0.2280, 91: 0.1400
+2025-03-04 18:10:27,209 - INFO - Removing 1145 from predicted terms
+2025-03-04 18:10:27,209 - INFO - Started predicting for term: 1684
+2025-03-04 18:10:27,380 - INFO - Predictions: 1169: 0.0185, 1234: 0.9913, 1271: 0.0001, 1278: 0.0004, 1558: 0.0010, 2019: 0.0007, 2031: 0.0032, 207: 0.0170, 2094: 0.0020, 2167: 0.0044, 2179: 0.0010, 2191: 0.0003, 2359: 0.0001, 313: 0.0000, 38: 0.0073, 387: 0.0004, 400: 0.0004, 401: 0.0128, 410: 0.0000, 523: 0.0000, 534: 0.0014, 740: 0.0006, 80: 0.0161, 808: 0.0017, 87: 0.0147, 88: 0.0012, 998: 0.0004
+2025-03-04 18:10:27,381 - INFO - Removing 1684 from predicted terms
+2025-03-04 18:10:27,381 - INFO - Started predicting for term: 1234
+2025-03-04 18:10:27,530 - INFO - Predictions: 1225: 0.0004, 1229: 0.0017, 1232: 0.0012, 1233: 0.0205, 1556: 0.0803, 1620: 0.0036, 1670: 0.0007, 1709: 0.0005, 1724: 0.0133, 1792: 0.0006, 208: 0.0804, 2129: 0.0212, 611: 0.0002, 918: 0.1512
+2025-03-04 18:10:27,530 - INFO - Started predicting for term: 1583
+2025-03-04 18:10:27,750 - INFO - Predictions: 1567: 0.0113, 1621: 0.0104, 1622: 0.1270, 1627: 0.0424, 1634: 0.9587, 2178: 0.0026, 241: 0.0008, 73: 0.0119
+2025-03-04 18:10:27,750 - INFO - Removing 1583 from predicted terms
+2025-03-04 18:10:27,750 - INFO - Started predicting for term: 1634
+2025-03-04 18:10:27,919 - INFO - Predictions: 1081: 0.9835, 1127: 0.1800, 1302: 0.0001, 1668: 0.0020, 1761: 0.9996, 1941: 0.0049, 2050: 0.0002, 2051: 0.0004, 2052: 0.2681, 2103: 0.0001, 226: 0.0043, 430: 0.0005, 460: 0.0013, 732: 0.0018, 818: 0.0014, 909: 0.0046
+2025-03-04 18:10:27,919 - INFO - Removing 1634 from predicted terms
+2025-03-04 18:10:27,919 - INFO - Started predicting for term: 1081
+2025-03-04 18:10:28,062 - INFO - Predictions: 154: 1.0000, 1714: 0.0000
+2025-03-04 18:10:28,062 - INFO - Removing 1081 from predicted terms
+2025-03-04 18:10:28,062 - INFO - Started predicting for term: 154
+2025-03-04 18:10:28,292 - INFO - Predictions: 1386: 0.0014, 1557: 0.0278, 1777: 0.0045, 1801: 0.0011, 2111: 0.0003, 254: 0.8839, 291: 0.0124, 375: 0.0015, 444: 0.0277, 79: 0.0050, 806: 0.0056
+2025-03-04 18:10:28,292 - INFO - Started predicting for term: 254
+2025-03-04 18:10:28,437 - INFO - Predictions: 1835: 0.0000, 283: 0.0013, 455: 0.0007, 801: 0.9999
+2025-03-04 18:10:28,437 - INFO - Removing 254 from predicted terms
+2025-03-04 18:10:28,437 - INFO - Removing 154 from predicted terms as branch
+2025-03-04 18:10:28,437 - INFO - Started predicting for term: 801
+2025-03-04 18:10:28,586 - INFO - Predictions: 1443: 0.9999, 1674: 0.0011, 2156: 0.0004, 2157: 0.0007, 283: 0.0031, 297: 0.0005
+2025-03-04 18:10:28,586 - INFO - Removing 801 from predicted terms
+2025-03-04 18:10:28,586 - INFO - Started predicting for term: 1443
+2025-03-04 18:10:28,726 - INFO - Predictions: 1811: 0.0005, 203: 1.0000, 24: 0.0008
+2025-03-04 18:10:28,726 - INFO - Removing 1443 from predicted terms
+2025-03-04 18:10:28,726 - INFO - Started predicting for term: 203
+2025-03-04 18:10:28,865 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 18:10:28,865 - INFO - Started predicting for term: 1126
+2025-03-04 18:10:28,865 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 18:10:28,865 - INFO - Started predicting for term: 1761
+2025-03-04 18:10:29,011 - INFO - Predictions: 1202: 0.0004, 1213: 0.0001, 514: 0.0002, 859: 0.9997
+2025-03-04 18:10:29,011 - INFO - Removing 1761 from predicted terms
+2025-03-04 18:10:29,011 - INFO - Started predicting for term: 859
+2025-03-04 18:10:29,156 - INFO - Predictions: 1307: 0.0005, 203: 0.9995, 476: 0.0024, 722: 0.0049, 996: 0.0024
+2025-03-04 18:10:29,156 - INFO - Started predicting for term: 203
+2025-03-04 18:10:29,298 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 18:10:29,298 - INFO - Started predicting for term: 1126
+2025-03-04 18:10:29,298 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 18:10:29,298 - INFO - Started predicting for term: 804
+2025-03-04 18:10:29,457 - INFO - Predictions: 101: 0.0001, 1222: 0.0000, 1868: 0.0002, 1882: 0.6757, 2004: 0.0570, 2165: 0.0004, 2366: 0.0000, 293: 0.9585, 74: 0.0004, 75: 0.0001, 78: 0.0018
+2025-03-04 18:10:29,458 - INFO - Started predicting for term: 1882
+2025-03-04 18:10:29,602 - INFO - Predictions: 1883: 0.0021, 1884: 0.0244, 1885: 0.0004, 1886: 0.9980, 1887: 0.0015
+2025-03-04 18:10:29,603 - INFO - Started predicting for term: 1886
+2025-03-04 18:10:29,759 - INFO - Predictions: 1906: 0.0009, 1907: 0.0163, 1908: 0.0058, 1909: 0.0031, 1910: 0.0027, 1911: 0.0053, 1912: 0.0284, 1913: 0.0097, 1914: 0.0028, 1915: 0.0024, 1916: 0.9901, 1917: 0.0029, 1918: 0.0042
+2025-03-04 18:10:29,759 - INFO - Removing 1886 from predicted terms
+2025-03-04 18:10:29,759 - INFO - Started predicting for term: 1916
+2025-03-04 18:10:29,937 - INFO - Predictions: 1953: 0.0021, 1954: 0.0160, 1955: 0.1770, 1956: 0.0130, 1957: 0.1499
+2025-03-04 18:10:29,937 - INFO - Started predicting for term: 293
+2025-03-04 18:10:30,087 - INFO - Predictions: 1855: 0.0118, 1858: 0.9961, 1965: 0.0189
+2025-03-04 18:10:30,087 - INFO - Removing 293 from predicted terms
+2025-03-04 18:10:30,087 - INFO - Started predicting for term: 1858
+2025-03-04 18:10:30,233 - INFO - Predictions: 1859: 0.2760, 1860: 0.0100, 1861: 0.0076, 1968: 0.0649, 2305: 0.0024, 2306: 0.0002, 83: 0.0800
+2025-03-04 18:10:30,235 - INFO - Term: 1234, Probability: {'probabilities': [0.99135], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 18:10:30,236 - INFO - Term: 203, Probability: {'probabilities': [0.99999], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1443']}
+2025-03-04 18:10:30,236 - INFO - Term: 1126, Probability: {'probabilities': [0.94077], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['203']}
+2025-03-04 18:10:30,236 - INFO - Term: 859, Probability: {'probabilities': [0.99969], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1761']}
+2025-03-04 18:10:30,236 - INFO - Term: 1916, Probability: {'probabilities': [0.99007], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1886']}
+2025-03-04 18:10:30,236 - INFO - Term: 1858, Probability: {'probabilities': [0.99611], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['293']}
+2025-03-04 18:10:30,236 - INFO - Term: 1234, Probability: {'probability': 0.99135, 'name': 'Photometry'}
+2025-03-04 18:10:30,236 - INFO - Term: 203, Probability: {'probability': 0.99999, 'name': 'Cataclysmic variable stars'}
+2025-03-04 18:10:30,236 - INFO - Term: 1126, Probability: {'probability': 0.94077, 'name': 'Nova-like variable stars'}
+2025-03-04 18:10:30,236 - INFO - Term: 859, Probability: {'probability': 0.99969, 'name': 'Intrinsic variable stars'}
+2025-03-04 18:10:30,236 - INFO - Term: 1916, Probability: {'probability': 0.99007, 'name': 'Time series analysis'}
+2025-03-04 18:10:30,236 - INFO - Term: 1858, Probability: {'probability': 0.99611, 'name': 'Astronomy data analysis'}
+2025-03-04 18:24:26,652 - INFO - Predicting with input creator: abstract
+2025-03-04 18:24:26,652 - INFO - Started predicting for term: 1
+2025-03-04 18:24:26,834 - INFO - Predictions: 104: 0.0098, 1145: 0.9731, 1476: 0.0049, 1529: 0.0009, 1583: 0.9958, 343: 0.3233, 486: 0.0088, 563: 0.0082, 739: 0.1612, 804: 0.8557, 847: 0.0624
+2025-03-04 18:24:26,835 - INFO - Started predicting for term: 1145
+2025-03-04 18:24:26,992 - INFO - Predictions: 1043: 0.3512, 1684: 0.9173, 799: 0.5287, 91: 0.0190
+2025-03-04 18:24:26,993 - INFO - Started predicting for term: 1684
+2025-03-04 18:24:27,168 - INFO - Predictions: 1169: 0.0028, 1234: 0.0141, 1271: 0.0001, 1278: 0.0001, 1558: 0.9765, 2019: 0.0005, 2031: 0.0044, 207: 0.0020, 2094: 0.0039, 2167: 0.0005, 2179: 0.0042, 2191: 0.0020, 2359: 0.0001, 313: 0.0002, 38: 0.0075, 387: 0.0008, 400: 0.0004, 401: 0.0377, 410: 0.0000, 523: 0.0000, 534: 0.0007, 740: 0.0006, 80: 0.0066, 808: 0.0055, 87: 0.0076, 88: 0.0029, 998: 0.0001
+2025-03-04 18:24:27,169 - INFO - Removing 1684 from predicted terms
+2025-03-04 18:24:27,169 - INFO - Removing 1145 from predicted terms as branch
+2025-03-04 18:24:27,169 - INFO - Started predicting for term: 1558
+2025-03-04 18:24:27,321 - INFO - Predictions: 1359: 0.0021, 2095: 0.0006, 2099: 0.0025, 2133: 0.0174, 2171: 0.3870, 2247: 0.0001, 2248: 0.0003, 2249: 0.0036, 2250: 0.0009, 2283: 0.0002, 2284: 0.8066, 2285: 0.0042, 980: 0.0058
+2025-03-04 18:24:27,321 - INFO - Started predicting for term: 2284
+2025-03-04 18:24:27,321 - ERROR - Model for term 2284 not found at path: ./models/abstract/2284
+2025-03-04 18:24:27,321 - INFO - Started predicting for term: 799
+2025-03-04 18:24:27,485 - INFO - Predictions: 1147: 0.4637, 1277: 0.0033, 1499: 0.0032, 1549: 0.1766, 1554: 0.0054, 1633: 0.0003, 1689: 0.0869, 1708: 0.0001, 2030: 0.0003, 2329: 0.0001, 433: 0.0001, 738: 0.0013, 805: 0.0026, 84: 0.0030
+2025-03-04 18:24:27,485 - INFO - Started predicting for term: 1147
+2025-03-04 18:24:27,627 - INFO - Predictions: 1170: 0.8325, 1350: 0.0052, 1513: 0.0068, 1543: 0.3130, 1739: 0.1053, 1774: 0.0015, 1819: 0.0263, 399: 0.0022, 47: 0.0017, 632: 0.0137, 791: 0.0011
+2025-03-04 18:24:27,627 - INFO - Started predicting for term: 1170
+2025-03-04 18:24:27,773 - INFO - Predictions: 1767: 0.0071, 761: 0.9967
+2025-03-04 18:24:27,773 - INFO - Removing 1170 from predicted terms
+2025-03-04 18:24:27,773 - INFO - Started predicting for term: 761
+2025-03-04 18:24:27,773 - ERROR - Model for term 761 not found at path: ./models/abstract/761
+2025-03-04 18:24:27,773 - INFO - Started predicting for term: 1583
+2025-03-04 18:24:28,020 - INFO - Predictions: 1567: 0.0005, 1621: 0.9390, 1622: 0.0001, 1627: 0.0443, 1634: 0.0246, 2178: 0.0006, 241: 0.0046, 73: 0.0000
+2025-03-04 18:24:28,020 - INFO - Started predicting for term: 1621
+2025-03-04 18:24:28,181 - INFO - Predictions: 1569: 0.0372, 1572: 0.0002, 1577: 0.0006, 1584: 0.0112, 1596: 0.0006, 1599: 0.0033, 1619: 0.9979, 1623: 0.0001, 1624: 0.0029, 1631: 0.0001, 1636: 0.0014, 2102: 0.0000
+2025-03-04 18:24:28,181 - INFO - Removing 1621 from predicted terms
+2025-03-04 18:24:28,181 - INFO - Removing 1583 from predicted terms as branch
+2025-03-04 18:24:28,181 - INFO - Started predicting for term: 1619
+2025-03-04 18:24:28,325 - INFO - Predictions: 106: 0.0002, 1603: 0.0005, 1613: 0.0001, 1625: 0.0004, 187: 1.0000, 1881: 0.0001
+2025-03-04 18:24:28,326 - INFO - Removing 1619 from predicted terms
+2025-03-04 18:24:28,326 - INFO - Started predicting for term: 187
+2025-03-04 18:24:28,511 - INFO - Predictions: 1164: 0.0009, 1339: 0.0010, 1362: 0.0001, 1814: 0.0010, 629: 0.9997
+2025-03-04 18:24:28,512 - INFO - Removing 187 from predicted terms
+2025-03-04 18:24:28,512 - INFO - Started predicting for term: 629
+2025-03-04 18:24:28,512 - ERROR - Model for term 629 not found at path: ./models/abstract/629
+2025-03-04 18:24:28,512 - INFO - Started predicting for term: 804
+2025-03-04 18:24:28,668 - INFO - Predictions: 101: 0.0010, 1222: 0.0000, 1868: 0.0000, 1882: 0.0032, 2004: 0.9886, 2165: 0.0000, 2366: 0.0000, 293: 0.0351, 74: 0.0003, 75: 0.0028, 78: 0.0003
+2025-03-04 18:24:28,668 - INFO - Removing 804 from predicted terms
+2025-03-04 18:24:28,668 - INFO - Started predicting for term: 2004
+2025-03-04 18:24:28,843 - INFO - Predictions: 2058: 0.0051, 2063: 0.0076, 2077: 0.0125, 2078: 0.9797, 2088: 0.0003, 2089: 0.0002, 2090: 0.0021, 2093: 0.0009, 2107: 0.0289, 2371: 0.0007, 2372: 0.0000
+2025-03-04 18:24:28,843 - INFO - Removing 2004 from predicted terms
+2025-03-04 18:24:28,843 - INFO - Started predicting for term: 2078
+2025-03-04 18:24:28,989 - INFO - Predictions: 1558: 1.0000, 2094: 0.0000, 2223: 0.0001, 2224: 0.0004, 2225: 0.0000, 2243: 0.0001
+2025-03-04 18:24:28,989 - INFO - Started predicting for term: 1558
+2025-03-04 18:24:29,132 - INFO - Predictions: 1359: 0.0021, 2095: 0.0006, 2099: 0.0025, 2133: 0.0174, 2171: 0.3870, 2247: 0.0001, 2248: 0.0003, 2249: 0.0036, 2250: 0.0009, 2283: 0.0002, 2284: 0.8066, 2285: 0.0042, 980: 0.0058
+2025-03-04 18:24:29,132 - INFO - Started predicting for term: 2284
+2025-03-04 18:24:29,132 - ERROR - Model for term 2284 not found at path: ./models/abstract/2284
+2025-03-04 18:24:29,134 - INFO - Term: 1558, Probability: {'probabilities': [0.97646], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 18:24:29,134 - INFO - Term: 2284, Probability: {'probabilities': [0.80662], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1558']}
+2025-03-04 18:24:29,134 - INFO - Term: 761, Probability: {'probabilities': [0.99666], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1170']}
+2025-03-04 18:24:29,134 - INFO - Term: 629, Probability: {'probabilities': [0.99971], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['187']}
+2025-03-04 18:24:29,134 - INFO - Term: 2078, Probability: {'probabilities': [0.97968], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['2004']}
+2025-03-04 18:24:29,134 - INFO - Term: 1558, Probability: {'probability': 0.97646, 'name': 'Spectroscopy'}
+2025-03-04 18:24:29,134 - INFO - Term: 2284, Probability: {'probability': 0.80662, 'name': 'Ultraviolet spectroscopy'}
+2025-03-04 18:24:29,134 - INFO - Term: 761, Probability: {'probability': 0.99666, 'name': 'Hubble Space Telescope'}
+2025-03-04 18:24:29,134 - INFO - Term: 629, Probability: {'probability': 0.99971, 'name': 'Gamma-ray bursts'}
+2025-03-04 18:24:29,134 - INFO - Term: 2078, Probability: {'probability': 0.97968, 'name': 'Experimental techniques'}
+2025-03-04 18:27:33,761 - INFO - Predicting with input creator: abstract
+2025-03-04 18:27:33,761 - INFO - Started predicting for term: 1
+2025-03-04 18:27:33,954 - INFO - Predictions: 104: 0.0162, 1145: 0.9980, 1476: 0.0035, 1529: 0.0077, 1583: 0.0283, 343: 0.0047, 486: 0.0021, 563: 0.1290, 739: 0.0002, 804: 0.9899, 847: 0.0090
+2025-03-04 18:27:33,954 - INFO - Started predicting for term: 1145
+2025-03-04 18:27:34,120 - INFO - Predictions: 1043: 0.5442, 1684: 0.9373, 799: 0.0083, 91: 0.1005
+2025-03-04 18:27:34,120 - INFO - Started predicting for term: 1043
+2025-03-04 18:27:34,291 - INFO - Predictions: 1100: 0.0001, 1146: 0.0391, 1329: 0.0000, 1338: 0.0018, 1736: 0.0002, 1776: 0.0002, 1810: 0.0001, 2109: 0.0003, 293: 0.9944, 324: 0.0001, 35: 0.0002, 628: 0.0001, 675: 0.0060, 686: 0.0001, 786: 0.0007, 97: 0.0000
+2025-03-04 18:27:34,291 - INFO - Started predicting for term: 293
+2025-03-04 18:27:34,520 - INFO - Predictions: 1855: 0.1499, 1858: 0.9718, 1965: 0.5268
+2025-03-04 18:27:34,520 - INFO - Removing 293 from predicted terms
+2025-03-04 18:27:34,520 - INFO - Started predicting for term: 1858
+2025-03-04 18:27:34,667 - INFO - Predictions: 1859: 0.0034, 1860: 0.0044, 1861: 0.0020, 1968: 0.0042, 2305: 0.0005, 2306: 0.0032, 83: 0.9841
+2025-03-04 18:27:34,667 - INFO - Removing 1858 from predicted terms
+2025-03-04 18:27:34,667 - INFO - Started predicting for term: 83
+2025-03-04 18:27:34,667 - ERROR - Model for term 83 not found at path: ./models/abstract/83
+2025-03-04 18:27:34,667 - INFO - Started predicting for term: 1965
+2025-03-04 18:27:34,813 - INFO - Predictions: 1889: 0.0025, 1969: 0.0065, 1970: 0.0299, 1971: 0.0136, 83: 0.6080
+2025-03-04 18:27:34,813 - INFO - Started predicting for term: 83
+2025-03-04 18:27:34,813 - ERROR - Model for term 83 not found at path: ./models/abstract/83
+2025-03-04 18:27:34,813 - INFO - Started predicting for term: 1684
+2025-03-04 18:27:34,987 - INFO - Predictions: 1169: 0.0047, 1234: 0.9859, 1271: 0.0001, 1278: 0.0001, 1558: 0.0394, 2019: 0.0012, 2031: 0.0005, 207: 0.0097, 2094: 0.0021, 2167: 0.0004, 2179: 0.9287, 2191: 0.0013, 2359: 0.0001, 313: 0.0003, 38: 0.0012, 387: 0.0010, 400: 0.0003, 401: 0.0060, 410: 0.0001, 523: 0.0000, 534: 0.0025, 740: 0.0003, 80: 0.7377, 808: 0.0010, 87: 0.0163, 88: 0.0396, 998: 0.0002
+2025-03-04 18:27:34,987 - INFO - Removing 1684 from predicted terms
+2025-03-04 18:27:34,987 - INFO - Removing 1145 from predicted terms as branch
+2025-03-04 18:27:34,987 - INFO - Started predicting for term: 1234
+2025-03-04 18:27:35,148 - INFO - Predictions: 1225: 0.0001, 1229: 0.0023, 1232: 0.0028, 1233: 0.0009, 1556: 0.7166, 1620: 0.1747, 1670: 0.0003, 1709: 0.0004, 1724: 0.0156, 1792: 0.0201, 208: 0.0166, 2129: 0.0091, 611: 0.0004, 918: 0.0005
+2025-03-04 18:27:35,148 - INFO - Started predicting for term: 1556
+2025-03-04 18:27:35,306 - INFO - Predictions: 1555: 0.0293, 544: 0.9985
+2025-03-04 18:27:35,306 - INFO - Started predicting for term: 544
+2025-03-04 18:27:35,306 - ERROR - Model for term 544 not found at path: ./models/abstract/544
+2025-03-04 18:27:35,306 - INFO - Started predicting for term: 2179
+2025-03-04 18:27:35,450 - INFO - Predictions: 544: 1.0000
+2025-03-04 18:27:35,450 - INFO - Started predicting for term: 544
+2025-03-04 18:27:35,451 - ERROR - Model for term 544 not found at path: ./models/abstract/544
+2025-03-04 18:27:35,451 - INFO - Started predicting for term: 80
+2025-03-04 18:27:35,627 - INFO - Predictions: 1197: 0.0021, 1217: 0.0005, 1218: 0.0000, 1219: 0.0001, 1220: 0.0008, 1227: 0.0005, 131: 0.0000, 1332: 0.0006, 1337: 0.0018, 1385: 0.0017, 1394: 0.0009, 1463: 0.0171, 1481: 0.0000, 1541: 0.0005, 1553: 0.0009, 1564: 0.0043, 1595: 0.1068, 1677: 0.0029, 1724: 0.0002, 173: 0.0001, 1807: 0.0000, 182: 0.0007, 2328: 0.0000, 395: 0.0008, 449: 0.0009, 466: 0.0000, 555: 0.7900, 82: 0.0004, 85: 0.0006, 999: 0.0010
+2025-03-04 18:27:35,627 - INFO - Started predicting for term: 555
+2025-03-04 18:27:35,627 - ERROR - Model for term 555 not found at path: ./models/abstract/555
+2025-03-04 18:27:35,627 - INFO - Started predicting for term: 804
+2025-03-04 18:27:35,822 - INFO - Predictions: 101: 0.0098, 1222: 0.0000, 1868: 0.0000, 1882: 0.0091, 2004: 0.0045, 2165: 0.0000, 2366: 0.0000, 293: 0.9843, 74: 0.0003, 75: 0.0001, 78: 0.0001
+2025-03-04 18:27:35,822 - INFO - Started predicting for term: 293
+2025-03-04 18:27:35,980 - INFO - Predictions: 1855: 0.1499, 1858: 0.9718, 1965: 0.5268
+2025-03-04 18:27:35,980 - INFO - Started predicting for term: 1858
+2025-03-04 18:27:36,124 - INFO - Predictions: 1859: 0.0034, 1860: 0.0044, 1861: 0.0020, 1968: 0.0042, 2305: 0.0005, 2306: 0.0032, 83: 0.9841
+2025-03-04 18:27:36,125 - INFO - Started predicting for term: 83
+2025-03-04 18:27:36,125 - ERROR - Model for term 83 not found at path: ./models/abstract/83
+2025-03-04 18:27:36,125 - INFO - Started predicting for term: 1965
+2025-03-04 18:27:36,326 - INFO - Predictions: 1889: 0.0025, 1969: 0.0065, 1970: 0.0299, 1971: 0.0136, 83: 0.6080
+2025-03-04 18:27:36,327 - INFO - Started predicting for term: 83
+2025-03-04 18:27:36,327 - ERROR - Model for term 83 not found at path: ./models/abstract/83
+2025-03-04 18:27:36,328 - INFO - Term: 804, Probability: {'probabilities': [0.98994], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1']}
+2025-03-04 18:27:36,329 - INFO - Term: 83, Probability: {'probabilities': [0.98405], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1858']}
+2025-03-04 18:27:36,329 - INFO - Term: 1234, Probability: {'probabilities': [0.98589], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 18:27:36,329 - INFO - Term: 2179, Probability: {'probabilities': [0.92873], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 18:27:36,329 - INFO - Term: 544, Probability: {'probabilities': [0.99846], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1556']}
+2025-03-04 18:27:36,329 - INFO - Term: 804, Probability: {'probability': 0.98994, 'name': 'Interdisciplinary astronomy'}
+2025-03-04 18:27:36,329 - INFO - Term: 83, Probability: {'probability': 0.98405, 'name': 'Astronomy databases'}
+2025-03-04 18:27:36,329 - INFO - Term: 1234, Probability: {'probability': 0.98589, 'name': 'Photometry'}
+2025-03-04 18:27:36,329 - INFO - Term: 2179, Probability: {'probability': 0.92873, 'name': 'Calibration'}
+2025-03-04 18:27:36,329 - INFO - Term: 544, Probability: {'probability': 0.99846, 'name': 'Flux calibration'}
+2025-03-04 18:37:11,844 - INFO - Predicting with input creator: abstract
+2025-03-04 18:37:11,844 - INFO - Started predicting for term: 1
+2025-03-04 18:37:12,040 - INFO - Predictions: 104: 0.0162, 1145: 0.9980, 1476: 0.0035, 1529: 0.0077, 1583: 0.0283, 343: 0.0047, 486: 0.0021, 563: 0.1290, 739: 0.0002, 804: 0.9899, 847: 0.0090
+2025-03-04 18:37:12,040 - INFO - Started predicting for term: 1145
+2025-03-04 18:37:12,204 - INFO - Predictions: 1043: 0.5442, 1684: 0.9373, 799: 0.0083, 91: 0.1005
+2025-03-04 18:37:12,204 - INFO - Started predicting for term: 1043
+2025-03-04 18:37:12,368 - INFO - Predictions: 1100: 0.0001, 1146: 0.0391, 1329: 0.0000, 1338: 0.0018, 1736: 0.0002, 1776: 0.0002, 1810: 0.0001, 2109: 0.0003, 293: 0.9944, 324: 0.0001, 35: 0.0002, 628: 0.0001, 675: 0.0060, 686: 0.0001, 786: 0.0007, 97: 0.0000
+2025-03-04 18:37:12,368 - INFO - Started predicting for term: 293
+2025-03-04 18:37:12,514 - INFO - Predictions: 1855: 0.1499, 1858: 0.9718, 1965: 0.5268
+2025-03-04 18:37:12,514 - INFO - Removing 293 from predicted terms
+2025-03-04 18:37:12,514 - INFO - Started predicting for term: 1858
+2025-03-04 18:37:12,655 - INFO - Predictions: 1859: 0.0034, 1860: 0.0044, 1861: 0.0020, 1968: 0.0042, 2305: 0.0005, 2306: 0.0032, 83: 0.9841
+2025-03-04 18:37:12,656 - INFO - Removing 1858 from predicted terms
+2025-03-04 18:37:12,656 - INFO - Started predicting for term: 83
+2025-03-04 18:37:12,656 - ERROR - Model for term 83 not found at path: ./models/abstract/83
+2025-03-04 18:37:12,656 - INFO - Started predicting for term: 1965
+2025-03-04 18:37:12,796 - INFO - Predictions: 1889: 0.0025, 1969: 0.0065, 1970: 0.0299, 1971: 0.0136, 83: 0.6080
+2025-03-04 18:37:12,796 - INFO - Started predicting for term: 83
+2025-03-04 18:37:12,796 - ERROR - Model for term 83 not found at path: ./models/abstract/83
+2025-03-04 18:37:12,796 - INFO - Started predicting for term: 1684
+2025-03-04 18:37:12,968 - INFO - Predictions: 1169: 0.0047, 1234: 0.9859, 1271: 0.0001, 1278: 0.0001, 1558: 0.0394, 2019: 0.0012, 2031: 0.0005, 207: 0.0097, 2094: 0.0021, 2167: 0.0004, 2179: 0.9287, 2191: 0.0013, 2359: 0.0001, 313: 0.0003, 38: 0.0012, 387: 0.0010, 400: 0.0003, 401: 0.0060, 410: 0.0001, 523: 0.0000, 534: 0.0025, 740: 0.0003, 80: 0.7377, 808: 0.0010, 87: 0.0163, 88: 0.0396, 998: 0.0002
+2025-03-04 18:37:12,968 - INFO - Removing 1684 from predicted terms
+2025-03-04 18:37:12,968 - INFO - Removing 1145 from predicted terms as branch
+2025-03-04 18:37:12,968 - INFO - Started predicting for term: 1234
+2025-03-04 18:37:13,146 - INFO - Predictions: 1225: 0.0001, 1229: 0.0023, 1232: 0.0028, 1233: 0.0009, 1556: 0.7166, 1620: 0.1747, 1670: 0.0003, 1709: 0.0004, 1724: 0.0156, 1792: 0.0201, 208: 0.0166, 2129: 0.0091, 611: 0.0004, 918: 0.0005
+2025-03-04 18:37:13,147 - INFO - Started predicting for term: 1556
+2025-03-04 18:37:13,337 - INFO - Predictions: 1555: 0.0293, 544: 0.9985
+2025-03-04 18:37:13,337 - INFO - Started predicting for term: 544
+2025-03-04 18:37:13,337 - ERROR - Model for term 544 not found at path: ./models/abstract/544
+2025-03-04 18:37:13,337 - INFO - Started predicting for term: 2179
+2025-03-04 18:37:13,602 - INFO - Predictions: 544: 1.0000
+2025-03-04 18:37:13,602 - INFO - Started predicting for term: 544
+2025-03-04 18:37:13,602 - ERROR - Model for term 544 not found at path: ./models/abstract/544
+2025-03-04 18:37:13,602 - INFO - Started predicting for term: 80
+2025-03-04 18:37:13,765 - INFO - Predictions: 1197: 0.0021, 1217: 0.0005, 1218: 0.0000, 1219: 0.0001, 1220: 0.0008, 1227: 0.0005, 131: 0.0000, 1332: 0.0006, 1337: 0.0018, 1385: 0.0017, 1394: 0.0009, 1463: 0.0171, 1481: 0.0000, 1541: 0.0005, 1553: 0.0009, 1564: 0.0043, 1595: 0.1068, 1677: 0.0029, 1724: 0.0002, 173: 0.0001, 1807: 0.0000, 182: 0.0007, 2328: 0.0000, 395: 0.0008, 449: 0.0009, 466: 0.0000, 555: 0.7900, 82: 0.0004, 85: 0.0006, 999: 0.0010
+2025-03-04 18:37:13,765 - INFO - Started predicting for term: 555
+2025-03-04 18:37:13,765 - ERROR - Model for term 555 not found at path: ./models/abstract/555
+2025-03-04 18:37:13,765 - INFO - Started predicting for term: 804
+2025-03-04 18:37:13,944 - INFO - Predictions: 101: 0.0098, 1222: 0.0000, 1868: 0.0000, 1882: 0.0091, 2004: 0.0045, 2165: 0.0000, 2366: 0.0000, 293: 0.9843, 74: 0.0003, 75: 0.0001, 78: 0.0001
+2025-03-04 18:37:13,944 - INFO - Started predicting for term: 293
+2025-03-04 18:37:14,087 - INFO - Predictions: 1855: 0.1499, 1858: 0.9718, 1965: 0.5268
+2025-03-04 18:37:14,087 - INFO - Started predicting for term: 1858
+2025-03-04 18:37:14,230 - INFO - Predictions: 1859: 0.0034, 1860: 0.0044, 1861: 0.0020, 1968: 0.0042, 2305: 0.0005, 2306: 0.0032, 83: 0.9841
+2025-03-04 18:37:14,231 - INFO - Started predicting for term: 83
+2025-03-04 18:37:14,231 - ERROR - Model for term 83 not found at path: ./models/abstract/83
+2025-03-04 18:37:14,231 - INFO - Started predicting for term: 1965
+2025-03-04 18:37:14,373 - INFO - Predictions: 1889: 0.0025, 1969: 0.0065, 1970: 0.0299, 1971: 0.0136, 83: 0.6080
+2025-03-04 18:37:14,373 - INFO - Started predicting for term: 83
+2025-03-04 18:37:14,373 - ERROR - Model for term 83 not found at path: ./models/abstract/83
+2025-03-04 18:37:14,375 - INFO - Term: 804, Probability: {'probabilities': [0.98994], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1']}
+2025-03-04 18:37:14,375 - INFO - Term: 83, Probability: {'probabilities': [0.98405], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1858']}
+2025-03-04 18:37:14,375 - INFO - Term: 1234, Probability: {'probabilities': [0.98589], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 18:37:14,375 - INFO - Term: 2179, Probability: {'probabilities': [0.92873], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 18:37:14,375 - INFO - Term: 544, Probability: {'probabilities': [0.99846], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1556']}
+2025-03-04 18:37:14,375 - INFO - Term: 804, Probability: {'probability': 0.98994, 'name': 'Interdisciplinary astronomy'}
+2025-03-04 18:37:14,375 - INFO - Term: 83, Probability: {'probability': 0.98405, 'name': 'Astronomy databases'}
+2025-03-04 18:37:14,375 - INFO - Term: 1234, Probability: {'probability': 0.98589, 'name': 'Photometry'}
+2025-03-04 18:37:14,375 - INFO - Term: 2179, Probability: {'probability': 0.92873, 'name': 'Calibration'}
+2025-03-04 18:37:14,375 - INFO - Term: 544, Probability: {'probability': 0.99846, 'name': 'Flux calibration'}
+2025-03-04 18:45:50,320 - INFO - Predicting with input creator: abstract
+2025-03-04 18:45:50,320 - INFO - Started predicting for term: 1
+2025-03-04 18:45:50,507 - INFO - Predictions: 104: 0.0162, 1145: 0.9980, 1476: 0.0035, 1529: 0.0077, 1583: 0.0283, 343: 0.0047, 486: 0.0021, 563: 0.1290, 739: 0.0002, 804: 0.9899, 847: 0.0090
+2025-03-04 18:45:50,507 - INFO - Started predicting for term: 1145
+2025-03-04 18:45:50,668 - INFO - Predictions: 1043: 0.5442, 1684: 0.9373, 799: 0.0083, 91: 0.1005
+2025-03-04 18:45:50,668 - INFO - Started predicting for term: 1043
+2025-03-04 18:45:50,831 - INFO - Predictions: 1100: 0.0001, 1146: 0.0391, 1329: 0.0000, 1338: 0.0018, 1736: 0.0002, 1776: 0.0002, 1810: 0.0001, 2109: 0.0003, 293: 0.9944, 324: 0.0001, 35: 0.0002, 628: 0.0001, 675: 0.0060, 686: 0.0001, 786: 0.0007, 97: 0.0000
+2025-03-04 18:45:50,831 - INFO - Started predicting for term: 293
+2025-03-04 18:45:51,021 - INFO - Predictions: 1855: 0.1499, 1858: 0.9718, 1965: 0.5268
+2025-03-04 18:45:51,021 - INFO - Removing 293 from predicted terms
+2025-03-04 18:45:51,021 - INFO - Started predicting for term: 1858
+2025-03-04 18:45:51,163 - INFO - Predictions: 1859: 0.0034, 1860: 0.0044, 1861: 0.0020, 1968: 0.0042, 2305: 0.0005, 2306: 0.0032, 83: 0.9841
+2025-03-04 18:45:51,163 - INFO - Removing 1858 from predicted terms
+2025-03-04 18:45:51,163 - INFO - Started predicting for term: 83
+2025-03-04 18:45:51,163 - ERROR - Model for term 83 not found at path: ./models/abstract/83
+2025-03-04 18:45:51,163 - INFO - Started predicting for term: 1965
+2025-03-04 18:45:51,387 - INFO - Predictions: 1889: 0.0025, 1969: 0.0065, 1970: 0.0299, 1971: 0.0136, 83: 0.6080
+2025-03-04 18:45:51,387 - INFO - Started predicting for term: 83
+2025-03-04 18:45:51,387 - ERROR - Model for term 83 not found at path: ./models/abstract/83
+2025-03-04 18:45:51,387 - INFO - Started predicting for term: 1684
+2025-03-04 18:45:51,558 - INFO - Predictions: 1169: 0.0047, 1234: 0.9859, 1271: 0.0001, 1278: 0.0001, 1558: 0.0394, 2019: 0.0012, 2031: 0.0005, 207: 0.0097, 2094: 0.0021, 2167: 0.0004, 2179: 0.9287, 2191: 0.0013, 2359: 0.0001, 313: 0.0003, 38: 0.0012, 387: 0.0010, 400: 0.0003, 401: 0.0060, 410: 0.0001, 523: 0.0000, 534: 0.0025, 740: 0.0003, 80: 0.7377, 808: 0.0010, 87: 0.0163, 88: 0.0396, 998: 0.0002
+2025-03-04 18:45:51,558 - INFO - Removing 1684 from predicted terms
+2025-03-04 18:45:51,558 - INFO - Removing 1145 from predicted terms as branch
+2025-03-04 18:45:51,558 - INFO - Started predicting for term: 1234
+2025-03-04 18:45:51,709 - INFO - Predictions: 1225: 0.0001, 1229: 0.0023, 1232: 0.0028, 1233: 0.0009, 1556: 0.7166, 1620: 0.1747, 1670: 0.0003, 1709: 0.0004, 1724: 0.0156, 1792: 0.0201, 208: 0.0166, 2129: 0.0091, 611: 0.0004, 918: 0.0005
+2025-03-04 18:45:51,709 - INFO - Started predicting for term: 1556
+2025-03-04 18:45:51,848 - INFO - Predictions: 1555: 0.0293, 544: 0.9985
+2025-03-04 18:45:51,848 - INFO - Started predicting for term: 544
+2025-03-04 18:45:51,848 - ERROR - Model for term 544 not found at path: ./models/abstract/544
+2025-03-04 18:45:51,848 - INFO - Started predicting for term: 2179
+2025-03-04 18:45:52,015 - INFO - Predictions: 544: 1.0000
+2025-03-04 18:45:52,016 - INFO - Started predicting for term: 544
+2025-03-04 18:45:52,016 - ERROR - Model for term 544 not found at path: ./models/abstract/544
+2025-03-04 18:45:52,016 - INFO - Started predicting for term: 80
+2025-03-04 18:45:52,192 - INFO - Predictions: 1197: 0.0021, 1217: 0.0005, 1218: 0.0000, 1219: 0.0001, 1220: 0.0008, 1227: 0.0005, 131: 0.0000, 1332: 0.0006, 1337: 0.0018, 1385: 0.0017, 1394: 0.0009, 1463: 0.0171, 1481: 0.0000, 1541: 0.0005, 1553: 0.0009, 1564: 0.0043, 1595: 0.1068, 1677: 0.0029, 1724: 0.0002, 173: 0.0001, 1807: 0.0000, 182: 0.0007, 2328: 0.0000, 395: 0.0008, 449: 0.0009, 466: 0.0000, 555: 0.7900, 82: 0.0004, 85: 0.0006, 999: 0.0010
+2025-03-04 18:45:52,192 - INFO - Started predicting for term: 555
+2025-03-04 18:45:52,192 - ERROR - Model for term 555 not found at path: ./models/abstract/555
+2025-03-04 18:45:52,192 - INFO - Started predicting for term: 804
+2025-03-04 18:45:52,354 - INFO - Predictions: 101: 0.0098, 1222: 0.0000, 1868: 0.0000, 1882: 0.0091, 2004: 0.0045, 2165: 0.0000, 2366: 0.0000, 293: 0.9843, 74: 0.0003, 75: 0.0001, 78: 0.0001
+2025-03-04 18:45:52,354 - INFO - Started predicting for term: 293
+2025-03-04 18:45:52,510 - INFO - Predictions: 1855: 0.1499, 1858: 0.9718, 1965: 0.5268
+2025-03-04 18:45:52,510 - INFO - Started predicting for term: 1858
+2025-03-04 18:45:52,654 - INFO - Predictions: 1859: 0.0034, 1860: 0.0044, 1861: 0.0020, 1968: 0.0042, 2305: 0.0005, 2306: 0.0032, 83: 0.9841
+2025-03-04 18:45:52,654 - INFO - Started predicting for term: 83
+2025-03-04 18:45:52,654 - ERROR - Model for term 83 not found at path: ./models/abstract/83
+2025-03-04 18:45:52,654 - INFO - Started predicting for term: 1965
+2025-03-04 18:45:52,799 - INFO - Predictions: 1889: 0.0025, 1969: 0.0065, 1970: 0.0299, 1971: 0.0136, 83: 0.6080
+2025-03-04 18:45:52,800 - INFO - Started predicting for term: 83
+2025-03-04 18:45:52,800 - ERROR - Model for term 83 not found at path: ./models/abstract/83
+2025-03-04 18:45:52,801 - INFO - Term: 804, Probability: {'probabilities': [0.98994], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1']}
+2025-03-04 18:45:52,801 - INFO - Term: 83, Probability: {'probabilities': [0.98405], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1858']}
+2025-03-04 18:45:52,801 - INFO - Term: 1234, Probability: {'probabilities': [0.98589], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 18:45:52,801 - INFO - Term: 2179, Probability: {'probabilities': [0.92873], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 18:45:52,801 - INFO - Term: 544, Probability: {'probabilities': [0.99846], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1556']}
+2025-03-04 18:45:52,801 - INFO - Term: 804, Probability: {'probability': 0.98994, 'name': 'Interdisciplinary astronomy'}
+2025-03-04 18:45:52,801 - INFO - Term: 83, Probability: {'probability': 0.98405, 'name': 'Astronomy databases'}
+2025-03-04 18:45:52,801 - INFO - Term: 1234, Probability: {'probability': 0.98589, 'name': 'Photometry'}
+2025-03-04 18:45:52,801 - INFO - Term: 2179, Probability: {'probability': 0.92873, 'name': 'Calibration'}
+2025-03-04 18:45:52,801 - INFO - Term: 544, Probability: {'probability': 0.99846, 'name': 'Flux calibration'}
+2025-03-04 18:47:28,894 - INFO - Predicting with input creator: abstract
+2025-03-04 18:47:28,894 - INFO - Started predicting for term: 1
+2025-03-04 18:47:29,086 - INFO - Predictions: 104: 0.0011, 1145: 0.9988, 1476: 0.0002, 1529: 0.0098, 1583: 0.8527, 343: 0.0017, 486: 0.0087, 563: 0.0372, 739: 0.0001, 804: 0.4080, 847: 0.0388
+2025-03-04 18:47:29,086 - INFO - Started predicting for term: 1145
+2025-03-04 18:47:29,287 - INFO - Predictions: 1043: 0.0978, 1684: 0.9504, 799: 0.2280, 91: 0.1400
+2025-03-04 18:47:29,287 - INFO - Removing 1145 from predicted terms
+2025-03-04 18:47:29,287 - INFO - Started predicting for term: 1684
+2025-03-04 18:47:29,457 - INFO - Predictions: 1169: 0.0185, 1234: 0.9913, 1271: 0.0001, 1278: 0.0004, 1558: 0.0010, 2019: 0.0007, 2031: 0.0032, 207: 0.0170, 2094: 0.0020, 2167: 0.0044, 2179: 0.0010, 2191: 0.0003, 2359: 0.0001, 313: 0.0000, 38: 0.0073, 387: 0.0004, 400: 0.0004, 401: 0.0128, 410: 0.0000, 523: 0.0000, 534: 0.0014, 740: 0.0006, 80: 0.0161, 808: 0.0017, 87: 0.0147, 88: 0.0012, 998: 0.0004
+2025-03-04 18:47:29,457 - INFO - Removing 1684 from predicted terms
+2025-03-04 18:47:29,457 - INFO - Started predicting for term: 1234
+2025-03-04 18:47:29,604 - INFO - Predictions: 1225: 0.0004, 1229: 0.0017, 1232: 0.0012, 1233: 0.0205, 1556: 0.0803, 1620: 0.0036, 1670: 0.0007, 1709: 0.0005, 1724: 0.0133, 1792: 0.0006, 208: 0.0804, 2129: 0.0212, 611: 0.0002, 918: 0.1512
+2025-03-04 18:47:29,604 - INFO - Started predicting for term: 1583
+2025-03-04 18:47:29,782 - INFO - Predictions: 1567: 0.0113, 1621: 0.0104, 1622: 0.1270, 1627: 0.0424, 1634: 0.9587, 2178: 0.0026, 241: 0.0008, 73: 0.0119
+2025-03-04 18:47:29,782 - INFO - Removing 1583 from predicted terms
+2025-03-04 18:47:29,782 - INFO - Started predicting for term: 1634
+2025-03-04 18:47:30,055 - INFO - Predictions: 1081: 0.9835, 1127: 0.1800, 1302: 0.0001, 1668: 0.0020, 1761: 0.9996, 1941: 0.0049, 2050: 0.0002, 2051: 0.0004, 2052: 0.2681, 2103: 0.0001, 226: 0.0043, 430: 0.0005, 460: 0.0013, 732: 0.0018, 818: 0.0014, 909: 0.0046
+2025-03-04 18:47:30,056 - INFO - Removing 1634 from predicted terms
+2025-03-04 18:47:30,056 - INFO - Started predicting for term: 1081
+2025-03-04 18:47:30,323 - INFO - Predictions: 154: 1.0000, 1714: 0.0000
+2025-03-04 18:47:30,324 - INFO - Removing 1081 from predicted terms
+2025-03-04 18:47:30,324 - INFO - Started predicting for term: 154
+2025-03-04 18:47:30,525 - INFO - Predictions: 1386: 0.0014, 1557: 0.0278, 1777: 0.0045, 1801: 0.0011, 2111: 0.0003, 254: 0.8839, 291: 0.0124, 375: 0.0015, 444: 0.0277, 79: 0.0050, 806: 0.0056
+2025-03-04 18:47:30,525 - INFO - Started predicting for term: 254
+2025-03-04 18:47:30,775 - INFO - Predictions: 1835: 0.0000, 283: 0.0013, 455: 0.0007, 801: 0.9999
+2025-03-04 18:47:30,776 - INFO - Removing 254 from predicted terms
+2025-03-04 18:47:30,776 - INFO - Removing 154 from predicted terms as branch
+2025-03-04 18:47:30,776 - INFO - Started predicting for term: 801
+2025-03-04 18:47:30,949 - INFO - Predictions: 1443: 0.9999, 1674: 0.0011, 2156: 0.0004, 2157: 0.0007, 283: 0.0031, 297: 0.0005
+2025-03-04 18:47:30,949 - INFO - Removing 801 from predicted terms
+2025-03-04 18:47:30,949 - INFO - Started predicting for term: 1443
+2025-03-04 18:47:31,116 - INFO - Predictions: 1811: 0.0005, 203: 1.0000, 24: 0.0008
+2025-03-04 18:47:31,116 - INFO - Removing 1443 from predicted terms
+2025-03-04 18:47:31,116 - INFO - Started predicting for term: 203
+2025-03-04 18:47:31,291 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 18:47:31,292 - INFO - Started predicting for term: 1126
+2025-03-04 18:47:31,292 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 18:47:31,292 - INFO - Started predicting for term: 1761
+2025-03-04 18:47:31,470 - INFO - Predictions: 1202: 0.0004, 1213: 0.0001, 514: 0.0002, 859: 0.9997
+2025-03-04 18:47:31,470 - INFO - Removing 1761 from predicted terms
+2025-03-04 18:47:31,470 - INFO - Started predicting for term: 859
+2025-03-04 18:47:31,664 - INFO - Predictions: 1307: 0.0005, 203: 0.9995, 476: 0.0024, 722: 0.0049, 996: 0.0024
+2025-03-04 18:47:31,664 - INFO - Started predicting for term: 203
+2025-03-04 18:47:31,833 - INFO - Predictions: 1126: 0.9408, 1127: 0.0327, 1672: 0.0007, 1756: 0.0015, 1809: 0.0023, 31: 0.0006, 32: 0.0144
+2025-03-04 18:47:31,833 - INFO - Started predicting for term: 1126
+2025-03-04 18:47:31,833 - ERROR - Model for term 1126 not found at path: ./models/abstract/1126
+2025-03-04 18:47:31,834 - INFO - Started predicting for term: 804
+2025-03-04 18:47:32,010 - INFO - Predictions: 101: 0.0001, 1222: 0.0000, 1868: 0.0002, 1882: 0.6757, 2004: 0.0570, 2165: 0.0004, 2366: 0.0000, 293: 0.9585, 74: 0.0004, 75: 0.0001, 78: 0.0018
+2025-03-04 18:47:32,010 - INFO - Started predicting for term: 1882
+2025-03-04 18:47:32,175 - INFO - Predictions: 1883: 0.0021, 1884: 0.0244, 1885: 0.0004, 1886: 0.9980, 1887: 0.0015
+2025-03-04 18:47:32,176 - INFO - Started predicting for term: 1886
+2025-03-04 18:47:32,362 - INFO - Predictions: 1906: 0.0009, 1907: 0.0163, 1908: 0.0058, 1909: 0.0031, 1910: 0.0027, 1911: 0.0053, 1912: 0.0284, 1913: 0.0097, 1914: 0.0028, 1915: 0.0024, 1916: 0.9901, 1917: 0.0029, 1918: 0.0042
+2025-03-04 18:47:32,362 - INFO - Removing 1886 from predicted terms
+2025-03-04 18:47:32,362 - INFO - Started predicting for term: 1916
+2025-03-04 18:47:32,518 - INFO - Predictions: 1953: 0.0021, 1954: 0.0160, 1955: 0.1770, 1956: 0.0130, 1957: 0.1499
+2025-03-04 18:47:32,518 - INFO - Started predicting for term: 293
+2025-03-04 18:47:32,768 - INFO - Predictions: 1855: 0.0118, 1858: 0.9961, 1965: 0.0189
+2025-03-04 18:47:32,768 - INFO - Removing 293 from predicted terms
+2025-03-04 18:47:32,768 - INFO - Started predicting for term: 1858
+2025-03-04 18:47:32,940 - INFO - Predictions: 1859: 0.2760, 1860: 0.0100, 1861: 0.0076, 1968: 0.0649, 2305: 0.0024, 2306: 0.0002, 83: 0.0800
+2025-03-04 18:47:32,942 - INFO - Term: 1234, Probability: {'probabilities': [0.99135], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1684']}
+2025-03-04 18:47:32,942 - INFO - Term: 203, Probability: {'probabilities': [0.99999], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1443']}
+2025-03-04 18:47:32,942 - INFO - Term: 1126, Probability: {'probabilities': [0.94077], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['203']}
+2025-03-04 18:47:32,942 - INFO - Term: 859, Probability: {'probabilities': [0.99969], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1761']}
+2025-03-04 18:47:32,942 - INFO - Term: 1916, Probability: {'probabilities': [0.99007], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['1886']}
+2025-03-04 18:47:32,942 - INFO - Term: 1858, Probability: {'probabilities': [0.99611], 'multipliers': [1], 'multipliersNames': ['abstract'], 'parent': ['293']}
+2025-03-04 18:47:32,942 - INFO - Term: 1234, Probability: {'probability': 0.99135, 'name': 'Photometry'}
+2025-03-04 18:47:32,942 - INFO - Term: 203, Probability: {'probability': 0.99999, 'name': 'Cataclysmic variable stars'}
+2025-03-04 18:47:32,942 - INFO - Term: 1126, Probability: {'probability': 0.94077, 'name': 'Nova-like variable stars'}
+2025-03-04 18:47:32,942 - INFO - Term: 859, Probability: {'probability': 0.99969, 'name': 'Intrinsic variable stars'}
+2025-03-04 18:47:32,942 - INFO - Term: 1916, Probability: {'probability': 0.99007, 'name': 'Time series analysis'}
+2025-03-04 18:47:32,942 - INFO - Term: 1858, Probability: {'probability': 0.99611, 'name': 'Astronomy data analysis'}
