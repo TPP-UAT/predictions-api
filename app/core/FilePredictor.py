@@ -9,7 +9,7 @@ class FilePredictor:
     def __init__(self, initial_term_id, thesaurus, is_test):
         self.thesaurus = thesaurus
         # self.input_creators = ['abstract', 'summarize-full_text', 'summarize-summarize']
-        self.input_creators = ['abstract']
+        self.input_creators = ['summarize-full_text']
         self.initial_term_id = initial_term_id
         self.is_test = is_test
     

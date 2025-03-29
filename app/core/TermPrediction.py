@@ -28,7 +28,7 @@ class TermPrediction:
     def get_model_for_term(self, term_id):
         # Because summarize has two different data inputs, we need to modify the input creator based on the "-"
         input_creator = self.input_creator.split("-")[0]
-        model_path = f"./models/{input_creator}/{term_id}"
+        model_path = f"./models-2/{input_creator}/{term_id}"
         
         try:
             # Check if the model path exists, then load the model
