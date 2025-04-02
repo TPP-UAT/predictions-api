@@ -1,7 +1,13 @@
+import os
 from fastapi import FastAPI
+from app.database.Database import Database
 from app.routes import predict
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
 import spacy
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Load the spacy model
 spacy.cli.download("en_core_web_md")

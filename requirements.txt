@@ -3,3 +3,6 @@ uvicorn
 PyMuPDF
 spacy
 python-multipart
+sqlalchemy
+psycopg2-binary
+dotenv

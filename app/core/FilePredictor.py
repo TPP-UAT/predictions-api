@@ -43,7 +43,7 @@ class FilePredictor:
             for term_id, final_prediction in self.predictions_by_term.items():
                 print(f"Term: {term_id}, Probability: {final_prediction}")
                 self.log.info(f"Term: {term_id}, Probability: {final_prediction}")
-
+       
     '''
     Predicts the terms for a given input creator
     '''
