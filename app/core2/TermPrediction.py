@@ -153,7 +153,7 @@ class TermPredictionv2:
                 self.predicted_term_ids.append({ "term": term, "parent": prediction.get_parents()[0] })
 
                 # For each predicted term, check if the term has a father term already predicted. If that's the case, remove the father from predicted_terms
-                # self.filter_predicted_terms_by_child(predicted_terms, current_predictions)
+                self.filter_predicted_terms_by_child(predicted_terms, current_predictions)
 
         for term, prediction in current_children.items():
             prediction.generate_probability()
@@ -186,7 +186,7 @@ class TermPredictionv2:
     def remove_father_from_predictions(self, predicted_terms, term_prediction, term_parent):
         father_prediction = next((prediction for prediction in predicted_terms if prediction.get_term() == term_parent), None)
         if father_prediction != None:
-            self.delete_prediction(predicted_terms, father_prediction)
+            self.delete_prediction(predicted_terms, father_prediction, term_prediction)
 
     '''
         Iterates over the predicted terms and removes the branch of the term recursively

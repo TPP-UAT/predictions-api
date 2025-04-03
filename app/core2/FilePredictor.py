@@ -101,7 +101,7 @@ class FilePredictorv2:
         print("***************************************")
         # TESTING
         for prediction in predictions:
-            print(f"Term: {prediction.get_term()}, Probability: {prediction.get_combined_probability()}")
+            print(f"Term: {prediction.get_term()}, Probability: {prediction.get_combined_probability()}, probabilites: {prediction.get_probabilities()}, multipliersNames: {prediction.get_multipliers_names()}, parent: {prediction.get_parents()}")
         # self.print_predictions()
 
         # Return the final predictions
