@@ -97,7 +97,7 @@ class FilePredictor:
     '''
     async def predict_for_file(self, file):
         abstract, full_text = await get_text_from_file(file)
-        summarized_text = summarize_text(full_text, 0.25, max_sentences=100, additional_stopwords={"specific", "unnecessary", "technical"})
+        summarized_text = summarize_text(full_text, 0.25, additional_stopwords={"specific", "unnecessary", "technical"})
         data_input = {"abstract": abstract, "summarize-summarize": summarized_text, "summarize-full_text": full_text}
 
         # Iterate through the input creators

@@ -87,3 +87,22 @@ class Keyword():
                 file_ids.append(file_id)
         
         return file_ids
+    
+    def get_keywords_files_ocurrences(self, keyword_ids, limit=5):
+        query = select(KeywordModel.file_id, func.count(KeywordModel.keyword_id).label("occurrences")
+            ).where(KeywordModel.keyword_id.in_(keyword_ids)
+            ).group_by(KeywordModel.file_id
+            ).order_by(func.count(KeywordModel.keyword_id).desc()
+            ).limit(limit)
+        
+        results = self.database.query(query)
+
+        files_occurrences = []
+        for result in results:
+            file_id = result[0]
+            occurrences = result[1]
+            files_occurrences.append((file_id, occurrences))
+        
+        return files_occurrences
+
+

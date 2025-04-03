@@ -1,7 +1,7 @@
 import os
 from fastapi import FastAPI
 from app.database.Database import Database
-from app.routes import predict
+from app.routes import predict, recommend_controller
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import spacy
@@ -31,6 +31,8 @@ app.add_middleware(
 
 # Include routes from the example module
 app.include_router(predict.router)
+app.include_router(recommend_controller.router)
+
 
 @app.get("/")
 def read_root():

@@ -10,27 +10,23 @@ class FileRecommender:
 
 
     def recommend_documents(self, predictions_by_term):
-      print('----------------------------- Testing Predictions ----------------------------')
+      print('----------------------------- Testing Recommendations ----------------------------')
 
       if len(predictions_by_term.items()) == 0:
         print("No term_id predicted for the file, therefore no documents to recommend")
-        return
-      
-      docs_recommendatio_by_term = {}
+        return {}
 
-      for term_id, final_prediction in predictions_by_term.items():
-        term_recommended_docs = self.recommend_documents_for_term(term_id)
-        docs_recommendatio_by_term[term_id] = term_recommended_docs
-        
-        print(f"Term: {term_id}, Recommended Documents: {term_recommended_docs}")
-        self.log.info(f"Term: {term_id}, Recommended Documents:  {term_recommended_docs}")
+      predicted_keywords = predictions_by_term.keys()
+      term_files_ocurencies = self.top_keywords_files_ocurrences(predicted_keywords, 10)
 
-      return docs_recommendatio_by_term
+      print(f"Predicted Keywords: {predicted_keywords}")
+      print(f"Term Files Ocurrencies: {term_files_ocurencies}")
 
-    def recommend_documents_for_term(self, term_id):
-      '''
-      Recommends documents based on the term_id
-      '''
+      recommended_file_ids = [term_file_ocurrencies[0] for term_file_ocurrencies in term_files_ocurencies]
+
+      return recommended_file_ids
+    
+    def top_keywords_files_ocurrences(self, keywords, limit):
       keyword_table_db = Keyword(self.files_db)
 
-      return keyword_table_db.get_file_ids_by_keyword_id(term_id, 5)
+      return keyword_table_db.get_keywords_files_ocurrences(keywords, limit)
