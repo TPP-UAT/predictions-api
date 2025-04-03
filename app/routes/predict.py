@@ -32,7 +32,7 @@ async def predict_article(files: List[UploadFile] = File(...)):
             raise HTTPException(status_code=400, detail="PDF invalido")
     
     try:
-        predictions = await PredictService.predict_files(files, is_test=False)
+        predictions = await PredictService.predict_filesv2(files)
         return predictions
 
     except Exception as e:

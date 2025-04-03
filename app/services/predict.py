@@ -3,6 +3,7 @@ from typing import List
 from fastapi import File, UploadFile
 from app.utils.UATMapper import UATMapper
 from app.core.FilePredictor import FilePredictor
+from app.core2.FilePredictor import FilePredictorv2
 
 class PredictService:
     @staticmethod
@@ -17,6 +18,20 @@ class PredictService:
             print("Predicting for file: ", file.filename)
             predictor = FilePredictor(root_term.get_id(), thesaurus, is_test)
             file_predictions = await predictor.predict_for_file(file)
+            filename = file.filename.removesuffix(".pdf")
+            predictions[filename] = file_predictions
+
+        return predictions
+    
+    @staticmethod
+    async def predict_filesv2(files: List[UploadFile] = File(...)):
+        predictions = {}
+
+        for file in files:
+            print("Predicting for file: ", file.filename)
+            predictor = FilePredictorv2()
+            file_predictions = await predictor.predict_for_file(file)
+
             filename = file.filename.removesuffix(".pdf")
             predictions[filename] = file_predictions
 
