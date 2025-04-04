@@ -16,7 +16,7 @@ class TermPredictionv2:
         self.input_creators = ['abstract', 'summarize-full_text', 'summarize-summarize']
 
         # Threshold for prediction
-        self.CHILDREN_THRESHOLD = 0.4
+        self.CHILDREN_THRESHOLD = 0.35
         self.PREDICTION_THRESHOLD = 0.8
 
         self.nlp = None
@@ -53,7 +53,11 @@ class TermPredictionv2:
     """
     Perform prediction using a specific spaCy model loaded for the term.
     """
-    def predict_text_with_model(self, text, term_id, input_creator):
+    def predict_text_with_model(self, text, term_id, input_creator, level):
+        # For each level, we lower the threshold for prediction
+        pred_threshold = self.PREDICTION_THRESHOLD - (level * 0.04) if level > 2 else self.PREDICTION_THRESHOLD
+        children_threshold = self.CHILDREN_THRESHOLD + (level * 0.1) if level > 3 else self.CHILDREN_THRESHOLD
+
         predicted_terms = []
         predicted_children = []
         predictions_log = []
@@ -71,12 +75,12 @@ class TermPredictionv2:
                 continue
 
             # Check if the score is above the threshold
-            if score > self.PREDICTION_THRESHOLD:
+            if score > pred_threshold:
+                # self.log.info(f"Adding prediction: {cat} with score: {score}")
                 prediction_obj = Prediction(cat, round(doc.cats[cat], 5), term_id, get_prediction_multiplier(input_creator), input_creator)
                 predicted_terms.append(prediction_obj)
-                # self.predicted_term_ids.append({ "term": cat, "parent": term_id })
-            if score > self.CHILDREN_THRESHOLD:
-
+            if score > children_threshold:
+                # self.log.info(f"Adding child: {cat} with score: {score}")
                 children_obj = Prediction(cat, round(doc.cats[cat], 5), term_id, get_prediction_multiplier(input_creator), input_creator)
                 predicted_children.append(children_obj)
 
@@ -87,7 +91,7 @@ class TermPredictionv2:
     '''
         Predicts the terms for a given input creator
     '''
-    def predict_text_with_input_creator(self, input_creator, text, term_id):
+    def predict_text_with_input_creator(self, input_creator, text, term_id, level):
         # Load the saved spaCy model for the term
         model_has_loaded = self.get_model_for_term(term_id, input_creator)
 
@@ -96,7 +100,7 @@ class TermPredictionv2:
             return [], []  # Skip if the model for the term is not found
         
         # Use the loaded model to predict the terms
-        selected_terms, selected_children_terms = self.predict_text_with_model(text, term_id, input_creator)
+        selected_terms, selected_children_terms = self.predict_text_with_model(text, term_id, input_creator, level)
         return selected_terms, selected_children_terms
     
     '''
@@ -124,21 +128,21 @@ class TermPredictionv2:
     '''
     Recursive function to predict the terms (Initially predicted terms are empty)
     '''
-    def predict_text(self, predicted_terms, term_id):
+    def predict_text(self, predicted_terms, term_id, level):
         # Initialize local arrays for combining the predictions
         current_predictions = {}
         current_children = {}
         selected_children_ids = []
 
-        self.log.info(f"--------Started predicting for term: {term_id}--------")
-        print(f"--------Started predicting for term: {term_id}--------", flush=True)
+        self.log.info(f"---Started predicting for term: {term_id}---")
+        print(f"---Started predicting for term: {term_id}---", flush=True)
 
         # For each term, we need to ensamble the three different input creators
         # Iterate over the input creators 
         for input_creator in self.input_creators:
             self.log.info(f"*Predicting with input creator: {input_creator}*")
             print(f"*Predicting with input creator: {input_creator}*", flush=True)
-            selected_terms, selected_children_terms = self.predict_text_with_input_creator(input_creator, self.data_input[input_creator], term_id)
+            selected_terms, selected_children_terms = self.predict_text_with_input_creator(input_creator, self.data_input[input_creator], term_id, level)
 
             # Combine the predictions from different input creators
             current_predictions = self.combine_predictions(selected_terms, current_predictions)
@@ -147,8 +151,13 @@ class TermPredictionv2:
         # Generate probability for term using ensamble, append predictions only if the term is not already predicted and the probability is above the threshold
         for term, prediction in current_predictions.items():
             prediction.generate_probability()
+            self.log.info(f"--> Prediction for term: {term}, probability: {prediction.get_combined_probability()}")
 
-            if prediction.get_combined_probability() > self.PREDICTION_THRESHOLD and term not in self.predicted_term_ids:
+            # For each level, we lower the threshold for prediction
+            pred_threshold = self.PREDICTION_THRESHOLD - (level * 0.04) if level > 2 else self.PREDICTION_THRESHOLD
+            print(f"----- level: {level}, pred_threshold: {pred_threshold} -----", flush=True)
+
+            if prediction.get_combined_probability() > pred_threshold and term not in self.predicted_term_ids:
                 predicted_terms.append(prediction)
                 self.predicted_term_ids.append({ "term": term, "parent": prediction.get_parents()[0] })
 
@@ -159,15 +168,15 @@ class TermPredictionv2:
             prediction.generate_probability()
 
             if prediction.get_combined_probability() > self.CHILDREN_THRESHOLD:
+                self.log.info(f"-> Adding child: {term} with score: {prediction.get_combined_probability()}")
                 selected_children_ids.append(term)
 
         # If the prediction returns children, recursively predict for them
         if len(selected_children_ids):
             for selected_children_id in selected_children_ids:
-                self.predict_text(predicted_terms, selected_children_id)
+                self.predict_text(predicted_terms, selected_children_id, level + 1)
 
         return predicted_terms
-
 
     '''
         Iterates over the current_predictions (new predictions) and removes the father term from the predicted terms (all predictions) if it is already predicted
@@ -187,18 +196,6 @@ class TermPredictionv2:
         father_prediction = next((prediction for prediction in predicted_terms if prediction.get_term() == term_parent), None)
         if father_prediction != None:
             self.delete_prediction(predicted_terms, father_prediction, term_prediction)
-
-    '''
-        Iterates over the predicted terms and removes the branch of the term recursively
-    '''
-    def delete_branch(self, predicted_terms, term_parents):
-        for parent in term_parents:
-            father_prediction = next((prediction for prediction in predicted_terms if prediction.get_term() == parent), None)
-            if father_prediction != None:
-                print(f"Removing {father_prediction.get_term()} from predicted terms as branch", flush=True)
-                self.log.info(f"Removing {father_prediction.get_term()} from predicted terms as branch")
-                self.delete_prediction(predicted_terms, father_prediction)
-                self.delete_branch(predicted_terms, father_prediction.get_parents())
 
     '''
         Deletes the term from the predicted terms

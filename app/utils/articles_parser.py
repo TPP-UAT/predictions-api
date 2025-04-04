@@ -588,7 +588,7 @@ def clean_parenthesis_with_references_from_spans(spans):
         if start_index is not None:
             for k in range(start_index, len(spans)):
                 # Find the end of the parenthesis. If there's another parenthesis inside, skip it. E.g. (see Figure 5(a), left)
-                if ")" in spans[k]["text"] and "(" not in spans[k - 2]["text"]:
+                if ")" in spans[k]["text"] and ")" not in spans[k - 2]["text"]:
                     end_index = k + 1
                     break
 
@@ -626,7 +626,6 @@ def clean_orcids_from_spans(spans):
     while i < len(spans):
         start_index = None
         end_index = None
-        # Find the start of parenthesis and the word "see "
         for j in range(i, len(spans)):
             if ("ORCID iDs" in spans[j]["text"] and ".B" in spans[j]["font"]):
                 start_index = j
