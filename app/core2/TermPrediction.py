@@ -123,6 +123,10 @@ class TermPredictionv2:
                 current_predictions[term].add_multiplier_name(multiplierName)
                 current_predictions[term].add_parent(parent)
 
+            term_name = self.thesaurus.get_by_id(term).get_name()
+            # Set the name for the combined prediction
+            current_predictions[term].set_name(term_name)
+
         return current_predictions
 
     '''

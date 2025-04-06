@@ -7,6 +7,7 @@ class CombinedPrediction:
         self.multipliers = [multiplier]
         self.multipliersNames = [multiplierName]
         self.parents = [parent]
+        self.name = ''
 
         self.combined_probability = 0
 
@@ -28,6 +29,9 @@ class CombinedPrediction:
 
     def add_parent(self, parent):
         self.parents.append(parent)
+
+    def set_name(self, name):
+        self.name = name
 
     def get_term(self):
         return self.term
