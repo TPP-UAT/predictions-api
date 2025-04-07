@@ -407,13 +407,17 @@ def clean_years_from_text(spans):
         should_skip = False
         # Find an element that matches a "( "
         for j in range(i, len(spans)):
-            if (re.match(r'\s?\(', spans[j]['text']) and re.match(r'\d{4}', spans[j+1]['text']) and re.match(r'\s?\)', spans[j+2]['text'])):
-                if (spans[j]['color'] == 255):
-                    should_skip = True
-                start_index = j
-                end_index = j + 3
+            try:
+                if (j + 2 < len(spans) and re.match(r'\s?\(', spans[j]['text']) and re.match(r'\d{4}', spans[j+1]['text']) and re.match(r'\s?\)', spans[j+2]['text'])):
+                    if (spans[j]['color'] == 255):
+                        should_skip = True
+                    start_index = j
+                    end_index = j + 3
+                    break
+            except Exception as e:
+                # If we reach the end of the spans, break
                 break
-
+        
         if should_skip:
             i = end_index
             start_index = None
@@ -436,10 +440,9 @@ def clean_example_years_from_text(spans):
         end_index = None
         # Find an element that matches a "( "
         for j in range(i, len(spans)):
-            if(re.match(r'\s?\(', spans[j]['text']) and ("e.g." in spans[j+1]['text'])):
+            if(j + 1 < len(spans) and re.match(r'\s?\(', spans[j]['text']) and ("e.g." in spans[j+1]['text'])):
                 start_index = j
                 break
-
 
         if start_index is not None:
             for k in range(start_index, len(spans)):
