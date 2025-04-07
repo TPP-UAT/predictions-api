@@ -16,7 +16,7 @@ class TermPredictionv2:
         self.input_creators = ['abstract', 'summarize-full_text', 'summarize-summarize']
 
         # Threshold for prediction
-        self.CHILDREN_THRESHOLD = 0.35
+        self.CHILDREN_THRESHOLD = 0.4
         self.PREDICTION_THRESHOLD = 0.8
 
         self.nlp = None
@@ -26,6 +26,13 @@ class TermPredictionv2:
 
         # Array to store the predicted term ids
         self.predicted_term_ids = []
+
+    """
+    Reduce the threshold for prediction
+    """
+    def reduce_threshold(self):
+        self.PREDICTION_THRESHOLD = 0.6
+        self.CHILDREN_THRESHOLD = 0.2
 
     """
     Retrieve and load the saved spaCy model for a specific term.
@@ -137,6 +144,7 @@ class TermPredictionv2:
         current_predictions = {}
         current_children = {}
         selected_children_ids = []
+        current_prediction_count = 0
 
         self.log.info(f"---Started predicting for term: {term_id}---")
         print(f"---Started predicting for term: {term_id}---", flush=True)
@@ -163,6 +171,7 @@ class TermPredictionv2:
 
             if prediction.get_combined_probability() > pred_threshold and term not in self.predicted_term_ids:
                 predicted_terms.append(prediction)
+                current_prediction_count += 1
                 self.predicted_term_ids.append({ "term": term, "parent": prediction.get_parents()[0] })
 
                 # For each predicted term, check if the term has a father term already predicted. If that's the case, remove the father from predicted_terms
@@ -171,7 +180,9 @@ class TermPredictionv2:
         for term, prediction in current_children.items():
             prediction.generate_probability()
 
-            if prediction.get_combined_probability() > self.CHILDREN_THRESHOLD:
+            # For each level, we higher the threshold for children
+            children_threshold = self.CHILDREN_THRESHOLD + (level * 0.1) if level > 3 else self.CHILDREN_THRESHOLD
+            if prediction.get_combined_probability() > children_threshold:
                 self.log.info(f"-> Adding child: {term} with score: {prediction.get_combined_probability()}")
                 selected_children_ids.append(term)
 

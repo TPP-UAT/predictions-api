@@ -15,8 +15,9 @@ class CombinedPrediction:
     def generate_probability(self):
         # If the term is in only one prediction, is not gonna reach children threshold
         # If the term is in two predictions, is not gonna reach predictions threshold
-        for probability in self.probabilities:
-            self.combined_probability += probability * self.multipliers[self.probabilities.index(probability)]
+        self.combined_probability = 0
+        for i, (p, m) in enumerate(zip(self.probabilities, self.multipliers)):
+            self.combined_probability += p * m
 
     def add_probability(self, probability):
         self.probabilities.append(probability)

@@ -25,15 +25,22 @@ class PredictService:
     
     @staticmethod
     async def predict_filesv2(files: List[UploadFile] = File(...)):
-        predictions = {}
+        predictions = []
 
         for file in files:
             print("Predicting for file: ", file.filename)
             predictor = FilePredictorv2()
-            file_predictions = await predictor.predict_for_file(file)
+            accuracy, file_predictions = await predictor.predict_for_file(file)
 
             filename = file.filename.removesuffix(".pdf")
-            predictions[filename] = file_predictions
+
+            # Create an object with the filename, accuracy, and the array of predictions
+            file_predictions = {
+                "filename": filename,
+                "accuracy": accuracy,
+                "predictions": file_predictions
+            }
+            predictions.append(file_predictions)
 
         return predictions
         

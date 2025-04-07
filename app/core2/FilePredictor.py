@@ -114,6 +114,7 @@ class FilePredictorv2:
         # Calculate the accuracy
         accuracy = evaluate_hierarchical_metrics(keywords_ids, best_paths)
         print("----> Accuracy: ", accuracy)
+        return accuracy
         
     '''
     Predicts the terms for a given file
@@ -127,6 +128,10 @@ class FilePredictorv2:
 
         predicted_terms = []
         predictions = term_prediction.predict_text(predicted_terms, root_term.get_id(), level)
+
+        if (len(predictions) < 3):
+            term_prediction.reduce_threshold()
+            predictions = term_prediction.predict_text(predicted_terms, root_term.get_id(), level)
         return predictions
 
     '''
@@ -148,8 +153,8 @@ class FilePredictorv2:
         print("----------------------------- Predictions ----------------------------")
         self.print_predictions(predictions)
 
+        accuracy = 0
         if (keywords):
-            self.calculate_accuracy(predictions, keywords)
+            accuracy = self.calculate_accuracy(predictions, keywords)
 
-        return predictions
-    
+        return accuracy, predictions
