@@ -1,24 +1,18 @@
+import os
 import logging
+from app.utils.UATMapper import UATMapper
 from app.core.TermPrediction import TermPrediction
 from app.utils.articles_parser import get_text_from_file
 from app.utils.summarize_text import summarize_text
+from app.utils.accuracy import evaluate_predictions
 
 logging.basicConfig(filename='logs/predictor.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class FilePredictor:
-    def __init__(self, initial_term_id, thesaurus, is_test):
-        self.thesaurus = thesaurus
-        # self.input_creators = ['abstract', 'summarize-full_text', 'summarize-summarize']
-        self.input_creators = ['abstract']
-        self.initial_term_id = initial_term_id
-        self.is_test = is_test
-    
-        self.predictions = {}
-        self.predictions_by_term = {}
-
-        # For testing purposes
-        self.temporal_predictions = {}
-        self.remove_parent_flag = not is_test
+    def __init__(self):
+        # Initialize the thesaurus
+        mapper = UATMapper(os.path.abspath("app/data/UAT-filtered.json"))
+        self.thesaurus = mapper.map_to_thesaurus()
 
         # For logging purposes
         self.log = logging.getLogger('predictor_logger')
@@ -27,89 +21,150 @@ class FilePredictor:
     '''
     Prints the predictions in the console
     '''
-    def print_predictions(self):
-        print('----------------------------- Testing Predictions ----------------------------')
-
-        if len(self.predictions) == 0:
+    def print_predictions(self, predictions):
+        if len(predictions) == 0:
             print("There are no predictions")
 
         else:
-            for term_id, prediction in self.temporal_predictions.items():
-                print(f"Term: {term_id}, Probability: {prediction}")
-                self.log.info(f"Term: {term_id}, Probability: {prediction}")
+            for prediction in predictions:
+                print(f"Term: {prediction.get_term()}, Probability: {prediction.get_combined_probability()}, probabilites: {prediction.get_probabilities()}, multipliersNames: {prediction.get_multipliers_names()}, parent: {prediction.get_parents()}")
 
-            print('----------------------- Combined Predictions -------------------------------')
+    def find_paths(self, term_ids, best_paths, terms_in_path, overwrite_existing=False, fill_missing=False):
+        eleven_children = ["104", "1145", "1476", "1529", "1583", "343", "486", "563", "739", "804", "847"]
+        distances = {}
 
-            for term_id, final_prediction in self.predictions_by_term.items():
-                print(f"Term: {term_id}, Probability: {final_prediction}")
-                self.log.info(f"Term: {term_id}, Probability: {final_prediction}")
+        for term_id in term_ids:
+            for original_child in eleven_children:
+                # Find the shortest path between predicted and original
+                shortest_path = self.thesaurus.find_shortest_path(original_child, term_id)
+
+                if shortest_path:
+                    distances[(term_id, original_child)] = (len(shortest_path) - 1, shortest_path)
+                else:
+                    # If no path is found, return None for that pair
+                    distances[(term_id, original_child)] = (None, "No path found")
+
+        for term_id in term_ids:
+            best_path_for_term = None
+            best_length = float("inf")
+
+            for original_child in eleven_children:
+                key = (term_id, original_child)
+                dist, path = distances.get(key, (None, None))
+                if not isinstance(path, list):
+                    continue
+
+                if any(t in path and t != term_id for t in terms_in_path):
+                    if len(path) < best_length:
+                        best_path_for_term = path
+                        best_length = len(path)
+
+                    # Check if the path contains any of the terms in the path
+                    # and if so, update the best_paths dictionary
+                    for t in terms_in_path:
+                        if t in path and t != term_id:
+                            # solo sobreescribir si no existe o el nuevo camino es más corto
+                            if t not in best_paths or len(path) < len(best_paths[t]):
+                                best_paths[t] = path
+
+            if best_path_for_term:
+                if (
+                    term_id not in best_paths or
+                    overwrite_existing and len(best_path_for_term) < len(best_paths[term_id])
+                ):
+                    best_paths[term_id] = best_path_for_term         
+
+            elif fill_missing and term_id not in best_paths:
+                # Try to at least fill *some* path if none match the filter
+                for original_child in eleven_children:
+                    key = (term_id, original_child)
+                    dist, path = distances.get(key, (None, None))
+                    if isinstance(path, list):
+                        best_paths[term_id] = path
+                        break
+
+        return best_paths
 
     '''
-    Predicts the terms for a given input creator
+    Calculate the accuracy for the file
     '''
-    def predict_terms(self, input_creator, text):
-        term_prediction = TermPrediction(input_creator, self.thesaurus, self.is_test)
+    def calculate_accuracy(self, predictions, keywords_ids):
+        original_keywords = {}
+
+        # Get the ids of the predicted terms
+        predicted_ids = [prediction.get_term() for prediction in predictions]
+        print("Predicted IDs: ", predicted_ids)
+        print("Keywords IDs: ", keywords_ids)
+        for keyword in keywords_ids:
+            main_paths = self.thesaurus.find_paths_from_eleven_children(keyword)
+            original_keywords[keyword] = main_paths
+        print("Original Keywords: ", original_keywords)
+
+        best_paths = {}
+
+        best_paths = self.find_paths(keywords_ids, best_paths, predicted_ids)
+        best_paths = self.find_paths(predicted_ids, best_paths, keywords_ids, overwrite_existing=True, fill_missing=True)
+
+        for pid, path in best_paths.items():
+            prediction = next((p for p in predictions if p.get_term() == pid), None)
+            best_paths[pid] = { "path": path, "prob": prediction.get_combined_probability() if prediction else None }
+
+        # Filter best_paths to only include those that contain a predicted_id
+        best_paths = { pid: data for pid, data in best_paths.items() if pid in predicted_ids }
+
+        # If there's a prediction the same as a keyword, set the path to None
+        for kid in keywords_ids:
+            if kid in best_paths:
+                best_paths[kid]['path'] = None
+
+        print("----------- Best Paths Including a Keyword ID -----------")
+        for pid, path in best_paths.items():
+            print(f"{pid}: {path}")
+
+        # Calculate the accuracy
+        accuracy = evaluate_predictions(original_keywords, best_paths)
+        print("----> Accuracy: ", accuracy)
+        return accuracy
+        
+    '''
+    Predicts the terms for a given file
+    '''
+    def predict_terms(self, data_input):
+        term_prediction = TermPrediction(data_input, self.thesaurus)
+
+        # Initial term ID
+        root_term = self.thesaurus.get_by_id("1")
+        level = 0
 
         predicted_terms = []
-        # The flag remove_parent_flag is for removing the fathers with "condition" based on the probability
-        predictions = term_prediction.predict_text(text, self.initial_term_id, predicted_terms, self.remove_parent_flag)
+        predictions = term_prediction.predict_text(predicted_terms, root_term.get_id(), level)
+
+        if (len(predictions) < 3):
+            term_prediction.reduce_threshold()
+            predictions = term_prediction.predict_text(predicted_terms, root_term.get_id(), level)
         return predictions
-
-    '''
-    Combines the predictions from different input creators and generates the final prediction
-    '''
-    def generate_predictions(self, predictions):
-        # Combine predictions from different input creators if the term is already in the predictions
-        for prediction in predictions:
-            if prediction.get_term() not in self.predictions:
-                self.predictions[prediction.get_term()] = prediction
-            else:
-                probability = prediction.get_probabilities()[0]
-                self.predictions[prediction.get_term()].add_probability(probability)
-                self.predictions[prediction.get_term()].add_multiplier(prediction.get_multipliers()[0])
-                self.predictions[prediction.get_term()].add_multiplier_name(prediction.get_multipliers_names()[0])
-                self.predictions[prediction.get_term()].add_parent(prediction.get_parents()[0])
-
-        # Generate prediction object with the final probabilities combined
-        final_predictions = {}
-        for term_id, prediction in self.predictions.items():
-            # Get term name from thesaurus
-            term_name = self.thesaurus.get_by_id(term_id).get_name()
-            
-            final_prediction = 0
-            for pred, multiplier in zip(prediction.get_probabilities(), prediction.get_multipliers()):
-                final_prediction += pred * multiplier
-            final_predictions[term_id] = { 'probability': final_prediction, 'name': term_name }
-
-        self.predictions_by_term = final_predictions
-
-        # We want the info for the prediction for testing purposes
-        for term_id, prediction in self.predictions.items():
-            self.temporal_predictions[term_id] = {
-                'probabilities': prediction.get_probabilities(),
-                'multipliers': prediction.get_multipliers(),
-                'multipliersNames': prediction.get_multipliers_names(),
-                'parent': prediction.get_parents()
-            }
 
     '''
     Extracts the abstract and full text from a file and predicts the terms
     '''
     async def predict_for_file(self, file):
-        abstract, full_text = await get_text_from_file(file)
+        self.log.info("\n\n")
+        self.log.info(f"****** Starting prediction for file: {file.filename} ********")
+        # Get the text from the file
+        abstract, full_text, keywords = await get_text_from_file(file)
         summarized_text = summarize_text(full_text, 0.25, max_sentences=100, additional_stopwords={"specific", "unnecessary", "technical"})
-        data_input = {"abstract": abstract, "summarize-summarize": summarized_text, "summarize-full_text": full_text}
+        # If we can't extract the abstract, we use the summarized text
+        abstract_text = abstract if abstract else summarized_text
+        data_input = {"abstract": abstract_text, "summarize-summarize": summarized_text, "summarize-full_text": full_text}
+        print("Keywords: ", keywords)
 
-        # Iterate through the input creators
-        for input_creator in self.input_creators:
-            self.log.info(f"Predicting with input creator: {input_creator}")
-            predictions = self.predict_terms(input_creator, data_input[input_creator])
-            self.generate_predictions(predictions)
+        predictions = self.predict_terms(data_input)
 
-        self.print_predictions()
+        print("----------------------------- Predictions ----------------------------")
+        self.print_predictions(predictions)
 
-        # Return the final predictions (It depends on the is_test flag)
-        if self.is_test:
-            return self.temporal_predictions
-        else:
-            return self.predictions_by_term
+        accuracy = 0
+        if (keywords):
+            accuracy = self.calculate_accuracy(predictions, keywords)
+
+        return accuracy, predictions

@@ -5,34 +5,6 @@ from heapq import nlargest
 from collections import Counter
 from app.utils.articles_parser import clean_summarized_text
 
-def _remove_consecutive_repeats(text, max_repeats=3):
-    """Remove words/numbers/symbols that are repeated consecutively more than max_repeats times."""
-    words = text.split()
-    cleaned_words = []
-    repeat_count = 1
-    
-    for i in range(len(words)):
-        if i > 0 and words[i] == words[i-1]:
-            repeat_count += 1
-        else:
-            repeat_count = 1
-            
-        if repeat_count <= max_repeats:
-            cleaned_words.append(words[i])
-            
-    return ' '.join(cleaned_words)
-
-def _remove_figure_sentences(text):
-    """Remove sentences that contain the word 'Figure'."""
-    sentences = text.split('.')
-    cleaned_sentences = []
-    
-    for sentence in sentences:
-        if 'Figure' not in sentence and 'figure' not in sentence:
-            cleaned_sentences.append(sentence)
-            
-    return '.'.join(cleaned_sentences)
-
 """
 Summarizes a scientific article, ensuring clarity, conciseness, and coherent starting points.
 
@@ -45,97 +17,94 @@ Parameters:
 Returns:
 - str: A concise and coherent summary.
 """
-def summarize_text(text, min_chars=7000, max_chars=10000, additional_stopwords=None):
-        """
-        Summarizes a scientific article with improved coherence and generalization.
+def summarize_text(text, percentage=0.15, max_sentences=10, additional_stopwords=None):
+    nlp = spacy.load('en_core_web_md')
 
-        Parameters:
-        - text (str): The text to summarize
-        - min_chars (int): Minimum character length for the summary (default: 6000)
-        - max_chars (int): Maximum character length for the summary (default: 9000)
-        - additional_stopwords (set): Custom stopwords to exclude from frequency calculation (optional)
+    if not text.strip():
+        return "The provided text is empty or invalid."
 
-        Returns:
-        - str: A structured summary within the specified length range
-        """
-        nlp = spacy.load('en_core_web_md')
+    # Clean the text and remove unnecessary content
+    text = clean_summarized_text(text)
+    
+    # Process the text with spaCy
+    doc = nlp(text)
 
-        if not text.strip():
-            return "The provided text is empty or invalid."
+    # Combine default and additional stopwords
+    stop_words = STOP_WORDS.union(additional_stopwords or set())
 
-        # Pre-process text to remove figures and repeated elements
-        text = _remove_figure_sentences(text)
-        text = _remove_consecutive_repeats(text)
+    # Calculate word frequencies, ignoring stopwords, punctuation, and numerical tokens
+    word_frequencies = Counter(
+        token.text.lower() for token in doc
+        if token.text.lower() not in stop_words
+        and token.text not in punctuation
+        and not token.is_digit
+    )
 
-        # Clean the text
-        text = clean_summarized_text(text)
+    # Normalize word frequencies
+    max_freq = max(word_frequencies.values(), default=1)
+    word_frequencies = {word: freq / max_freq for word, freq in word_frequencies.items()}
 
-        # Process text with spaCy
-        doc = nlp(text)
+    # Score sentences based on word frequencies and named entities
+    sentence_scores = {}
+    for sent in doc.sents:
+        token_count = 0
+        sent_score = 0
 
-        # Define stopwords dynamically
-        stop_words = STOP_WORDS.union(additional_stopwords or set())
+        for token in sent:
+            word_lower = token.text.lower()
+            if word_lower in word_frequencies:
+                sent_score += word_frequencies[word_lower]
+                token_count += 1
 
-        # Compute word frequencies while prioritizing key terms
-        word_frequencies = Counter()
-        for token in doc:
-            if (not token.is_stop and 
-                not token.is_punct and 
-                not token.like_num and
-                token.pos_ in {'NOUN', 'PROPN', 'VERB', 'ADJ'}):
-                word_frequencies[token.lemma_] += 1
+            # Boost scores for named entities or scientific terms
+            if token.ent_type_ in {"PERSON", "ORG", "GPE", "DATE", "NORP", "FAC"} or token.pos_ in {"NOUN", "PROPN"}:
+                sent_score += 2
 
-        # Normalize frequencies
-        max_freq = max(word_frequencies.values(), default=1)
-        word_frequencies = {word: freq / max_freq for word, freq in word_frequencies.items()}
+        if token_count > 0:
+            sentence_scores[sent] = sent_score / token_count
 
-        # Sentence scoring
-        sentence_scores = {}
-        for sent in doc.sents:
-            if len(sent.text.split()) < 5:  # Skip very short sentences
-                continue
+    # Find the most suitable introductory sentence
+    intro_sentences = [
+        sent for sent in doc.sents if "phenomenon" in sent.text.lower() or "X-ray" in sent.text.lower()
+    ]
+    if intro_sentences:
+        starting_sentence = max(intro_sentences, key=lambda sent: sentence_scores.get(sent, 0))
+    else:
+        starting_sentence = max(doc.sents, key=lambda sent: sentence_scores.get(sent, 0))
 
-            score = sum(word_frequencies.get(token.lemma_, 0) for token in sent)
+    # Filter out irrelevant or overly short sentences
+    filtered_sentences = {
+        sent: score for sent, score in sentence_scores.items()
+        if len(sent.text.split()) > 8
+        and not any(keyword in sent.text.lower() for keyword in ["appendix", "section", "figure", "license", "acknowledgment"])
+    }
 
-            # Boost scores for sentences with scientific indicators
-            scientific_indicators = {'study', 'research', 'analysis', 'results', 'findings', 'method', 'experiment'}
-            if any(word in sent.text.lower() for word in scientific_indicators):
-                score *= 1.3
+    # Determine the number of sentences dynamically
+    total_sentences = len(list(doc.sents))
+    num_sentences = min(max_sentences, max(3, int(total_sentences * percentage)))
 
-            sentence_scores[sent] = score
+    # Select top sentences based on scores
+    selected_sentences = nlargest(num_sentences, filtered_sentences, key=filtered_sentences.get)
 
-        # Select top-ranked sentences dynamically
-        selected_sentences = []
-        current_length = 0
-        sorted_sentences = sorted(sentence_scores.items(), key=lambda x: x[1], reverse=True)
+    # Ensure the starting sentence is included
+    if starting_sentence and starting_sentence not in selected_sentences:
+        selected_sentences = [starting_sentence] + selected_sentences[:-1]
 
-        for sent, _ in sorted_sentences:
-            if current_length >= max_chars:
-                break
+    # Sort sentences by their order in the original text
+    final_summary = sorted(selected_sentences, key=lambda s: list(doc.sents).index(s))
 
-            sent_text = sent.text.strip()
-            if sent_text not in {s.text.strip() for s in selected_sentences}:  # Avoid duplicates
-                # Additional check for repeated elements in the sentence
-                cleaned_sent = _remove_consecutive_repeats(sent_text)
-                if cleaned_sent and 'Figure' not in cleaned_sent and 'figure' not in cleaned_sent:
-                    selected_sentences.append(sent)
-                    current_length += len(cleaned_sent) + 1  # +1 for space
+    # Remove duplicates and create the summary
+    seen = set()
+    unique_sentences = [
+        sent.text.strip() for sent in final_summary
+        if sent.text.strip() not in seen and not seen.add(sent.text.strip())
+    ]
 
-            if min_chars <= current_length <= max_chars:
-                break
+    # Join selected sentences into a coherent summary
+    summary = " ".join(unique_sentences)
 
-        # Sort sentences by their original order
-        selected_sentences.sort(key=lambda s: s.start)
+    # Handle cases where no valid sentences are selected
+    if not summary:
+        return "No suitable summary could be generated from the given text."
 
-        # Join sentences with proper formatting and do final cleaning
-        summary = ' '.join(sent.text.strip() for sent in selected_sentences)
-        summary = _remove_consecutive_repeats(summary)  # Final check for repeats
-        
-        # Final length check
-        if len(summary) > max_chars:
-            while len(summary) > max_chars and len(selected_sentences) > 1:
-                selected_sentences.pop()
-                summary = ' '.join(s.text.strip() for s in selected_sentences)
-                summary = _remove_consecutive_repeats(summary)
-
-        return summary if summary else "Could not generate a suitable summary."
+    return summary
