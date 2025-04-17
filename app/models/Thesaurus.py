@@ -66,7 +66,7 @@ class Thesaurus:
         distances = {term_id: float('inf') for term_id in self.terms}
         distances[start_id] = 0
         previous = {term_id: None for term_id in self.terms}
-        heap = [(0, start_id)]  # Heap de prioridad (distancia, term_id)
+        heap = [(0, start_id)]  # Priority heap for Dijkstra
 
         # Dijkstra algorithm
         while heap:
@@ -81,19 +81,11 @@ class Thesaurus:
 
             # Update the distances to the children
             for child_id in term.children:
-                new_distance = current_distance + 1  # Peso de 1 para todas las conexiones
+                new_distance = current_distance + 1  # Assuming each edge has a weight of 1
                 if new_distance < distances[child_id]:
                     distances[child_id] = new_distance
                     previous[child_id] = current_id
                     heapq.heappush(heap, (new_distance, child_id))
-
-            # Update the distances to the parents
-            for parent_id in term.parents:
-                new_distance = current_distance + 1  # Peso de 1 para todas las conexiones
-                if new_distance < distances[parent_id]:
-                    distances[parent_id] = new_distance
-                    previous[parent_id] = current_id
-                    heapq.heappush(heap, (new_distance, parent_id))
 
         # Reconstruct the path
         path = []
@@ -104,3 +96,14 @@ class Thesaurus:
 
         path.reverse()
         return path if path[0] == start_id else None
+
+    def find_paths_from_eleven_children(self, end_id):
+        eleven_children = ["104", "1145", "1476", "1529", "1583", "343", "486", "563", "739", "804", "847"]
+        paths = []
+
+        for start_id in eleven_children:
+            path = self.find_shortest_path(start_id, end_id)
+            if path:
+                paths.append(path)
+
+        return paths

@@ -34,6 +34,8 @@ def get_text_from_page(page, remove_abstract):
 
                     if "Bold" in font_name or ".B" in font_name or "Black" in font_name:
                         bold_text.append(text)
+
+    keywords = get_keywords_from_text(page_spans)
     
     # First filter using the full span element (more properties)
     page_spans = clean_spans_from_page(page_spans, remove_abstract)
@@ -43,7 +45,7 @@ def get_text_from_page(page, remove_abstract):
     for span in page_spans:
         text += span["text"] + " "
 
-    return text, bold_text
+    return text, bold_text, keywords
 
 # Retrieve the title form an article
 async def get_title_from_file(file):
@@ -95,6 +97,39 @@ async def get_title_from_file(file):
 
     pdf_document.close()
     return title
+
+def get_keywords_from_text(spans):
+    keywords = []
+    i = 0
+
+    while i < len(spans):
+        start_index = None
+        end_index = None
+        # Find an element that matches a "concepts:"
+        for j in range(i, len(spans)):
+            if ("concepts:" in spans[j]['text']):
+                start_index = j
+                break
+
+        if start_index is not None:
+            for k in range(start_index, len(spans)):
+                if spans[k]["text"] == "1. Introduction":
+                    end_index = k
+                    break
+
+        # If both elements were found, remove the elements between them
+        if start_index is not None and end_index is not None:
+            text = ' '
+            for index in range(start_index, end_index):
+                text += spans[index]["text"] + ' '
+            
+            ids = re.findall(r'\d+', text)
+            keywords = ids
+            break
+        else:
+            i += 1
+
+    return keywords
 
 ''' Cleans the text by applying a series of text processing functions 
     Params: The plain text of the full article and an array of bold texts
@@ -372,13 +407,17 @@ def clean_years_from_text(spans):
         should_skip = False
         # Find an element that matches a "( "
         for j in range(i, len(spans)):
-            if (re.match(r'\s?\(', spans[j]['text']) and re.match(r'\d{4}', spans[j+1]['text']) and re.match(r'\s?\)', spans[j+2]['text'])):
-                if (spans[j]['color'] == 255):
-                    should_skip = True
-                start_index = j
-                end_index = j + 3
+            try:
+                if (j + 2 < len(spans) and re.match(r'\s?\(', spans[j]['text']) and re.match(r'\d{4}', spans[j+1]['text']) and re.match(r'\s?\)', spans[j+2]['text'])):
+                    if (spans[j]['color'] == 255):
+                        should_skip = True
+                    start_index = j
+                    end_index = j + 3
+                    break
+            except Exception as e:
+                # If we reach the end of the spans, break
                 break
-
+        
         if should_skip:
             i = end_index
             start_index = None
@@ -401,10 +440,9 @@ def clean_example_years_from_text(spans):
         end_index = None
         # Find an element that matches a "( "
         for j in range(i, len(spans)):
-            if(re.match(r'\s?\(', spans[j]['text']) and ("e.g." in spans[j+1]['text'])):
+            if(j + 1 < len(spans) and re.match(r'\s?\(', spans[j]['text']) and ("e.g." in spans[j+1]['text'])):
                 start_index = j
                 break
-
 
         if start_index is not None:
             for k in range(start_index, len(spans)):
@@ -588,7 +626,7 @@ def clean_parenthesis_with_references_from_spans(spans):
         if start_index is not None:
             for k in range(start_index, len(spans)):
                 # Find the end of the parenthesis. If there's another parenthesis inside, skip it. E.g. (see Figure 5(a), left)
-                if ")" in spans[k]["text"] and "(" not in spans[k - 2]["text"]:
+                if ")" in spans[k]["text"] and ")" not in spans[k - 2]["text"]:
                     end_index = k + 1
                     break
 
@@ -626,7 +664,6 @@ def clean_orcids_from_spans(spans):
     while i < len(spans):
         start_index = None
         end_index = None
-        # Find the start of parenthesis and the word "see "
         for j in range(i, len(spans)):
             if ("ORCID iDs" in spans[j]["text"] and ".B" in spans[j]["font"]):
                 start_index = j
@@ -675,7 +712,7 @@ def clean_parentesis_from_text(text):
 '''
 # Retrieve the abstract from an article
 async def get_abstract_from_file(file, get_title=False):
-    full_text = await get_full_text_from_file(file)
+    full_text, keywords = await get_full_text_from_file(file)
     regex_pattern = r'Abstract([\s\S]*?)Unified Astronomy Thesaurus concepts:'
     extracted_text = ''
     match = re.search(regex_pattern, full_text)
@@ -698,12 +735,14 @@ async def get_full_text_from_file(file, remove_abstract=False):
 
     full_text = ""
     bold_text = []
+    keywords = []
     for page_number in range(len(pdf_document)):
         # Numero de pagina - 1 que el pdf
         page = pdf_document[page_number]
-        text, bold_text_from_page = get_text_from_page(page, remove_abstract)
+        text, bold_text_from_page, keywords_by_page = get_text_from_page(page, remove_abstract)
         # ctrl+shift+p: toggle word wrap para evitar scroll
         bold_text = bold_text + bold_text_from_page
+        keywords = keywords + keywords_by_page
         full_text += text + "\n\n"
 
     pdf_document.close()
@@ -711,18 +750,18 @@ async def get_full_text_from_file(file, remove_abstract=False):
     # Second filter using the only the text
     full_text = clean_plain_text(full_text, bold_text)
 
-    return full_text
+    return full_text, keywords
 
 '''
 Retrieve abstract and full text from an article
 '''
 async def get_text_from_file(file, get_title=False):
-    full_text_for_abstract = await get_full_text_from_file(file, False)
+    full_text_for_abstract, keywords = await get_full_text_from_file(file, False)
     # Reset the file pointer to the beginning
     await file.seek(0)
 
-    full_text = await get_full_text_from_file(file, True)
-    regex_pattern = r'Abstract([\s\S]*?)Unified Astronomy Thesaurus concepts:'
+    full_text, keywords = await get_full_text_from_file(file, True)
+    regex_pattern = r'(?:Abstract|Abstract\.|Received(?: on)? [\w\s,]*?\d{4})([\s\S]*?)(Unified Astronomy Thesaurus concepts:|I\.|Resumen\.|Keywords.|Key words:|Subject headin g g s:|Key words.|Keywords :|K ey words:|Keywords:|Subject headings:)'
     abstract_text = ''
     match = re.search(regex_pattern, full_text_for_abstract)
 
@@ -734,4 +773,4 @@ async def get_text_from_file(file, get_title=False):
     if get_title:
         abstract_text = await get_title_from_file(file) + abstract_text
     
-    return abstract_text, full_text
+    return abstract_text, full_text, keywords
