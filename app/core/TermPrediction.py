@@ -3,32 +3,45 @@ import logging
 import spacy
 from app.utils.input_creators import get_prediction_multiplier
 from app.models.Prediction import Prediction
+from app.models.CombinedPrediction import CombinedPrediction
 
 logging.basicConfig(filename='logs/predictor.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class TermPrediction:
-    def __init__(self, input_creator, thesaurus, is_test):
-        self.input_creator = input_creator
+    def __init__(self, data_input, thesaurus):
+        self.data_input = data_input
         self.thesaurus = thesaurus
-        self.is_test = is_test
+
+        # self.input_creators = ['abstract', 'summarize-full_text', 'summarize-summarize']
+        self.input_creators = ['abstract', 'summarize-full_text', 'summarize-summarize']
 
         # Threshold for prediction
         self.CHILDREN_THRESHOLD = 0.4
-        self.PREDICTION_THRESHOLD = 0.2 if is_test else 0.8
+        self.PREDICTION_THRESHOLD = 0.8
 
         self.nlp = None
         self.log = logging.getLogger('predictor_logger')
-        # Array to store the predicted term ids and parents
+
+        # Array to store the 
+
+        # Array to store the predicted term ids
         self.predicted_term_ids = []
+
+    """
+    Reduce the threshold for prediction
+    """
+    def reduce_threshold(self):
+        self.PREDICTION_THRESHOLD = 0.6
+        self.CHILDREN_THRESHOLD = 0.2
 
     """
     Retrieve and load the saved spaCy model for a specific term.
     The model should have been previously saved to disk.
     """
-    def get_model_for_term(self, term_id):
+    def get_model_for_term(self, term_id, input_creator):
         # Because summarize has two different data inputs, we need to modify the input creator based on the "-"
-        input_creator = self.input_creator.split("-")[0]
-        model_path = f"./models-2/{input_creator}/{term_id}"
+        input_creator = input_creator.split("-")[0]
+        model_path = f"./models/{input_creator}/{term_id}"
         
         try:
             # Check if the model path exists, then load the model
@@ -47,9 +60,13 @@ class TermPrediction:
     """
     Perform prediction using a specific spaCy model loaded for the term.
     """
-    def predict_text_with_model(self, text, term_id):
+    def predict_text_with_model(self, text, term_id, input_creator, level):
+        # For each level, we lower the threshold for prediction
+        pred_threshold = self.PREDICTION_THRESHOLD - (level * 0.04) if level > 2 else self.PREDICTION_THRESHOLD
+        children_threshold = self.CHILDREN_THRESHOLD + (level * 0.1) if level > 3 else self.CHILDREN_THRESHOLD
+
         predicted_terms = []
-        predicted_children_ids = []
+        predicted_children = []
         predictions_log = []
 
         doc = self.nlp(text)  # Process the text with the loaded spaCy model
@@ -57,103 +74,143 @@ class TermPrediction:
             predictions_log.append(f"{cat}: {score:.4f}")
             
             # Check if the term is already predicted 
-            # if it's for testing we can have multiples predictions for the same input creator - different parent)
             # If it's not for testing, we can only have one prediction for the same input creator
-            if self.is_test:
-                exists = any(item["term"] == cat and item["parent"] == term_id for item in self.predicted_term_ids)
-            else:
-                exists = any(item["term"] == cat for item in self.predicted_term_ids)
+            exists = any(item["term"] == cat for item in self.predicted_term_ids)
 
-            # Check if the score is above the threshold and if the term is not already predicted
-            if score > self.PREDICTION_THRESHOLD and not exists:
-                prediction_obj = Prediction(cat, round(doc.cats[cat], 5), get_prediction_multiplier(self.input_creator), self.input_creator, term_id)
+            # If the term is already predicted, we can skip it
+            if exists:
+                continue
+
+            # Check if the score is above the threshold
+            if score > pred_threshold:
+                # self.log.info(f"Adding prediction: {cat} with score: {score}")
+                prediction_obj = Prediction(cat, round(doc.cats[cat], 5), term_id, get_prediction_multiplier(input_creator), input_creator)
                 predicted_terms.append(prediction_obj)
-                self.predicted_term_ids.append({ "term": cat, "parent": term_id })
-            if score > self.CHILDREN_THRESHOLD:
-                predicted_children_ids.append(cat)
+            if score > children_threshold:
+                # self.log.info(f"Adding child: {cat} with score: {score}")
+                children_obj = Prediction(cat, round(doc.cats[cat], 5), term_id, get_prediction_multiplier(input_creator), input_creator)
+                predicted_children.append(children_obj)
 
         self.log.info(f"Predictions: {', '.join(predictions_log)}")
 
-        return predicted_terms, predicted_children_ids
+        return predicted_terms, predicted_children
 
-        # Score supera PREDICTION -> guardar como un predicted term
-        #            prediction_obj = Prediction(term, doc.cats[term], get_prediction_multiplier(self.input_creator))
-        #             predicted_terms.append(prediction_obj)
-        # Score supera CHILDREN PREDICTION -> guardar como un id y apendearlo a un predicted_children_terms (son ids)
+    '''
+        Predicts the terms for a given input creator
+    '''
+    def predict_text_with_input_creator(self, input_creator, text, term_id, level):
+        # Load the saved spaCy model for the term
+        model_has_loaded = self.get_model_for_term(term_id, input_creator)
+
+        if model_has_loaded is not True:
+            print(f"Model for term {term_id} not found", flush=True)
+            return [], []  # Skip if the model for the term is not found
+        
+        # Use the loaded model to predict the terms
+        selected_terms, selected_children_terms = self.predict_text_with_model(text, term_id, input_creator, level)
+        return selected_terms, selected_children_terms
+    
+    '''
+        Combines the predictions from different input creators and generates the final prediction
+    '''
+    def combine_predictions(self, new_predictions, current_predictions):
+        # Combine the predictions from different input creators
+        for prediction in new_predictions:
+            term = prediction.get_term()
+            probability = prediction.get_probability()
+            parent = prediction.get_parent()
+            multiplierName = prediction.get_multiplier_name()
+            multiplier = prediction.get_multiplier()
+
+            if term not in current_predictions:
+                current_predictions[term] = CombinedPrediction(term, probability, multiplier, multiplierName, parent)
+            else:
+                current_predictions[term].add_probability(probability)
+                current_predictions[term].add_multiplier(multiplier)
+                current_predictions[term].add_multiplier_name(multiplierName)
+                current_predictions[term].add_parent(parent)
+
+            term_name = self.thesaurus.get_by_id(term).get_name()
+            # Set the name for the combined prediction
+            current_predictions[term].set_name(term_name)
+
+        return current_predictions
 
     '''
     Recursive function to predict the terms (Initially predicted terms are empty)
     '''
-    def predict_text(self, text, term_id, predicted_terms, delete_by_probability=False):
-        self.log.info(f"Started predicting for term: {term_id}")
-        print(f"Started predicting for term: {term_id}", flush=True)
+    def predict_text(self, predicted_terms, term_id, level):
+        # Initialize local arrays for combining the predictions
+        current_predictions = {}
+        current_children = {}
+        selected_children_ids = []
+        current_prediction_count = 0
 
-        # Load the saved spaCy model for the term
-        model_has_loaded = self.get_model_for_term(term_id)
-        if model_has_loaded is not True:
-            print(f"Model for term {term_id} not found", flush=True)
-            return predicted_terms  # Skip if the model for the term is not found
+        self.log.info(f"---Started predicting for term: {term_id}---")
+        print(f"---Started predicting for term: {term_id}---", flush=True)
 
-        # Use the loaded model to predict the terms
-        selected_terms, selected_children_ids = self.predict_text_with_model(text, term_id)
+        # For each term, we need to ensamble the three different input creators
+        # Iterate over the input creators 
+        for input_creator in self.input_creators:
+            self.log.info(f"*Predicting with input creator: {input_creator}*")
+            print(f"*Predicting with input creator: {input_creator}*", flush=True)
+            selected_terms, selected_children_terms = self.predict_text_with_input_creator(input_creator, self.data_input[input_creator], term_id, level)
 
-        if selected_terms:
-            predicted_terms.extend(selected_terms)
+            # Combine the predictions from different input creators
+            current_predictions = self.combine_predictions(selected_terms, current_predictions)
+            current_children = self.combine_predictions(selected_children_terms, current_children)
 
-            # For each predicted term, check if the term has a father term already predicted. If that's the case, remove the father from predicted_terms
-            # We are using the is_test for allowing the removal of the father term if the term is already predicted
-            if not self.is_test:
-                self.filter_predicted_terms_by_child(predicted_terms, delete_by_probability, selected_terms)
+        # Generate probability for term using ensamble, append predictions only if the term is not already predicted and the probability is above the threshold
+        for term, prediction in current_predictions.items():
+            prediction.generate_probability()
+            self.log.info(f"--> Prediction for term: {term}, probability: {prediction.get_combined_probability()}")
+
+            # For each level, we lower the threshold for prediction
+            pred_threshold = self.PREDICTION_THRESHOLD - (level * 0.04) if level > 2 else self.PREDICTION_THRESHOLD
+            print(f"----- level: {level}, pred_threshold: {pred_threshold} -----", flush=True)
+
+            if prediction.get_combined_probability() > pred_threshold and term not in self.predicted_term_ids:
+                predicted_terms.append(prediction)
+                current_prediction_count += 1
+                self.predicted_term_ids.append({ "term": term, "parent": prediction.get_parents()[0] })
+
+                # For each predicted term, check if the term has a father term already predicted. If that's the case, remove the father from predicted_terms
+                self.filter_predicted_terms_by_child(predicted_terms, current_predictions)
+
+        for term, prediction in current_children.items():
+            prediction.generate_probability()
+
+            # For each level, we higher the threshold for children
+            children_threshold = self.CHILDREN_THRESHOLD + (level * 0.1) if level > 3 else self.CHILDREN_THRESHOLD
+            if prediction.get_combined_probability() > children_threshold:
+                self.log.info(f"-> Adding child: {term} with score: {prediction.get_combined_probability()}")
+                selected_children_ids.append(term)
 
         # If the prediction returns children, recursively predict for them
         if len(selected_children_ids):
             for selected_children_id in selected_children_ids:
-                self.predict_text(text, selected_children_id, predicted_terms, delete_by_probability)
+                self.predict_text(predicted_terms, selected_children_id, level + 1)
 
         return predicted_terms
 
     '''
-        Iterates over the selected terms (new predictions) and removes the father term from the predicted terms (all predictions) if it is already predicted
+        Iterates over the current_predictions (new predictions) and removes the father term from the predicted terms (all predictions) if it is already predicted
     '''
-    def filter_predicted_terms_by_child(self, predicted_terms, delete_by_probability, selected_terms):
-        for selected_term in selected_terms:
+    def filter_predicted_terms_by_child(self, predicted_terms, current_predictions):
+        for selected_term in current_predictions.values():
             term_predictions = selected_term.get_probabilities()
             term_parents = selected_term.get_parents()
-            term_multipliers = selected_term.get_multipliers_names()
 
-            for term_prediction, term_parent, term_input_creator in zip(term_predictions, term_parents, term_multipliers):
-                self.remove_father_from_predictions(predicted_terms, term_prediction, term_parent, term_input_creator, delete_by_probability)
+            for term_prediction, term_parent in zip(term_predictions, term_parents):
+                self.remove_father_from_predictions(predicted_terms, term_prediction, term_parent)
     
     '''
         Removes the father term from the predicted terms if it is already predicted
     '''
-    def remove_father_from_predictions(self, predicted_terms, term_prediction, term_parent, term_input_creator, delete_by_probability):
+    def remove_father_from_predictions(self, predicted_terms, term_prediction, term_parent):
         father_prediction = next((prediction for prediction in predicted_terms if prediction.get_term() == term_parent), None)
-        if father_prediction != None and term_input_creator == self.input_creator:
-            if delete_by_probability:
-                        
-                # Get first index of current input creator from father prediction
-                father_index = father_prediction.get_multipliers_names().index(self.input_creator)
-                father_probability = father_prediction.get_probabilities()[father_index]
-
-                # If the father probability is less than the term prediction + 0.05, remove the father from the predicted terms
-                if (father_probability < (term_prediction + 0.05)):
-                    self.delete_prediction(predicted_terms, father_prediction, father_probability)
-                    self.delete_branch(predicted_terms, father_prediction.get_parents())
-            else:
-                self.delete_prediction(predicted_terms, father_prediction)
-
-    '''
-        Iterates over the predicted terms and removes the branch of the term recursively
-    '''
-    def delete_branch(self, predicted_terms, term_parents):
-        for parent in term_parents:
-            father_prediction = next((prediction for prediction in predicted_terms if prediction.get_term() == parent), None)
-            if father_prediction != None:
-                print(f"Removing {father_prediction.get_term()} from predicted terms as branch", flush=True)
-                self.log.info(f"Removing {father_prediction.get_term()} from predicted terms as branch")
-                self.delete_prediction(predicted_terms, father_prediction)
-                self.delete_branch(predicted_terms, father_prediction.get_parents())
+        if father_prediction != None:
+            self.delete_prediction(predicted_terms, father_prediction, term_prediction)
 
     '''
         Deletes the term from the predicted terms

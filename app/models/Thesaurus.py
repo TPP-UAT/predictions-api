@@ -96,3 +96,14 @@ class Thesaurus:
 
         path.reverse()
         return path if path[0] == start_id else None
+
+    def find_paths_from_eleven_children(self, end_id):
+        eleven_children = ["104", "1145", "1476", "1529", "1583", "343", "486", "563", "739", "804", "847"]
+        paths = []
+
+        for start_id in eleven_children:
+            path = self.find_shortest_path(start_id, end_id)
+            if path:
+                paths.append(path)
+
+        return paths
