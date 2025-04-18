@@ -28,6 +28,19 @@ class Keyword():
         
         return keywords
     
+    def get_by_file_id(self, file_id):
+        """Get all keywords associated with a given file_id."""
+        keywords = []
+        query = select(KeywordModel).where(KeywordModel.file_id == file_id)
+
+        results = self.database.query(query)
+
+        for result in results:
+            keyword = result[0]
+            keywords.append(keyword)
+        
+        return keywords
+    
     def get_by_keyword_id(self, keyword_id):
         """Get a keyword by its keyword_id."""
         query = select(KeywordModel).where(KeywordModel.keyword_id == keyword_id)
