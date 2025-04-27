@@ -1,5 +1,6 @@
 from sqlalchemy import func, select
-from app.database.DatabaseModels import KeywordModel
+from sqlalchemy.orm import joinedload
+from app.database.DatabaseModels import KeywordModel, FileModel
 
 class Keyword():
     def __init__(self, database):
@@ -102,20 +103,28 @@ class Keyword():
         return file_ids
     
     def get_keywords_files_ocurrences(self, keyword_ids, limit=5):
-        query = select(KeywordModel.file_id, func.count(KeywordModel.keyword_id).label("occurrences")
-            ).where(KeywordModel.keyword_id.in_(keyword_ids)
-            ).group_by(KeywordModel.file_id
-            ).order_by(func.count(KeywordModel.keyword_id).desc()
-            ).limit(limit)
+        query = (
+            select(
+                KeywordModel.file_id,
+                FileModel.title,
+                FileModel.link,
+                func.count(KeywordModel.keyword_id).label("occurrences")
+            )
+            .join(FileModel, KeywordModel.file_id == FileModel.file_id)
+            .where(KeywordModel.keyword_id.in_(keyword_ids))
+            .group_by(KeywordModel.file_id, FileModel.title, FileModel.link)
+            .order_by(func.count(KeywordModel.keyword_id).desc())
+            .limit(limit)
+        )
         
         results = self.database.query(query)
 
         files_occurrences = []
         for result in results:
             file_id = result[0]
-            occurrences = result[1]
-            files_occurrences.append((file_id, occurrences))
+            title = result[1]
+            link = result[2]
+            occurrences = result[3]
+            files_occurrences.append((file_id, title, link, occurrences))
         
         return files_occurrences
-
-

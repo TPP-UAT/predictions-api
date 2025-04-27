@@ -30,9 +30,11 @@ class FileRecommender:
         print(f"Term Files Ocurrencies: {term_files_ocurencies}")
 
         recommended_file_ids = [term_file_ocurrencies[0] for term_file_ocurrencies in term_files_ocurencies]
+        recommended_title = [term_file_ocurrencies[1] for term_file_ocurrencies in term_files_ocurencies]
+        recommended_link = [term_file_ocurrencies[2] for term_file_ocurrencies in term_files_ocurencies]
 
         # Get original keywords for each file
-        for doc in recommended_file_ids:
+        for doc, title, link in zip(recommended_file_ids, recommended_title, recommended_link):
             keywords = self.get_keywords_by_file_id(doc)
             keyword_ids = [kw.keyword_id for kw in keywords]
 
@@ -47,18 +49,20 @@ class FileRecommender:
                 # Get the name of the term
                 term = self.thesaurus.get_by_id(str(same_term))
                 if term:
-                    name = term.get_name() + "(" + str(same_term) + ")"
+                    name = term.get_name() + " (" + str(same_term) + ")"
                     same[same.index(same_term)] = name
 
             for other_term in other:
                 # Get the name of the term
                 term = self.thesaurus.get_by_id(str(other_term))
                 if term:
-                    name = term.get_name() + "(" + str(other_term) + ")"
+                    name = term.get_name() + " (" + str(other_term) + ")"
                     other[other.index(other_term)] = name
 
             results.append({
                 "id": doc,
+                "title": title,
+                "link": link,
                 "same_keywords": same,
                 "other_keywords": other
             })
