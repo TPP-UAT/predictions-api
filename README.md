@@ -28,6 +28,19 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado:
     DATABASE_URL=tu_url_de_base_de_datos
     ```
 
+4. (Opcional) Para poder ejecutar el proyecto de frontend `predictions-app` y recibir las requests del mismo, es modificar en el archivo `main.py` la variable  `origins` con la URL del servidor del frontend.
+
+📂 Para poder generar las predicciones, es necesario utilizar los modelos entrenados en el proyecto `UAT-IA` e ingresar todas las carpetas en la raíz de este proyecto bajo el nombre **models**. 
+
+```
+./models/
+├── abstract/
+│   ├── 104
+│   └── 102
+├── summarize/
+│   └── ...
+```
+
 ## ▶️ Ejecución
 
 Para iniciar el servidor de desarrollo, ejecuta:
@@ -35,6 +48,8 @@ Para iniciar el servidor de desarrollo, ejecuta:
 ```bash
 uvicorn main:app --reload
 ```
+
+Es posible modificar el "peso" de cada uno de los métodos de predicción en el archivo `utils/input_creators.py`.
 
 ## 🚀 Uso
 
